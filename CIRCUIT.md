@@ -1,0 +1,181 @@
+# Schaltung — Door Controller
+
+## Übersicht
+
+ESP32 steuert über einen BTS7960 H-Bridge einen Waveshare DC-Getriebemotor (L-Shaped, 240 RPM, 12V) zum Öffnen und Schliessen einer Tür. Zwei Endschalter erkennen die Endlagen.
+
+---
+
+## Schaltplan
+
+```
+    12V Netzteil (min. 3A)
+        │
+        ├───────────────────────────────────── BTS7960 B+
+        │                                         │
+        │    ┌────────────────────────────────┐    │
+        │    │         470µF ║ 100nF          │    │
+        │    │         (Elko)  (Keramik)      │    │
+        │    │            GND                 │    │
+        │    │   Stützkondensatoren 12V-Rail  │    │
+        │    └────────────────────────────────┘    │
+        │                                         │
+        └──► Buck Converter 12V → 5V              │
+                  │                                │
+             ┌────┤                                │
+             │  ┌─┴──────────────────────┐         │
+             │  │  100µF ║ 100nF         │         │
+             │  │  (Elko)  (Keramik)     │         │
+             │  │     GND                │         │
+             │  │  Stützkondensatoren 5V │         │
+             │  └────────────────────────┘         │
+             │                                     │
+             ├──► ESP32 VIN                        │
+             │       │                             │
+             │     100nF (Keramik, nah am Chip)    │
+             │      GND                            │
+             │                                     │
+             └──► BTS7960 VCC (Logik)              │
+                                                   │
+                                                   │
+    ┌──────────────────────────────────────────────┐│
+    │              ESP32 DevKit                    ││
+    │                                              ││
+    │  Motor-Steuerung (mit Pull-Down)             ││
+    │  ──────────────────────────────              ││
+    │  GPIO 25 ──┬── 10kΩ ── GND ──────► RPWM     ││
+    │  GPIO 26 ──┬── 10kΩ ── GND ──────► LPWM     ││
+    │  GPIO 27 ──┬── 10kΩ ── GND ──────► R_EN     ││
+    │  GPIO 14 ──┬── 10kΩ ── GND ──────► L_EN     ││
+    │                                              ││
+    │  Strom-Messung (mit Spannungsteiler + Zener) ││
+    │  ────────────────────────────────────────     ││
+    │  GPIO 34 ◄─ 20kΩ ─┬─ 10kΩ ◄──────── R_IS    ││
+    │                 ZD 3.3V                      ││
+    │                   GND                        ││
+    │  GPIO 35 ◄─ 20kΩ ─┬─ 10kΩ ◄──────── L_IS    ││
+    │                 ZD 3.3V                      ││
+    │                   GND                        ││
+    │                                              ││
+    │  Endschalter (mit Serienwiderstand + Filter) ││
+    │  ────────────────────────────────────────     ││
+    │  GPIO 32 ◄── 1kΩ ──┬──── /  ── GND  (OPEN)  ││
+    │                   100nF                      ││
+    │                    GND                       ││
+    │  GPIO 33 ◄── 1kΩ ──┬──── /  ── GND  (CLOSE) ││
+    │                   100nF                      ││
+    │                    GND                       ││
+    │                                              ││
+    └──────────────────────────────────────────────┘│
+                                                    │
+    ┌───────────────────────────────────────────────┘
+    │
+    │  ┌──────────────┐      ┌──────────────┐
+    │  │   BTS7960     │      │  Waveshare   │
+    │  │               │      │  Motor       │
+    │  │  M+ ──────────┼──────┤  L-Shaped    │
+    │  │  M- ──────────┼──────┤  240 RPM     │
+    │  │  B- ── GND    │      └──────────────┘
+    │  │  GND ── GND   │
+    │  └───────────────┘
+    │
+   GND (alle Massen verbunden)
+```
+
+---
+
+## Stückliste Schutzbeschaltung
+
+| Bauteil | Anzahl | Wert | Bauform | Zweck |
+|---|---|---|---|---|
+| Widerstand | 4 | 10kΩ | 0805 / THT | Pull-Down Motor-Pins |
+| Widerstand | 2 | 10kΩ | 0805 / THT | Spannungsteiler IS (oben) |
+| Widerstand | 2 | 20kΩ | 0805 / THT | Spannungsteiler IS (unten) |
+| Widerstand | 2 | 1kΩ | 0805 / THT | Serienschutz Endschalter |
+| Zener-Diode | 2 | 3.3V | SOD-323 / THT | ADC-Überspannungsschutz |
+| Elko | 1 | 470µF / 25V | Radial | 12V-Puffer |
+| Elko | 1 | 100µF / 10V | Radial | 5V-Puffer |
+| Keramikkondensator | 5 | 100nF | 0805 / THT | Entkopplung |
+| Mikroschalter | 2 | – | – | Endlagen-Erkennung |
+
+---
+
+## Begründung der Schutzbeschaltung
+
+### Pull-Down Widerstände (10kΩ) auf RPWM, LPWM, R_EN, L_EN
+
+**Problem:** Während des ESP32-Bootprozesses (ca. 100-300 ms) sind die GPIOs nicht konfiguriert und floaten. Der BTS7960 interpretiert ein floatendes HIGH-Signal als aktiv — der Motor könnte beim Einschalten unkontrolliert anlaufen.
+
+**Lösung:** 10kΩ Pull-Down Widerstände halten die Leitungen zuverlässig auf LOW, bis der ESP32 die Pins konfiguriert hat. 10kΩ ist hoch genug, um den ESP32-Ausgang nicht merklich zu belasten (0.33 mA bei 3.3V), aber niedrig genug, um sicher gegen Störeinkopplungen zu sein.
+
+**Warum nicht im BTS7960 integriert?** Das BTS7960-Modul hat keine definierten Pull-Downs auf den Logikeingängen. Der Zustand bei offenem Eingang ist undefiniert.
+
+### Spannungsteiler (10kΩ / 20kΩ) + Zener-Diode (3.3V) auf IS-Pins
+
+**Problem:** Die Current-Sense Ausgänge des BTS7960 können bis zu 5V ausgeben (bei hohem Motorstrom). Der ESP32 ADC verträgt maximal 3.3V — höhere Spannungen beschädigen den Eingangs-Pin dauerhaft.
+
+**Lösung — Spannungsteiler:**
+```
+V_adc = V_is × R_bottom / (R_top + R_bottom)
+V_adc = V_is × 20kΩ / (10kΩ + 20kΩ)
+V_adc = V_is × 0.667
+```
+Bei maximalen 5V am IS-Pin kommen 3.33V am ADC an — gerade noch im sicheren Bereich.
+
+**Lösung — Zener-Diode:**
+Die 3.3V Zener-Diode ist ein Sicherheitsnetz: Falls der Spannungsteiler allein nicht ausreicht (z.B. durch Toleranzen oder Spannungsspitzen), clippt die Zener zuverlässig bei 3.3V und schützt den ADC.
+
+**Auswirkung auf die Software:**
+Der `CURRENT_THRESHOLD` in `Config.h` ist auf `1333` gesetzt (statt 2000), um den Faktor 0.667 des Spannungsteilers zu kompensieren. Die Berechnung:
+```
+Threshold_mit_Teiler = Threshold_ohne_Teiler × 0.667
+1333 ≈ 2000 × 0.667
+```
+
+### Stützkondensatoren (Elkos + Keramik)
+
+**Problem:** Der Motor erzeugt beim Anlaufen, Abbremsen und unter Last starke Stromschwankungen. Diese verursachen Spannungseinbrüche (Brownouts) und hochfrequente Störungen (EMV) auf der Versorgungsleitung. Der ESP32 ist besonders empfindlich — ein kurzer Spannungseinbruch unter ~2.8V löst einen Brownout-Reset aus.
+
+**Lösung — 12V-Rail (470µF Elko + 100nF Keramik):**
+- Der 470µF Elko puffert die grossen Stromspitzen des Motors (Anlaufstrom kann kurzzeitig 3-5× Nennstrom betragen)
+- Der 100nF Keramik filtert hochfrequente Störungen, die der Elko aufgrund seiner Induktivität nicht abfangen kann
+- Platzierung: So nah wie möglich am BTS7960 B+ Eingang
+
+**Lösung — 5V-Rail (100µF Elko + 100nF Keramik):**
+- Puffert die 5V-Versorgung für ESP32 und BTS7960-Logik
+- Verhindert, dass Motor-Spannungseinbrüche auf dem 12V-Rail durch den Buck Converter auf die 5V-Seite durchschlagen
+
+**Lösung — 100nF direkt am ESP32:**
+- Entkopplung der digitalen Schaltung vom Rest
+- Filtert kurze HF-Störungen direkt an der Versorgung des Mikrocontrollers
+- Platzierung: So nah wie möglich an VIN/GND des ESP32-Boards
+
+**Warum zwei Typen?** Elkos haben hohe Kapazität aber schlechtes HF-Verhalten (parasitäre Induktivität). Keramikkondensatoren haben niedrige Kapazität aber exzellentes HF-Verhalten. Zusammen decken sie das gesamte Frequenzspektrum ab.
+
+### Endschalter-Schutz (1kΩ + 100nF)
+
+**Problem 1 — Fehlverdrahtung:** Wenn ein Endschalter-Kabel versehentlich an 12V oder 5V gerät (z.B. bei Wartungsarbeiten), fliesst ohne Schutz ein zerstörerischer Strom in den GPIO.
+
+**Lösung:** Der 1kΩ Serienwiderstand begrenzt den Strom auf maximal 12 mA bei 12V Fehlspannung — sicher für den ESP32 (max. 12 mA pro Pin). Im Normalbetrieb fliesst nur 3.3V / (1kΩ + interner Pull-up ~45kΩ) ≈ 0.07 mA — vernachlässigbar.
+
+**Problem 2 — Prellen und Störungen:** Mechanische Endschalter prellen beim Betätigen (10-50 ms Kontaktspringen). Lange Kabel zum Endschalter wirken als Antennen und fangen elektromagnetische Störungen ein (besonders vom PWM-getakteten Motor).
+
+**Lösung:** Der 100nF Kondensator bildet zusammen mit dem 1kΩ Widerstand einen RC-Tiefpass (τ = R×C = 0.1 ms, Grenzfrequenz ≈ 1.6 kHz). Dieser filtert:
+- Kontaktprellen (typisch 1-10 kHz)
+- HF-Störungen vom Motortreiber (20 kHz PWM und Oberwellen)
+
+Die Software implementiert zusätzlich ein 50 ms Debouncing als zweite Schutzschicht.
+
+---
+
+## Verdrahtungshinweise
+
+1. **GND-Führung:** Alle Massen (Netzteil, Buck Converter, ESP32, BTS7960) an einem gemeinsamen Punkt verbinden (Star-Ground). Keine Schleifen bilden — Motor-Rückstrom soll nicht über die Logik-Masse fliessen.
+
+2. **Kabelquerschnitt:** Motorleitungen (M+/M-, B+/B-) mindestens 1.0 mm², Signalleitungen 0.25 mm² genügt.
+
+3. **Kondensatoren-Platzierung:** Stützkondensatoren immer so nah wie möglich an den Verbraucher-Pins. Lange Leitungen zwischen Kondensator und IC machen die Entkopplung wirkungslos.
+
+4. **Endschalter-Kabel:** Geschirmte oder paarweise verdrillte Leitungen verwenden, wenn die Kabelwege länger als 30 cm sind. Den Schirm einseitig (am ESP32) auf GND legen.
+
+5. **Motor-Kabel:** Kurz halten und von den Signalleitungen räumlich trennen. Idealerweise separat verlegen.
