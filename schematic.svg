@@ -428,7 +428,7 @@
   <circle cx="480" cy="1280" r="4" fill="#6c757d"/>
 
   <!-- OPEN: GND → Switch → 1kΩ → junction → 100nF → GND -->
-  <text x="120" y="1287" font-size="18" fill="#198754" font-weight="bold">OPEN</text>
+  <text x="120" y="1265" font-size="18" fill="#198754" font-weight="bold">OPEN</text>
   <line x1="100" y1="1280" x2="190" y2="1280" stroke="#6c757d" stroke-width="2"/>
   <!-- GND -->
   <line x1="88" y1="1272" x2="88" y2="1288" stroke="#6c757d" stroke-width="3"/>
@@ -462,7 +462,7 @@
   <circle cx="480" cy="1370" r="4" fill="#6c757d"/>
 
   <!-- CLOSE: same pattern -->
-  <text x="120" y="1377" font-size="18" fill="#dc3545" font-weight="bold">CLOSE</text>
+  <text x="120" y="1355" font-size="18" fill="#dc3545" font-weight="bold">CLOSE</text>
   <line x1="100" y1="1370" x2="190" y2="1370" stroke="#6c757d" stroke-width="2"/>
   <line x1="88" y1="1362" x2="88" y2="1378" stroke="#6c757d" stroke-width="3"/>
   <line x1="82" y1="1366" x2="82" y2="1374" stroke="#6c757d" stroke-width="2.5"/>
