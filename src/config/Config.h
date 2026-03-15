@@ -16,30 +16,43 @@
 #define PIN_ENDSTOP_OPEN    32
 #define PIN_ENDSTOP_CLOSE   33
 
+// Encoder (DFRobot FIT0185 — Hall effect, quadrature)
+#define PIN_ENCODER_A       16      // Encoder channel A
+#define PIN_ENCODER_B       17      // Encoder channel B
+#define ENCODER_ENABLED     1       // Set to 0 to compile without encoder
+
 // =============================================
-// Motor Settings
+// Motor Settings (DFRobot FIT0185: 12V, 83RPM, 45kg·cm)
 // =============================================
 #define MOTOR_MAX_SPEED         255     // PWM duty cycle (0-255)
-#define MOTOR_RAMP_TIME_MS      800     // Soft-start ramp duration
-#define MOTOR_TIMEOUT_MS        15000   // Max runtime per operation
+#define MOTOR_RAMP_TIME_MS      1200    // Soft-start ramp (longer for high-torque motor)
+#define MOTOR_TIMEOUT_MS        25000   // Max runtime per operation
+#define CALIBRATION_SPEED       180     // Reduced speed for calibration (~70%)
+
+// =============================================
+// Encoder
+// =============================================
+#define ENCODER_CPR             2096    // Counts per revolution (gearbox output)
+#define ENCODER_DETECT_PULSES   10      // Min pulses to confirm encoder present
+#define ENCODER_DETECT_MS       500     // Detection time window
 
 // =============================================
 // Safety — Current Sensing
 // =============================================
 // IS pins are behind a 10kΩ/20kΩ voltage divider to protect the 3.3V ADC.
 // Divider ratio: 20k / (10k + 20k) = 0.667
-// The ADC reads 2/3 of the actual IS pin voltage.
 //
 // BTS7960 IS ratio: ~8500:1 (load current to sense current).
 // With typical module sense resistor (~1kΩ):
-//   V_IS ≈ I_load / 8.5     (e.g. 3A → 0.35V → ADC ~436 without divider)
-// After voltage divider:     (e.g. 3A → 0.24V → ADC ~291)
+//   V_IS ≈ I_load / 8.5
+// After voltage divider: V_ADC = V_IS × 0.667
 //
-// Threshold 1333 ≈ 2000 * 0.667 — triggers at roughly the same physical
-// current as a raw threshold of 2000 would without the divider.
+// FIT0185: stall current 7A, normal load ~1-3A.
+// Trip at ~5A: V_IS = 5/8.5 = 0.588V → after divider 0.392V → ADC ~487
+// Set threshold to 500 (trips at ~5.1A, well under 7A stall).
 #define IS_R_TOP                10000   // Voltage divider top resistor (Ohm)
 #define IS_R_BOTTOM             20000   // Voltage divider bottom resistor (Ohm)
-#define CURRENT_THRESHOLD       1333    // ADC value — adjusted for divider
+#define CURRENT_THRESHOLD       500     // ADC value — ~5A trip point
 #define DEBOUNCE_MS             50      // Endstop debounce time
 
 // =============================================

@@ -9,15 +9,23 @@
 #include "door/DoorController.h"
 #include "network/DoorWebServer.h"
 
-// ---------------------------------------------------------
-// Global objects
+#if ENCODER_ENABLED
+#include "encoder/Encoder.h"
+#endif
+
 // ---------------------------------------------------------
 BTS7960Driver motor(PIN_RPWM, PIN_LPWM,
                     PIN_R_EN, PIN_L_EN,
                     PIN_R_IS, PIN_L_IS);
 
+#if ENCODER_ENABLED
+Encoder encoder(PIN_ENCODER_A, PIN_ENCODER_B, ENCODER_CPR);
+DoorController door(motor, PIN_ENDSTOP_OPEN, PIN_ENDSTOP_CLOSE, &encoder);
+#else
 DoorController door(motor, PIN_ENDSTOP_OPEN, PIN_ENDSTOP_CLOSE);
-DoorWebServer  webServer(door, WEB_SERVER_PORT);
+#endif
+
+DoorWebServer webServer(door, WEB_SERVER_PORT);
 
 // ---------------------------------------------------------
 static void connectWiFi() {
@@ -41,7 +49,7 @@ static void connectWiFi() {
 void setup() {
     Serial.begin(115200);
     Serial.println("\n=============================");
-    Serial.println("  Door Controller v1.0");
+    Serial.println("  Door Controller v2.0");
     Serial.println("=============================");
 
     connectWiFi();
@@ -50,17 +58,10 @@ void setup() {
         Serial.printf("[mDNS] http://%s.local\n", MDNS_HOSTNAME);
     }
 
-    // OTA — allows wireless firmware updates
     ArduinoOTA.setHostname(MDNS_HOSTNAME);
-    ArduinoOTA.onStart([]() {
-        Serial.println("[OTA] Update starting...");
-    });
-    ArduinoOTA.onEnd([]() {
-        Serial.println("\n[OTA] Update complete");
-    });
-    ArduinoOTA.onError([](ota_error_t error) {
-        Serial.printf("[OTA] Error %u\n", error);
-    });
+    ArduinoOTA.onStart([]() { Serial.println("[OTA] Update starting..."); });
+    ArduinoOTA.onEnd([]()   { Serial.println("\n[OTA] Update complete"); });
+    ArduinoOTA.onError([](ota_error_t error) { Serial.printf("[OTA] Error %u\n", error); });
     ArduinoOTA.begin();
 
     door.begin();
@@ -75,7 +76,6 @@ void loop() {
     webServer.handle();
     door.update();
 
-    // Reconnect WiFi if connection drops
     static uint32_t lastWifiCheck = 0;
     if (millis() - lastWifiCheck > 10000) {
         lastWifiCheck = millis();

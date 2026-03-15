@@ -2,21 +2,25 @@
 
 ## Übersicht
 
-ESP32 steuert über einen BTS7960 H-Bridge einen Waveshare DC-Getriebemotor (L-Shaped, 240 RPM, 12V) zum Öffnen und Schliessen einer Tür. Zwei Endschalter erkennen die Endlagen.
+ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen und Schliessen einer Tür. Zwei Endschalter erkennen die Endlagen. Optional liefert ein Encoder am Motor präzise Positionsdaten.
+
+**Unterstützte Motoren:**
+- **Ansatz B (aktiv):** DFRobot FIT0185 — 12V, 83 RPM, 45 kg·cm, Hall-Encoder 2096 CPR
+- **Ansatz C (Reserve):** DFRobot FIT0186 — 12V, 251 RPM, 18 kg·cm, Hall-Encoder 700 CPR
+- **Ansatz A (Legacy):** Waveshare L-Shaped 240 RPM (ohne Encoder)
 
 ---
 
 ## Schaltplan
 
 ```
-    12V Netzteil (min. 3A)
+    12V Netzteil (min. 5A)
         │
         ├───────────────────────────────────── BTS7960 B+
         │                                         │
         │    ┌────────────────────────────────┐    │
-        │    │         470µF ║ 100nF          │    │
-        │    │         (Elko)  (Keramik)      │    │
-        │    │            GND                 │    │
+        │    │     470µF (Elko) ║ 100nF       │    │
+        │    │        GND                     │    │
         │    │   Stützkondensatoren 12V-Rail  │    │
         │    └────────────────────────────────┘    │
         │                                         │
@@ -24,8 +28,7 @@ ESP32 steuert über einen BTS7960 H-Bridge einen Waveshare DC-Getriebemotor (L-S
                   │                                │
              ┌────┤                                │
              │  ┌─┴──────────────────────┐         │
-             │  │  100µF ║ 100nF         │         │
-             │  │  (Elko)  (Keramik)     │         │
+             │  │  100µF (Elko) ║ 100nF  │         │
              │  │     GND                │         │
              │  │  Stützkondensatoren 5V │         │
              │  └────────────────────────┘         │
@@ -35,7 +38,9 @@ ESP32 steuert über einen BTS7960 H-Bridge einen Waveshare DC-Getriebemotor (L-S
              │     100nF (Keramik, nah am Chip)    │
              │      GND                            │
              │                                     │
-             └──► BTS7960 VCC (Logik)              │
+             ├──► BTS7960 VCC (Logik)              │
+             │                                     │
+             └──► Encoder VCC (5V)                 │
                                                    │
                                                    │
     ┌──────────────────────────────────────────────┐│
@@ -57,6 +62,15 @@ ESP32 steuert über einen BTS7960 H-Bridge einen Waveshare DC-Getriebemotor (L-S
     │                 ZD 3.3V                      ││
     │                   GND                        ││
     │                                              ││
+    │  Encoder (mit Level-Shifter + Filter)        ││
+    │  ────────────────────────────────────────     ││
+    │  GPIO 16 ◄── 1kΩ ──┬── [3.3V/5V LS] ◄── Ch.A││
+    │                   100nF                      ││
+    │                    GND                       ││
+    │  GPIO 17 ◄── 1kΩ ──┬── [3.3V/5V LS] ◄── Ch.B││
+    │                   100nF                      ││
+    │                    GND                       ││
+    │                                              ││
     │  Endschalter (mit Serienwiderstand + Filter) ││
     │  ────────────────────────────────────────     ││
     │  GPIO 32 ◄── 1kΩ ──┬──── /  ── GND  (OPEN)  ││
@@ -70,33 +84,38 @@ ESP32 steuert über einen BTS7960 H-Bridge einen Waveshare DC-Getriebemotor (L-S
                                                     │
     ┌───────────────────────────────────────────────┘
     │
-    │  ┌──────────────┐      ┌──────────────┐
-    │  │   BTS7960     │      │  Waveshare   │
-    │  │               │      │  Motor       │
-    │  │  M+ ──────────┼──────┤  L-Shaped    │
-    │  │  M- ──────────┼──────┤  240 RPM     │
-    │  │  B- ── GND    │      └──────────────┘
-    │  │  GND ── GND   │
-    │  └───────────────┘
+    │  ┌──────────────┐      ┌──────────────────────┐
+    │  │   BTS7960     │      │  DFRobot FIT0185     │
+    │  │               │      │  DC-Getriebemotor    │
+    │  │  M+ ──────────┼──────┤  12V / 83 RPM       │
+    │  │  M- ──────────┼──────┤  45 kg·cm            │
+    │  │  B- ── GND    │      │                      │
+    │  │  GND ── GND   │      │  Encoder:            │
+    │  └───────────────┘      │  VCC ◄── 5V Rail     │
+    │                         │  GND ◄── GND         │
+    │                         │  Ch.A ──► GPIO 16    │
+    │                         │  Ch.B ──► GPIO 17    │
+    │                         └──────────────────────┘
     │
    GND (alle Massen verbunden)
 ```
 
 ---
 
-## Stückliste Schutzbeschaltung
+## Stückliste
 
 | Bauteil | Anzahl | Wert | Bauform | Zweck |
 |---|---|---|---|---|
 | Widerstand | 4 | 10kΩ | 0805 / THT | Pull-Down Motor-Pins |
 | Widerstand | 2 | 10kΩ | 0805 / THT | Spannungsteiler IS (oben) |
 | Widerstand | 2 | 20kΩ | 0805 / THT | Spannungsteiler IS (unten) |
-| Widerstand | 2 | 1kΩ | 0805 / THT | Serienschutz Endschalter |
+| Widerstand | 4 | 1kΩ | 0805 / THT | Serienschutz Endschalter + Encoder |
 | Zener-Diode | 2 | 3.3V | SOD-323 / THT | ADC-Überspannungsschutz |
 | Elko | 1 | 470µF / 25V | Radial | 12V-Puffer |
 | Elko | 1 | 100µF / 10V | Radial | 5V-Puffer |
-| Keramikkondensator | 5 | 100nF | 0805 / THT | Entkopplung |
+| Keramikkondensator | 7 | 100nF | 0805 / THT | Entkopplung (12V, 5V, ESP32, 2× Endschalter, 2× Encoder) |
 | Mikroschalter | 2 | – | – | Endlagen-Erkennung |
+| Level-Shifter | 1 | 3.3V/5V | BSS138 Modul, 2-Kanal | Encoder-Signalpegelanpassung |
 
 ---
 
@@ -126,11 +145,18 @@ Bei maximalen 5V am IS-Pin kommen 3.33V am ADC an — gerade noch im sicheren Be
 Die 3.3V Zener-Diode ist ein Sicherheitsnetz: Falls der Spannungsteiler allein nicht ausreicht (z.B. durch Toleranzen oder Spannungsspitzen), clippt die Zener zuverlässig bei 3.3V und schützt den ADC.
 
 **Auswirkung auf die Software:**
-Der `CURRENT_THRESHOLD` in `Config.h` ist auf `1333` gesetzt (statt 2000), um den Faktor 0.667 des Spannungsteilers zu kompensieren. Die Berechnung:
+Der `CURRENT_THRESHOLD` in `Config.h` ist auf `500` gesetzt. Bei der FIT0185 (7A Stall) löst dies bei ~5.1A aus:
 ```
-Threshold_mit_Teiler = Threshold_ohne_Teiler × 0.667
-1333 ≈ 2000 × 0.667
+V_IS = 5.1A / 8.5 = 0.6V → nach Teiler 0.4V → ADC ≈ 497
 ```
+
+### Encoder Level-Shifter (5V → 3.3V)
+
+**Problem:** Der DFRobot FIT0185 Encoder gibt 5V-Signale aus. Die ESP32-GPIO-Eingänge sind für max. 3.3V spezifiziert. Obwohl viele Community-Berichte bestätigen, dass ESP32-Pins 5V auf Eingängen tolerieren, ist dies nicht offiziell garantiert und kann langfristig zu Schäden führen.
+
+**Lösung:** Ein BSS138-basierter bidirektionaler Level-Shifter (3.3V/5V, 2-Kanal) wandelt die Signale sauber um. Diese Module kosten wenige Rappen und sind als fertige Breakout-Boards erhältlich.
+
+**Zusätzlich:** 1kΩ Serienwiderstand + 100nF Kondensator als RC-Tiefpass (gleiche Topologie wie bei den Endschaltern) filtert Glitches und EMV-Störungen vom Motorkabel.
 
 ### Stützkondensatoren (Elkos + Keramik)
 
@@ -142,7 +168,7 @@ Threshold_mit_Teiler = Threshold_ohne_Teiler × 0.667
 - Platzierung: So nah wie möglich am BTS7960 B+ Eingang
 
 **Lösung — 5V-Rail (100µF Elko + 100nF Keramik):**
-- Puffert die 5V-Versorgung für ESP32 und BTS7960-Logik
+- Puffert die 5V-Versorgung für ESP32, BTS7960-Logik und Encoder
 - Verhindert, dass Motor-Spannungseinbrüche auf dem 12V-Rail durch den Buck Converter auf die 5V-Seite durchschlagen
 
 **Lösung — 100nF direkt am ESP32:**
@@ -170,7 +196,7 @@ Die Software implementiert zusätzlich ein 50 ms Debouncing als zweite Schutzsch
 
 ## Verdrahtungshinweise
 
-1. **GND-Führung:** Alle Massen (Netzteil, Buck Converter, ESP32, BTS7960) an einem gemeinsamen Punkt verbinden (Star-Ground). Keine Schleifen bilden — Motor-Rückstrom soll nicht über die Logik-Masse fliessen.
+1. **GND-Führung:** Alle Massen (Netzteil, Buck Converter, ESP32, BTS7960, Encoder) an einem gemeinsamen Punkt verbinden (Star-Ground). Keine Schleifen bilden — Motor-Rückstrom soll nicht über die Logik-Masse fliessen.
 
 2. **Kabelquerschnitt:** Motorleitungen (M+/M-, B+/B-) mindestens 1.0 mm², Signalleitungen 0.25 mm² genügt.
 
@@ -179,3 +205,18 @@ Die Software implementiert zusätzlich ein 50 ms Debouncing als zweite Schutzsch
 4. **Endschalter-Kabel:** Geschirmte oder paarweise verdrillte Leitungen verwenden, wenn die Kabelwege länger als 30 cm sind. Den Schirm einseitig (am ESP32) auf GND legen.
 
 5. **Motor-Kabel:** Kurz halten und von den Signalleitungen räumlich trennen. Idealerweise separat verlegen.
+
+6. **Encoder-Kabel:** Der DFRobot FIT0185 hat ein 6-adriges Kabel (Motor + Encoder). Die Encoder-Signalleitungen (Ch.A, Ch.B) möglichst kurz halten und nicht parallel zu den Motorleitungen führen. Bei Kabellängen über 50 cm geschirmtes Kabel verwenden.
+
+---
+
+## Encoder-Kalibrierung
+
+Beim ersten Start (oder nach Firmware-Update) muss die Tür kalibriert werden:
+
+1. **Über das Web-Interface** (`http://door.local`) → Settings → "Calibrate"
+2. Der Motor fährt die Tür zuerst ganz zu (Endschalter CLOSE → Position 0)
+3. Dann fährt er die Tür ganz auf (Endschalter OPEN → Position wird gespeichert)
+4. Die Kalibrierungsdaten werden im NVS (Non-Volatile Storage) des ESP32 gespeichert und überleben Neustarts
+
+Ohne Kalibrierung arbeitet der Controller ausschliesslich mit Endschaltern (wie Ansatz A).

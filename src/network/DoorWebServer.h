@@ -8,7 +8,7 @@ public:
     DoorWebServer(DoorController& door, uint16_t port = 80);
 
     void begin();
-    void handle();      // Call every loop() iteration
+    void handle();
 
 private:
     void handleRoot();
@@ -17,6 +17,8 @@ private:
     void handleClose();
     void handleStop();
     void handleReset();
+    void handleCalibrate();
+    void handleClearCalibration();
 
     DoorController& _door;
     WebServer _server;
