@@ -95,13 +95,19 @@
     <line x1="-2" y1="46" x2="2" y2="46" stroke="#6c757d" stroke-width="1.5"/>
   </g>
 
-  <!-- 12V + 5V to BTS7960 -->
+  <!-- 12V to BTS7960 B+: rail → down → right → down right side → into box at y=490 -->
   <circle cx="1580" cy="165" r="5" fill="#dc3545"/>
-  <line x1="1580" y1="165" x2="1580" y2="380" stroke="#dc3545" stroke-width="2.5"/>
-  <text x="1588" y="210" font-size="14" fill="#dc3545" font-weight="bold">→ B+</text>
+  <line x1="1580" y1="165" x2="1580" y2="340" stroke="#dc3545" stroke-width="2.5"/>
+  <line x1="1580" y1="340" x2="1900" y2="340" stroke="#dc3545" stroke-width="2.5"/>
+  <line x1="1900" y1="340" x2="1900" y2="490" stroke="#dc3545" stroke-width="2.5"/>
+  <line x1="1870" y1="490" x2="1900" y2="490" stroke="#dc3545" stroke-width="2.5"/>
+
+  <!-- 5V to BTS7960 VCC: rail → down → right → down right side → into box at y=443 -->
   <circle cx="1540" cy="273" r="5" fill="#fd7e14"/>
-  <line x1="1540" y1="273" x2="1540" y2="380" stroke="#fd7e14" stroke-width="2.5"/>
-  <text x="1548" y="330" font-size="14" fill="#fd7e14" font-weight="bold">→ VCC</text>
+  <line x1="1540" y1="273" x2="1540" y2="360" stroke="#fd7e14" stroke-width="2.5"/>
+  <line x1="1540" y1="360" x2="1940" y2="360" stroke="#fd7e14" stroke-width="2.5"/>
+  <line x1="1940" y1="360" x2="1940" y2="443" stroke="#fd7e14" stroke-width="2.5"/>
+  <line x1="1870" y1="443" x2="1940" y2="443" stroke="#fd7e14" stroke-width="2.5"/>
 
   <!-- ============================================================ -->
   <!-- ESP32 BLOCK  (y=380..1310, height=930)                        -->
@@ -196,13 +202,12 @@
   <text x="1520" y="1057" font-size="18" fill="#212529" font-weight="bold">M-</text>
   <text x="1520" y="1117" font-size="18" fill="#212529" font-weight="bold">B- / GND</text>
 
-  <line x1="1685" y1="1140" x2="1685" y2="1162" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="1673" y1="1162" x2="1697" y2="1162" stroke="#6c757d" stroke-width="3"/>
-  <line x1="1677" y1="1168" x2="1693" y2="1168" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="1681" y1="1174" x2="1689" y2="1174" stroke="#6c757d" stroke-width="2"/>
-
-  <line x1="1540" y1="380" x2="1540" y2="443" stroke="#fd7e14" stroke-width="2.5"/>
-  <line x1="1580" y1="380" x2="1580" y2="483" stroke="#dc3545" stroke-width="2.5"/>
+  <!-- B-/GND: pin stub right → GND symbol -->
+  <line x1="1870" y1="1110" x2="1940" y2="1110" stroke="#6c757d" stroke-width="2.5"/>
+  <line x1="1940" y1="1110" x2="1940" y2="1132" stroke="#6c757d" stroke-width="2.5"/>
+  <line x1="1928" y1="1132" x2="1952" y2="1132" stroke="#6c757d" stroke-width="3"/>
+  <line x1="1932" y1="1138" x2="1948" y2="1138" stroke="#6c757d" stroke-width="2.5"/>
+  <line x1="1936" y1="1144" x2="1944" y2="1144" stroke="#6c757d" stroke-width="2"/>
 
   <!-- ============================================================ -->
   <!-- MOTOR CONTROL WIRES + PULL-DOWNS (unchanged y=530..740)       -->
