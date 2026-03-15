@@ -493,7 +493,7 @@
   <!-- LEGEND                                                        -->
   <!-- ============================================================ -->
 
-  <rect x="1100" y="1190" width="520" height="250" rx="10" fill="#fff" stroke="#ced4da" stroke-width="2"/>
+  <rect x="1100" y="1190" width="650" height="250" rx="10" fill="#fff" stroke="#ced4da" stroke-width="2"/>
   <text x="1135" y="1225" font-size="22" font-weight="bold" fill="#212529">Legende</text>
 
   <line x1="1135" y1="1252" x2="1180" y2="1252" stroke="#dc3545" stroke-width="3.5"/>
@@ -511,25 +511,25 @@
   <line x1="1135" y1="1372" x2="1180" y2="1372" stroke="#6c757d" stroke-width="3.5"/>
   <text x="1192" y="1378" font-size="17" fill="#495057">GND / Endschalter</text>
 
-  <!-- Symbol legend -->
-  <rect x="1400" y="1244" width="26" height="12" rx="2.5" fill="#fff" stroke="#212529" stroke-width="1.5"/>
-  <text x="1434" y="1258" font-size="16" fill="#495057">Widerstand</text>
+  <!-- Symbol legend (shifted right to avoid overlap with color legend text) -->
+  <rect x="1530" y="1244" width="26" height="12" rx="2.5" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+  <text x="1564" y="1258" font-size="16" fill="#495057">Widerstand</text>
 
-  <line x1="1406" y1="1278" x2="1420" y2="1278" stroke="#212529" stroke-width="2.5"/>
-  <line x1="1406" y1="1286" x2="1420" y2="1286" stroke="#212529" stroke-width="2.5"/>
-  <text x="1434" y="1288" font-size="16" fill="#495057">Kondensator</text>
+  <line x1="1536" y1="1278" x2="1550" y2="1278" stroke="#212529" stroke-width="2.5"/>
+  <line x1="1536" y1="1286" x2="1550" y2="1286" stroke="#212529" stroke-width="2.5"/>
+  <text x="1564" y="1288" font-size="16" fill="#495057">Kondensator</text>
 
-  <polygon points="1404,1320 1416,1306 1416,1320" fill="none" stroke="#212529" stroke-width="1.5"/>
-  <line x1="1416" y1="1303" x2="1416" y2="1323" stroke="#212529" stroke-width="1.5"/>
-  <text x="1434" y="1318" font-size="16" fill="#495057">Zener-Diode</text>
+  <polygon points="1534,1320 1546,1306 1546,1320" fill="none" stroke="#212529" stroke-width="1.5"/>
+  <line x1="1546" y1="1303" x2="1546" y2="1323" stroke="#212529" stroke-width="1.5"/>
+  <text x="1564" y="1318" font-size="16" fill="#495057">Zener-Diode</text>
 
-  <circle cx="1406" cy="1348" r="3.5" fill="#212529"/>
-  <line x1="1409" y1="1345" x2="1420" y2="1338" stroke="#212529" stroke-width="2"/>
-  <circle cx="1420" cy="1348" r="3.5" fill="#212529"/>
-  <text x="1434" y="1353" font-size="16" fill="#495057">Schalter</text>
+  <circle cx="1536" cy="1348" r="3.5" fill="#212529"/>
+  <line x1="1539" y1="1345" x2="1550" y2="1338" stroke="#212529" stroke-width="2"/>
+  <circle cx="1550" cy="1348" r="3.5" fill="#212529"/>
+  <text x="1564" y="1353" font-size="16" fill="#495057">Schalter</text>
 
-  <circle cx="1413" cy="1378" r="4.5" fill="#198754"/>
-  <text x="1434" y="1383" font-size="16" fill="#495057">Knotenpunkt</text>
+  <circle cx="1543" cy="1378" r="4.5" fill="#198754"/>
+  <text x="1564" y="1383" font-size="16" fill="#495057">Knotenpunkt</text>
 
   <!-- FOOTER -->
   <line x1="50" y1="1460" x2="2050" y2="1460" stroke="#dee2e6" stroke-width="1.5"/>
