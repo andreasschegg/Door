@@ -275,14 +275,8 @@
   <!-- ENCODER WIRES + LEVEL SHIFTER (NEW)                           -->
   <!-- ============================================================ -->
 
-  <!-- Level Shifter block -->
-  <rect x="920" y="1000" width="150" height="100" rx="8" fill="#fff" stroke="#9c27b0" stroke-width="2.5"/>
-  <text x="995" y="1035" text-anchor="middle" font-size="14" font-weight="bold" fill="#9c27b0">Level Shifter</text>
-  <text x="995" y="1055" text-anchor="middle" font-size="12" fill="#6c757d">5V → 3.3V</text>
-  <text x="995" y="1075" text-anchor="middle" font-size="12" fill="#6c757d">BSS138</text>
-
-  <!-- GPIO 16 → RC filter → Level Shifter (y=1020) -->
-  <line x1="510" y1="1020" x2="920" y2="1020" stroke="#9c27b0" stroke-width="2.5"/>
+  <!-- GPIO 16 → 1kΩ (inline) → to motor encoder Ch.A (y=1020) -->
+  <line x1="510" y1="1020" x2="1470" y2="1020" stroke="#9c27b0" stroke-width="2.5"/>
   <!-- RC filter junction at x=700 -->
   <circle cx="700" cy="1020" r="4" fill="#9c27b0"/>
   <g transform="translate(700, 1020)">
@@ -295,10 +289,14 @@
     <line x1="0" y1="27" x2="0" y2="40" stroke="#6c757d" stroke-width="1.5"/>
     <line x1="-7" y1="40" x2="7" y2="40" stroke="#6c757d" stroke-width="2.5"/><line x1="-4" y1="44" x2="4" y2="44" stroke="#6c757d" stroke-width="2"/><line x1="-2" y1="48" x2="2" y2="48" stroke="#6c757d" stroke-width="1.5"/>
   </g>
-  <text x="810" y="1012" font-size="15" fill="#9c27b0" font-weight="bold" text-anchor="middle">Enc Ch.A</text>
+  <text x="900" y="1012" font-size="15" fill="#9c27b0" font-weight="bold" text-anchor="middle">Enc Ch.A</text>
 
-  <!-- GPIO 17 → RC filter → Level Shifter (y=1080) -->
-  <line x1="510" y1="1080" x2="920" y2="1080" stroke="#9c27b0" stroke-width="2.5"/>
+  <!-- Route Ch.A under BTS7960 to motor -->
+  <line x1="1470" y1="1020" x2="1470" y2="1200" stroke="#9c27b0" stroke-width="2"/>
+  <line x1="1470" y1="1200" x2="1780" y2="1200" stroke="#9c27b0" stroke-width="2"/>
+
+  <!-- GPIO 17 → 1kΩ (inline) → to motor encoder Ch.B (y=1080) -->
+  <line x1="510" y1="1080" x2="1430" y2="1080" stroke="#9c27b0" stroke-width="2.5"/>
   <circle cx="780" cy="1080" r="4" fill="#9c27b0"/>
   <g transform="translate(780, 1080)">
     <rect x="-28" y="-8" width="55" height="16" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
@@ -310,20 +308,15 @@
     <line x1="0" y1="27" x2="0" y2="40" stroke="#6c757d" stroke-width="1.5"/>
     <line x1="-7" y1="40" x2="7" y2="40" stroke="#6c757d" stroke-width="2.5"/><line x1="-4" y1="44" x2="4" y2="44" stroke="#6c757d" stroke-width="2"/><line x1="-2" y1="48" x2="2" y2="48" stroke="#6c757d" stroke-width="1.5"/>
   </g>
-  <text x="860" y="1072" font-size="15" fill="#9c27b0" font-weight="bold" text-anchor="middle">Enc Ch.B</text>
+  <text x="960" y="1072" font-size="15" fill="#9c27b0" font-weight="bold" text-anchor="middle">Enc Ch.B</text>
 
-  <!-- Level Shifter → Motor Encoder (routed below BTS7960) -->
-  <line x1="1070" y1="1020" x2="1470" y2="1020" stroke="#9c27b0" stroke-width="2"/>
-  <line x1="1470" y1="1020" x2="1470" y2="1200" stroke="#9c27b0" stroke-width="2"/>
-  <line x1="1470" y1="1200" x2="1780" y2="1200" stroke="#9c27b0" stroke-width="2"/>
-
-  <line x1="1070" y1="1080" x2="1430" y2="1080" stroke="#9c27b0" stroke-width="2"/>
+  <!-- Route Ch.B under BTS7960 to motor -->
   <line x1="1430" y1="1080" x2="1430" y2="1240" stroke="#9c27b0" stroke-width="2"/>
   <line x1="1430" y1="1240" x2="1780" y2="1240" stroke="#9c27b0" stroke-width="2"/>
 
   <!-- Encoder annotation -->
-  <rect x="1100" y="1150" width="300" height="26" rx="6" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1.5"/>
-  <text x="1250" y="1168" text-anchor="middle" font-size="14" fill="#7b1fa2" font-weight="bold">1kΩ + 100nF + Level Shifter 5V→3.3V</text>
+  <rect x="1100" y="1150" width="280" height="26" rx="6" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1.5"/>
+  <text x="1240" y="1168" text-anchor="middle" font-size="14" fill="#7b1fa2" font-weight="bold">1kΩ + 100nF RC-Filter (Encoder)</text>
 
   <!-- ============================================================ -->
   <!-- MOTOR + ENCODER (updated label, encoder pins)                 -->

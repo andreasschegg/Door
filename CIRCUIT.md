@@ -62,12 +62,12 @@ ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen un
     │                 ZD 3.3V                      ││
     │                   GND                        ││
     │                                              ││
-    │  Encoder (mit Level-Shifter + Filter)        ││
+    │  Encoder (mit Serienwiderstand + Filter)       ││
     │  ────────────────────────────────────────     ││
-    │  GPIO 16 ◄── 1kΩ ──┬── [3.3V/5V LS] ◄── Ch.A││
+    │  GPIO 16 ◄── 1kΩ ──┬──────────────── Ch.A   ││
     │                   100nF                      ││
     │                    GND                       ││
-    │  GPIO 17 ◄── 1kΩ ──┬── [3.3V/5V LS] ◄── Ch.B││
+    │  GPIO 17 ◄── 1kΩ ──┬──────────────── Ch.B   ││
     │                   100nF                      ││
     │                    GND                       ││
     │                                              ││
@@ -115,7 +115,6 @@ ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen un
 | Elko | 1 | 100µF / 10V | Radial | 5V-Puffer |
 | Keramikkondensator | 7 | 100nF | 0805 / THT | Entkopplung (12V, 5V, ESP32, 2× Endschalter, 2× Encoder) |
 | Mikroschalter | 2 | – | – | Endlagen-Erkennung |
-| Level-Shifter | 1 | 3.3V/5V | BSS138 Modul, 2-Kanal | Encoder-Signalpegelanpassung |
 
 ---
 
@@ -150,13 +149,13 @@ Der `CURRENT_THRESHOLD` in `Config.h` ist auf `500` gesetzt. Bei der FIT0185 (7A
 V_IS = 5.1A / 8.5 = 0.6V → nach Teiler 0.4V → ADC ≈ 497
 ```
 
-### Encoder Level-Shifter (5V → 3.3V)
+### Encoder-Schutz (1kΩ + 100nF)
 
-**Problem:** Der DFRobot FIT0185 Encoder gibt 5V-Signale aus. Die ESP32-GPIO-Eingänge sind für max. 3.3V spezifiziert. Obwohl viele Community-Berichte bestätigen, dass ESP32-Pins 5V auf Eingängen tolerieren, ist dies nicht offiziell garantiert und kann langfristig zu Schäden führen.
+**Problem:** Der DFRobot FIT0185 Encoder gibt 5V-Signale aus. Die ESP32-GPIO-Eingänge sind offiziell für max. 3.3V spezifiziert, tolerieren aber de facto 5V auf Eingängen über die internen Schutzdioden.
 
-**Lösung:** Ein BSS138-basierter bidirektionaler Level-Shifter (3.3V/5V, 2-Kanal) wandelt die Signale sauber um. Diese Module kosten wenige Rappen und sind als fertige Breakout-Boards erhältlich.
+**Lösung:** Der 1kΩ Serienwiderstand begrenzt den Strom in die interne Clamp-Diode auf ~1.7mA — weit unter dem kritischen Bereich. Bei der Einsatzhäufigkeit dieses Projekts (30-40 Zyklen pro Abend) ist Langzeit-Degradation kein Thema. Ein Level-Shifter wäre erst bei 24/7-Dauerbetrieb empfehlenswert.
 
-**Zusätzlich:** 1kΩ Serienwiderstand + 100nF Kondensator als RC-Tiefpass (gleiche Topologie wie bei den Endschaltern) filtert Glitches und EMV-Störungen vom Motorkabel.
+**Zusätzlich:** Der 100nF Kondensator bildet zusammen mit dem 1kΩ Widerstand einen RC-Tiefpass, der EMV-Störungen vom Motorkabel und Encoder-Glitches filtert.
 
 ### Stützkondensatoren (Elkos + Keramik)
 
