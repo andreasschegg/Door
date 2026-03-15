@@ -350,10 +350,11 @@
   <text x="1840" y="1380" text-anchor="middle" font-size="13" fill="#6c757d">12V / 83RPM / 45kg·cm</text>
   <text x="1840" y="1398" text-anchor="middle" font-size="13" fill="#9c27b0">Encoder 2096 CPR</text>
 
-  <!-- 5V to encoder: junction from 5V rail, down to motor -->
+  <!-- 5V to encoder VCC: junction from 5V rail, down to motor encoder -->
   <circle cx="950" cy="273" r="4" fill="#fd7e14"/>
-  <line x1="950" y1="273" x2="950" y2="1000" stroke="#fd7e14" stroke-width="2"/>
-  <text x="958" y="990" font-size="12" fill="#fd7e14">→ LS + Enc 5V</text>
+  <line x1="950" y1="273" x2="950" y2="1310" stroke="#fd7e14" stroke-width="2"/>
+  <line x1="950" y1="1310" x2="1780" y2="1310" stroke="#fd7e14" stroke-width="2"/>
+  <text x="958" y="1300" font-size="14" fill="#fd7e14" font-weight="bold">→ Encoder 5V</text>
 
   <!-- ============================================================ -->
   <!-- ENDSTOPS (shifted down)                                       -->
