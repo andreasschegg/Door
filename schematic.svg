@@ -1,37 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2100 1500" width="420mm" height="297mm" font-family="Segoe UI, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2100 1650" width="420mm" height="330mm" font-family="Segoe UI, Arial, sans-serif">
   <style>@media print { svg { width: 100%; height: auto; page-break-inside: avoid; } }</style>
 
-  <rect width="2100" height="1500" fill="#f8f9fa"/>
-  <rect x="15" y="15" width="2070" height="1470" fill="none" stroke="#ced4da" stroke-width="2.5" rx="6"/>
+  <rect width="2100" height="1650" fill="#f8f9fa"/>
+  <rect x="15" y="15" width="2070" height="1620" fill="none" stroke="#ced4da" stroke-width="2.5" rx="6"/>
 
   <!-- TITLE -->
   <text x="1050" y="58" text-anchor="middle" font-size="36" font-weight="bold" fill="#212529">Door Controller — Schaltplan</text>
-  <text x="1050" y="88" text-anchor="middle" font-size="20" fill="#6c757d">ESP32 + BTS7960 H-Bridge + Waveshare Motor L-Shaped 240 RPM</text>
+  <text x="1050" y="88" text-anchor="middle" font-size="20" fill="#6c757d">ESP32 + BTS7960 H-Bridge + DFRobot FIT0185 (Encoder)</text>
   <line x1="50" y1="105" x2="2050" y2="105" stroke="#dee2e6" stroke-width="1.5"/>
 
   <!-- ============================================================ -->
   <!-- POWER SECTION                                                 -->
   <!-- ============================================================ -->
 
-  <!-- 12V PSU -->
   <rect x="70" y="130" width="200" height="70" rx="10" fill="#fff" stroke="#dc3545" stroke-width="2.5"/>
   <text x="170" y="165" text-anchor="middle" font-size="20" font-weight="bold" fill="#dc3545">12V Netzteil</text>
-  <text x="170" y="190" text-anchor="middle" font-size="15" fill="#6c757d">min. 3A</text>
+  <text x="170" y="190" text-anchor="middle" font-size="15" fill="#6c757d">min. 5A</text>
 
-  <!-- 12V Rail -->
   <line x1="270" y1="165" x2="1580" y2="165" stroke="#dc3545" stroke-width="3"/>
   <text x="500" y="155" font-size="16" fill="#dc3545" font-weight="bold">12V Rail</text>
 
-  <!-- Junction to Buck -->
   <circle cx="400" cy="165" r="5" fill="#dc3545"/>
   <line x1="400" y1="165" x2="400" y2="245" stroke="#dc3545" stroke-width="2.5"/>
 
-  <!-- Buck Converter -->
   <rect x="300" y="245" width="200" height="55" rx="8" fill="#fff" stroke="#fd7e14" stroke-width="2.5"/>
   <text x="400" y="272" text-anchor="middle" font-size="20" font-weight="bold" fill="#fd7e14">Buck Converter</text>
   <text x="400" y="293" text-anchor="middle" font-size="14" fill="#6c757d">12V → 5V</text>
 
-  <!-- 5V Rail (ends at x=1540 to avoid crossing the 12V vertical line at x=1580) -->
   <line x1="500" y1="273" x2="1540" y2="273" stroke="#fd7e14" stroke-width="3"/>
   <text x="580" y="263" font-size="16" fill="#fd7e14" font-weight="bold">5V Rail</text>
 
@@ -81,15 +76,12 @@
     <line x1="-2" y1="46" x2="2" y2="46" stroke="#6c757d" stroke-width="1.5"/>
   </g>
 
-  <!-- Decoupling annotation -->
   <rect x="660" y="322" width="280" height="24" rx="5" fill="#fff3e0" stroke="#fd7e14" stroke-width="1.2"/>
   <text x="800" y="340" text-anchor="middle" font-size="14" fill="#e65100">Stützkondensatoren (Brownout-Schutz)</text>
 
-  <!-- 5V to ESP32 VIN: vertical from 5V rail at x=510 down to VIN pin -->
+  <!-- 5V to ESP32 VIN -->
   <circle cx="510" cy="273" r="5" fill="#fd7e14"/>
   <line x1="510" y1="273" x2="510" y2="430" stroke="#fd7e14" stroke-width="2.5"/>
-
-  <!-- 100nF at ESP32 VIN -->
   <circle cx="510" cy="355" r="4" fill="#fd7e14"/>
   <line x1="510" y1="355" x2="570" y2="355" stroke="#fd7e14" stroke-width="2"/>
   <g transform="translate(570, 355)">
@@ -103,23 +95,19 @@
     <line x1="-2" y1="46" x2="2" y2="46" stroke="#6c757d" stroke-width="1.5"/>
   </g>
 
-  <!-- 12V to BTS7960 B+: vertical down from 12V rail -->
+  <!-- 12V + 5V to BTS7960 -->
   <circle cx="1580" cy="165" r="5" fill="#dc3545"/>
   <line x1="1580" y1="165" x2="1580" y2="380" stroke="#dc3545" stroke-width="2.5"/>
   <text x="1588" y="210" font-size="14" fill="#dc3545" font-weight="bold">→ B+</text>
-
-  <!-- 5V to BTS7960 VCC: vertical down from 5V rail -->
   <circle cx="1540" cy="273" r="5" fill="#fd7e14"/>
   <line x1="1540" y1="273" x2="1540" y2="380" stroke="#fd7e14" stroke-width="2.5"/>
   <text x="1548" y="330" font-size="14" fill="#fd7e14" font-weight="bold">→ VCC</text>
 
   <!-- ============================================================ -->
-  <!-- ESP32 BLOCK                                                   -->
-  <!--   Box: x=80..430, y=380..1170                                -->
-  <!--   Pin stubs extend right to x=510                             -->
+  <!-- ESP32 BLOCK  (y=380..1310, height=930)                        -->
   <!-- ============================================================ -->
 
-  <rect x="80" y="380" width="350" height="790" rx="12" fill="#fff" stroke="#0d6efd" stroke-width="3"/>
+  <rect x="80" y="380" width="350" height="930" rx="12" fill="#fff" stroke="#0d6efd" stroke-width="3"/>
   <rect x="80" y="380" width="350" height="40" rx="12" fill="#0d6efd"/>
   <rect x="80" y="406" width="350" height="14" fill="#0d6efd"/>
   <text x="255" y="410" text-anchor="middle" font-size="24" font-weight="bold" fill="#fff">ESP32 DevKit</text>
@@ -129,63 +117,52 @@
   <text x="100" y="437" font-size="15" fill="#6c757d">5V Power</text>
   <line x1="430" y1="430" x2="510" y2="430" stroke="#fd7e14" stroke-width="2"/>
 
-  <!-- Motor Control section -->
+  <!-- Motor Control -->
   <line x1="95" y1="460" x2="415" y2="460" stroke="#e9ecef" stroke-width="1.5"/>
   <text x="100" y="488" font-size="15" fill="#6c757d" font-style="italic">Motor Control</text>
-
   <text x="410" y="537" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 25</text>
-  <line x1="430" y1="530" x2="510" y2="530" stroke="#198754" stroke-width="2"/>
-  <circle cx="510" cy="530" r="4.5" fill="#198754"/>
-
+  <line x1="430" y1="530" x2="510" y2="530" stroke="#198754" stroke-width="2"/><circle cx="510" cy="530" r="4.5" fill="#198754"/>
   <text x="410" y="607" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 26</text>
-  <line x1="430" y1="600" x2="510" y2="600" stroke="#198754" stroke-width="2"/>
-  <circle cx="510" cy="600" r="4.5" fill="#198754"/>
-
+  <line x1="430" y1="600" x2="510" y2="600" stroke="#198754" stroke-width="2"/><circle cx="510" cy="600" r="4.5" fill="#198754"/>
   <text x="410" y="677" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 27</text>
-  <line x1="430" y1="670" x2="510" y2="670" stroke="#198754" stroke-width="2"/>
-  <circle cx="510" cy="670" r="4.5" fill="#198754"/>
-
+  <line x1="430" y1="670" x2="510" y2="670" stroke="#198754" stroke-width="2"/><circle cx="510" cy="670" r="4.5" fill="#198754"/>
   <text x="410" y="747" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 14</text>
-  <line x1="430" y1="740" x2="510" y2="740" stroke="#198754" stroke-width="2"/>
-  <circle cx="510" cy="740" r="4.5" fill="#198754"/>
+  <line x1="430" y1="740" x2="510" y2="740" stroke="#198754" stroke-width="2"/><circle cx="510" cy="740" r="4.5" fill="#198754"/>
 
-  <!-- Current Sense section -->
+  <!-- Current Sense -->
   <line x1="95" y1="775" x2="415" y2="775" stroke="#e9ecef" stroke-width="1.5"/>
   <text x="100" y="803" font-size="15" fill="#6c757d" font-style="italic">Current Sense (ADC)</text>
-
   <text x="410" y="837" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 34</text>
-  <line x1="430" y1="830" x2="510" y2="830" stroke="#0d6efd" stroke-width="2"/>
-  <circle cx="510" cy="830" r="4.5" fill="#0d6efd"/>
-
+  <line x1="430" y1="830" x2="510" y2="830" stroke="#0d6efd" stroke-width="2"/><circle cx="510" cy="830" r="4.5" fill="#0d6efd"/>
   <text x="410" y="937" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 35</text>
-  <line x1="430" y1="930" x2="510" y2="930" stroke="#0d6efd" stroke-width="2"/>
-  <circle cx="510" cy="930" r="4.5" fill="#0d6efd"/>
+  <line x1="430" y1="930" x2="510" y2="930" stroke="#0d6efd" stroke-width="2"/><circle cx="510" cy="930" r="4.5" fill="#0d6efd"/>
 
-  <!-- Endstops section -->
+  <!-- Encoder (NEW) -->
   <line x1="95" y1="965" x2="415" y2="965" stroke="#e9ecef" stroke-width="1.5"/>
-  <text x="100" y="993" font-size="15" fill="#6c757d" font-style="italic">Endstops</text>
+  <text x="100" y="993" font-size="15" fill="#6c757d" font-style="italic">Encoder</text>
+  <text x="410" y="1027" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 16</text>
+  <line x1="430" y1="1020" x2="510" y2="1020" stroke="#9c27b0" stroke-width="2"/><circle cx="510" cy="1020" r="4.5" fill="#9c27b0"/>
+  <text x="410" y="1087" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 17</text>
+  <line x1="430" y1="1080" x2="510" y2="1080" stroke="#9c27b0" stroke-width="2"/><circle cx="510" cy="1080" r="4.5" fill="#9c27b0"/>
 
-  <text x="410" y="1027" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 32</text>
-  <line x1="430" y1="1020" x2="510" y2="1020" stroke="#6c757d" stroke-width="2"/>
-  <circle cx="510" cy="1020" r="4.5" fill="#6c757d"/>
+  <!-- Endstops (shifted down) -->
+  <line x1="95" y1="1115" x2="415" y2="1115" stroke="#e9ecef" stroke-width="1.5"/>
+  <text x="100" y="1143" font-size="15" fill="#6c757d" font-style="italic">Endstops</text>
+  <text x="410" y="1177" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 32</text>
+  <line x1="430" y1="1170" x2="510" y2="1170" stroke="#6c757d" stroke-width="2"/><circle cx="510" cy="1170" r="4.5" fill="#6c757d"/>
+  <text x="410" y="1237" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 33</text>
+  <line x1="430" y1="1230" x2="510" y2="1230" stroke="#6c757d" stroke-width="2"/><circle cx="510" cy="1230" r="4.5" fill="#6c757d"/>
 
-  <text x="410" y="1097" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 33</text>
-  <line x1="430" y1="1090" x2="510" y2="1090" stroke="#6c757d" stroke-width="2"/>
-  <circle cx="510" cy="1090" r="4.5" fill="#6c757d"/>
-
-  <text x="410" y="1147" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GND</text>
-  <line x1="430" y1="1140" x2="510" y2="1140" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="510" y1="1140" x2="560" y2="1140" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="560" y1="1140" x2="560" y2="1162" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="548" y1="1162" x2="572" y2="1162" stroke="#6c757d" stroke-width="3"/>
-  <line x1="552" y1="1168" x2="568" y2="1168" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="556" y1="1174" x2="564" y2="1174" stroke="#6c757d" stroke-width="2"/>
+  <!-- GND -->
+  <text x="410" y="1287" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GND</text>
+  <line x1="430" y1="1280" x2="560" y2="1280" stroke="#6c757d" stroke-width="2.5"/>
+  <line x1="560" y1="1280" x2="560" y2="1302" stroke="#6c757d" stroke-width="2.5"/>
+  <line x1="548" y1="1302" x2="572" y2="1302" stroke="#6c757d" stroke-width="3"/>
+  <line x1="552" y1="1308" x2="568" y2="1308" stroke="#6c757d" stroke-width="2.5"/>
+  <line x1="556" y1="1314" x2="564" y2="1314" stroke="#6c757d" stroke-width="2"/>
 
   <!-- ============================================================ -->
-  <!-- BTS7960 BLOCK                                                 -->
-  <!--   Box: x=1500..1870, y=380..1140                              -->
-  <!--   Pin stubs extend left to x=1430                             -->
-  <!--   Pins ALIGNED with ESP32 for straight horizontal wires       -->
+  <!-- BTS7960 BLOCK (unchanged y=380..1140)                         -->
   <!-- ============================================================ -->
 
   <rect x="1500" y="380" width="370" height="760" rx="12" fill="#fff" stroke="#dc3545" stroke-width="3"/>
@@ -193,346 +170,291 @@
   <rect x="1500" y="406" width="370" height="14" fill="#dc3545"/>
   <text x="1685" y="410" text-anchor="middle" font-size="24" font-weight="bold" fill="#fff">BTS7960 H-Bridge</text>
 
-  <!-- Power pins -->
   <text x="1520" y="450" font-size="18" fill="#212529" font-weight="bold">VCC</text>
   <text x="1760" y="450" font-size="15" fill="#fd7e14">← 5V</text>
   <text x="1520" y="490" font-size="18" fill="#212529" font-weight="bold">B+</text>
   <text x="1760" y="490" font-size="15" fill="#dc3545">← 12V</text>
-
   <line x1="1515" y1="510" x2="1855" y2="510" stroke="#e9ecef" stroke-width="1.5"/>
 
-  <!-- Motor control pins — ALIGNED y with ESP32 -->
   <text x="1520" y="537" font-size="18" fill="#212529" font-weight="bold">RPWM</text>
-  <line x1="1430" y1="530" x2="1500" y2="530" stroke="#198754" stroke-width="2"/>
-  <circle cx="1430" cy="530" r="4.5" fill="#198754"/>
-
+  <line x1="1430" y1="530" x2="1500" y2="530" stroke="#198754" stroke-width="2"/><circle cx="1430" cy="530" r="4.5" fill="#198754"/>
   <text x="1520" y="607" font-size="18" fill="#212529" font-weight="bold">LPWM</text>
-  <line x1="1430" y1="600" x2="1500" y2="600" stroke="#198754" stroke-width="2"/>
-  <circle cx="1430" cy="600" r="4.5" fill="#198754"/>
-
+  <line x1="1430" y1="600" x2="1500" y2="600" stroke="#198754" stroke-width="2"/><circle cx="1430" cy="600" r="4.5" fill="#198754"/>
   <text x="1520" y="677" font-size="18" fill="#212529" font-weight="bold">R_EN</text>
-  <line x1="1430" y1="670" x2="1500" y2="670" stroke="#198754" stroke-width="2"/>
-  <circle cx="1430" cy="670" r="4.5" fill="#198754"/>
-
+  <line x1="1430" y1="670" x2="1500" y2="670" stroke="#198754" stroke-width="2"/><circle cx="1430" cy="670" r="4.5" fill="#198754"/>
   <text x="1520" y="747" font-size="18" fill="#212529" font-weight="bold">L_EN</text>
-  <line x1="1430" y1="740" x2="1500" y2="740" stroke="#198754" stroke-width="2"/>
-  <circle cx="1430" cy="740" r="4.5" fill="#198754"/>
-
+  <line x1="1430" y1="740" x2="1500" y2="740" stroke="#198754" stroke-width="2"/><circle cx="1430" cy="740" r="4.5" fill="#198754"/>
   <line x1="1515" y1="770" x2="1855" y2="770" stroke="#e9ecef" stroke-width="1.5"/>
 
-  <!-- Current sense pins — ALIGNED y with ESP32 -->
   <text x="1520" y="837" font-size="18" fill="#212529" font-weight="bold">R_IS</text>
-  <line x1="1430" y1="830" x2="1500" y2="830" stroke="#0d6efd" stroke-width="2"/>
-  <circle cx="1430" cy="830" r="4.5" fill="#0d6efd"/>
-
+  <line x1="1430" y1="830" x2="1500" y2="830" stroke="#0d6efd" stroke-width="2"/><circle cx="1430" cy="830" r="4.5" fill="#0d6efd"/>
   <text x="1520" y="937" font-size="18" fill="#212529" font-weight="bold">L_IS</text>
-  <line x1="1430" y1="930" x2="1500" y2="930" stroke="#0d6efd" stroke-width="2"/>
-  <circle cx="1430" cy="930" r="4.5" fill="#0d6efd"/>
-
+  <line x1="1430" y1="930" x2="1500" y2="930" stroke="#0d6efd" stroke-width="2"/><circle cx="1430" cy="930" r="4.5" fill="#0d6efd"/>
   <line x1="1515" y1="960" x2="1855" y2="960" stroke="#e9ecef" stroke-width="1.5"/>
 
-  <!-- Motor output pins -->
   <text x="1520" y="997" font-size="18" fill="#212529" font-weight="bold">M+</text>
   <text x="1520" y="1057" font-size="18" fill="#212529" font-weight="bold">M-</text>
-
   <text x="1520" y="1117" font-size="18" fill="#212529" font-weight="bold">B- / GND</text>
 
-  <!-- BTS7960 GND symbol -->
   <line x1="1685" y1="1140" x2="1685" y2="1162" stroke="#6c757d" stroke-width="2.5"/>
   <line x1="1673" y1="1162" x2="1697" y2="1162" stroke="#6c757d" stroke-width="3"/>
   <line x1="1677" y1="1168" x2="1693" y2="1168" stroke="#6c757d" stroke-width="2.5"/>
   <line x1="1681" y1="1174" x2="1689" y2="1174" stroke="#6c757d" stroke-width="2"/>
 
-  <!-- Power into BTS7960 top -->
   <line x1="1540" y1="380" x2="1540" y2="443" stroke="#fd7e14" stroke-width="2.5"/>
   <line x1="1580" y1="380" x2="1580" y2="483" stroke="#dc3545" stroke-width="2.5"/>
 
   <!-- ============================================================ -->
-  <!-- MOTOR CONTROL: 4× straight horizontal wires + pull-downs      -->
-  <!-- All wires perfectly horizontal (same y on both sides)         -->
+  <!-- MOTOR CONTROL WIRES + PULL-DOWNS (unchanged y=530..740)       -->
   <!-- ============================================================ -->
 
-  <!-- GPIO 25 → RPWM  (y=530, pull-down at x=640) -->
   <line x1="510" y1="530" x2="1430" y2="530" stroke="#198754" stroke-width="2.5"/>
   <circle cx="640" cy="530" r="4" fill="#198754"/>
-  <g transform="translate(640, 530)">
-    <line x1="0" y1="0" x2="0" y2="10" stroke="#198754" stroke-width="1.5"/>
-    <rect x="-8" y="10" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
-    <text x="14" y="30" font-size="14" fill="#495057">10kΩ</text>
-    <line x1="0" y1="42" x2="0" y2="52" stroke="#6c757d" stroke-width="1.5"/>
-    <line x1="-7" y1="52" x2="7" y2="52" stroke="#6c757d" stroke-width="2.5"/>
-    <line x1="-4" y1="57" x2="4" y2="57" stroke="#6c757d" stroke-width="2"/>
-    <line x1="-2" y1="62" x2="2" y2="62" stroke="#6c757d" stroke-width="1.5"/>
-  </g>
+  <g transform="translate(640, 530)"><line x1="0" y1="0" x2="0" y2="10" stroke="#198754" stroke-width="1.5"/><rect x="-8" y="10" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="14" y="30" font-size="14" fill="#495057">10kΩ</text><line x1="0" y1="42" x2="0" y2="52" stroke="#6c757d" stroke-width="1.5"/><line x1="-7" y1="52" x2="7" y2="52" stroke="#6c757d" stroke-width="2.5"/><line x1="-4" y1="57" x2="4" y2="57" stroke="#6c757d" stroke-width="2"/><line x1="-2" y1="62" x2="2" y2="62" stroke="#6c757d" stroke-width="1.5"/></g>
   <text x="970" y="522" font-size="15" fill="#198754" font-weight="bold" text-anchor="middle">RPWM</text>
 
-  <!-- GPIO 26 → LPWM  (y=600, pull-down at x=760) -->
   <line x1="510" y1="600" x2="1430" y2="600" stroke="#198754" stroke-width="2.5"/>
   <circle cx="760" cy="600" r="4" fill="#198754"/>
-  <g transform="translate(760, 600)">
-    <line x1="0" y1="0" x2="0" y2="10" stroke="#198754" stroke-width="1.5"/>
-    <rect x="-8" y="10" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
-    <text x="14" y="30" font-size="14" fill="#495057">10kΩ</text>
-    <line x1="0" y1="42" x2="0" y2="52" stroke="#6c757d" stroke-width="1.5"/>
-    <line x1="-7" y1="52" x2="7" y2="52" stroke="#6c757d" stroke-width="2.5"/>
-    <line x1="-4" y1="57" x2="4" y2="57" stroke="#6c757d" stroke-width="2"/>
-    <line x1="-2" y1="62" x2="2" y2="62" stroke="#6c757d" stroke-width="1.5"/>
-  </g>
+  <g transform="translate(760, 600)"><line x1="0" y1="0" x2="0" y2="10" stroke="#198754" stroke-width="1.5"/><rect x="-8" y="10" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="14" y="30" font-size="14" fill="#495057">10kΩ</text><line x1="0" y1="42" x2="0" y2="52" stroke="#6c757d" stroke-width="1.5"/><line x1="-7" y1="52" x2="7" y2="52" stroke="#6c757d" stroke-width="2.5"/><line x1="-4" y1="57" x2="4" y2="57" stroke="#6c757d" stroke-width="2"/><line x1="-2" y1="62" x2="2" y2="62" stroke="#6c757d" stroke-width="1.5"/></g>
   <text x="970" y="592" font-size="15" fill="#198754" font-weight="bold" text-anchor="middle">LPWM</text>
 
-  <!-- GPIO 27 → R_EN  (y=670, pull-down at x=880) -->
   <line x1="510" y1="670" x2="1430" y2="670" stroke="#198754" stroke-width="2.5"/>
   <circle cx="880" cy="670" r="4" fill="#198754"/>
-  <g transform="translate(880, 670)">
-    <line x1="0" y1="0" x2="0" y2="10" stroke="#198754" stroke-width="1.5"/>
-    <rect x="-8" y="10" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
-    <text x="14" y="30" font-size="14" fill="#495057">10kΩ</text>
-    <line x1="0" y1="42" x2="0" y2="52" stroke="#6c757d" stroke-width="1.5"/>
-    <line x1="-7" y1="52" x2="7" y2="52" stroke="#6c757d" stroke-width="2.5"/>
-    <line x1="-4" y1="57" x2="4" y2="57" stroke="#6c757d" stroke-width="2"/>
-    <line x1="-2" y1="62" x2="2" y2="62" stroke="#6c757d" stroke-width="1.5"/>
-  </g>
+  <g transform="translate(880, 670)"><line x1="0" y1="0" x2="0" y2="10" stroke="#198754" stroke-width="1.5"/><rect x="-8" y="10" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="14" y="30" font-size="14" fill="#495057">10kΩ</text><line x1="0" y1="42" x2="0" y2="52" stroke="#6c757d" stroke-width="1.5"/><line x1="-7" y1="52" x2="7" y2="52" stroke="#6c757d" stroke-width="2.5"/><line x1="-4" y1="57" x2="4" y2="57" stroke="#6c757d" stroke-width="2"/><line x1="-2" y1="62" x2="2" y2="62" stroke="#6c757d" stroke-width="1.5"/></g>
   <text x="970" y="662" font-size="15" fill="#198754" font-weight="bold" text-anchor="middle">R_EN</text>
 
-  <!-- GPIO 14 → L_EN  (y=740, pull-down at x=1000) -->
   <line x1="510" y1="740" x2="1430" y2="740" stroke="#198754" stroke-width="2.5"/>
   <circle cx="1000" cy="740" r="4" fill="#198754"/>
-  <g transform="translate(1000, 740)">
-    <line x1="0" y1="0" x2="0" y2="10" stroke="#198754" stroke-width="1.5"/>
-    <rect x="-8" y="10" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
-    <text x="14" y="30" font-size="14" fill="#495057">10kΩ</text>
-    <line x1="0" y1="42" x2="0" y2="52" stroke="#6c757d" stroke-width="1.5"/>
-    <line x1="-7" y1="52" x2="7" y2="52" stroke="#6c757d" stroke-width="2.5"/>
-    <line x1="-4" y1="57" x2="4" y2="57" stroke="#6c757d" stroke-width="2"/>
-    <line x1="-2" y1="62" x2="2" y2="62" stroke="#6c757d" stroke-width="1.5"/>
-  </g>
+  <g transform="translate(1000, 740)"><line x1="0" y1="0" x2="0" y2="10" stroke="#198754" stroke-width="1.5"/><rect x="-8" y="10" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/><text x="14" y="30" font-size="14" fill="#495057">10kΩ</text><line x1="0" y1="42" x2="0" y2="52" stroke="#6c757d" stroke-width="1.5"/><line x1="-7" y1="52" x2="7" y2="52" stroke="#6c757d" stroke-width="2.5"/><line x1="-4" y1="57" x2="4" y2="57" stroke="#6c757d" stroke-width="2"/><line x1="-2" y1="62" x2="2" y2="62" stroke="#6c757d" stroke-width="1.5"/></g>
   <text x="970" y="732" font-size="15" fill="#198754" font-weight="bold" text-anchor="middle">L_EN</text>
 
-  <!-- Pull-down annotation (placed between L_EN and Current Sense section) -->
   <rect x="600" y="778" width="310" height="26" rx="6" fill="#e8f5e9" stroke="#198754" stroke-width="1.5"/>
   <text x="755" y="796" text-anchor="middle" font-size="14" fill="#2e7d32" font-weight="bold">4× 10kΩ Pull-Down (Boot-Schutz)</text>
 
   <!-- ============================================================ -->
-  <!-- CURRENT SENSE: straight horizontal + voltage dividers         -->
-  <!-- Dividers at staggered x to avoid vertical overlap             -->
+  <!-- CURRENT SENSE WIRES + VOLTAGE DIVIDERS (unchanged y=830,930)  -->
   <!-- ============================================================ -->
 
-  <!-- R_IS (y=830): straight wire, divider at x=1240 -->
   <line x1="510" y1="830" x2="1430" y2="830" stroke="#0d6efd" stroke-width="2.5"/>
   <text x="830" y="822" font-size="15" fill="#0d6efd" font-weight="bold" text-anchor="middle">R_IS (Current Sense)</text>
-
-  <!-- 10kΩ inline resistor -->
   <rect x="1300" y="820" width="55" height="16" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
   <text x="1327" y="815" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">10kΩ</text>
-
-  <!-- Junction at x=1260 -->
   <circle cx="1260" cy="830" r="4.5" fill="#0d6efd"/>
-
-  <!-- 20kΩ to GND from junction -->
   <line x1="1260" y1="830" x2="1260" y2="847" stroke="#0d6efd" stroke-width="1.5"/>
   <rect x="1252" y="847" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
   <text x="1275" y="868" font-size="14" fill="#495057" font-weight="bold">20kΩ</text>
   <line x1="1260" y1="879" x2="1260" y2="892" stroke="#6c757d" stroke-width="1.5"/>
-  <line x1="1252" y1="892" x2="1268" y2="892" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="1255" y1="897" x2="1265" y2="897" stroke="#6c757d" stroke-width="2"/>
-  <line x1="1257" y1="902" x2="1263" y2="902" stroke="#6c757d" stroke-width="1.5"/>
-
-  <!-- Zener 3.3V parallel, at x=1190 -->
+  <line x1="1252" y1="892" x2="1268" y2="892" stroke="#6c757d" stroke-width="2.5"/><line x1="1255" y1="897" x2="1265" y2="897" stroke="#6c757d" stroke-width="2"/><line x1="1257" y1="902" x2="1263" y2="902" stroke="#6c757d" stroke-width="1.5"/>
   <line x1="1260" y1="830" x2="1190" y2="830" stroke="#0d6efd" stroke-width="1.5"/>
   <line x1="1190" y1="830" x2="1190" y2="850" stroke="#0d6efd" stroke-width="1.5"/>
   <polygon points="1178,864 1190,850 1202,864" fill="none" stroke="#212529" stroke-width="1.8"/>
-  <line x1="1174" y1="864" x2="1206" y2="864" stroke="#212529" stroke-width="1.8"/>
-  <line x1="1174" y1="864" x2="1174" y2="859" stroke="#212529" stroke-width="1.8"/>
-  <line x1="1206" y1="864" x2="1206" y2="869" stroke="#212529" stroke-width="1.8"/>
+  <line x1="1174" y1="864" x2="1206" y2="864" stroke="#212529" stroke-width="1.8"/><line x1="1174" y1="864" x2="1174" y2="859" stroke="#212529" stroke-width="1.8"/><line x1="1206" y1="864" x2="1206" y2="869" stroke="#212529" stroke-width="1.8"/>
   <text x="1160" y="862" font-size="14" fill="#495057" text-anchor="end" font-weight="bold">ZD 3.3V</text>
   <line x1="1190" y1="864" x2="1190" y2="892" stroke="#6c757d" stroke-width="1.5"/>
-  <line x1="1182" y1="892" x2="1198" y2="892" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="1185" y1="897" x2="1195" y2="897" stroke="#6c757d" stroke-width="2"/>
-  <line x1="1187" y1="902" x2="1193" y2="902" stroke="#6c757d" stroke-width="1.5"/>
+  <line x1="1182" y1="892" x2="1198" y2="892" stroke="#6c757d" stroke-width="2.5"/><line x1="1185" y1="897" x2="1195" y2="897" stroke="#6c757d" stroke-width="2"/><line x1="1187" y1="902" x2="1193" y2="902" stroke="#6c757d" stroke-width="1.5"/>
 
-  <!-- L_IS (y=930): straight wire, divider at x=1100 -->
   <line x1="510" y1="930" x2="1430" y2="930" stroke="#0d6efd" stroke-width="2.5"/>
   <text x="830" y="922" font-size="15" fill="#0d6efd" font-weight="bold" text-anchor="middle">L_IS (Current Sense)</text>
-
-  <!-- 10kΩ inline resistor -->
   <rect x="1300" y="920" width="55" height="16" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
   <text x="1327" y="915" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">10kΩ</text>
-
-  <!-- Junction at x=1100 (offset from R_IS to avoid overlap) -->
   <circle cx="1100" cy="930" r="4.5" fill="#0d6efd"/>
-
-  <!-- 20kΩ to GND -->
   <line x1="1100" y1="930" x2="1100" y2="947" stroke="#0d6efd" stroke-width="1.5"/>
   <rect x="1092" y="947" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
   <text x="1115" y="968" font-size="14" fill="#495057" font-weight="bold">20kΩ</text>
   <line x1="1100" y1="979" x2="1100" y2="992" stroke="#6c757d" stroke-width="1.5"/>
-  <line x1="1092" y1="992" x2="1108" y2="992" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="1095" y1="997" x2="1105" y2="997" stroke="#6c757d" stroke-width="2"/>
-  <line x1="1097" y1="1002" x2="1103" y2="1002" stroke="#6c757d" stroke-width="1.5"/>
-
-  <!-- Zener 3.3V at x=1030 -->
+  <line x1="1092" y1="992" x2="1108" y2="992" stroke="#6c757d" stroke-width="2.5"/><line x1="1095" y1="997" x2="1105" y2="997" stroke="#6c757d" stroke-width="2"/><line x1="1097" y1="1002" x2="1103" y2="1002" stroke="#6c757d" stroke-width="1.5"/>
   <line x1="1100" y1="930" x2="1030" y2="930" stroke="#0d6efd" stroke-width="1.5"/>
   <line x1="1030" y1="930" x2="1030" y2="950" stroke="#0d6efd" stroke-width="1.5"/>
   <polygon points="1018,964 1030,950 1042,964" fill="none" stroke="#212529" stroke-width="1.8"/>
-  <line x1="1014" y1="964" x2="1046" y2="964" stroke="#212529" stroke-width="1.8"/>
-  <line x1="1014" y1="964" x2="1014" y2="959" stroke="#212529" stroke-width="1.8"/>
-  <line x1="1046" y1="964" x2="1046" y2="969" stroke="#212529" stroke-width="1.8"/>
+  <line x1="1014" y1="964" x2="1046" y2="964" stroke="#212529" stroke-width="1.8"/><line x1="1014" y1="964" x2="1014" y2="959" stroke="#212529" stroke-width="1.8"/><line x1="1046" y1="964" x2="1046" y2="969" stroke="#212529" stroke-width="1.8"/>
   <text x="1000" y="962" font-size="14" fill="#495057" text-anchor="end" font-weight="bold">ZD 3.3V</text>
   <line x1="1030" y1="964" x2="1030" y2="992" stroke="#6c757d" stroke-width="1.5"/>
-  <line x1="1022" y1="992" x2="1038" y2="992" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="1025" y1="997" x2="1035" y2="997" stroke="#6c757d" stroke-width="2"/>
-  <line x1="1027" y1="1002" x2="1033" y2="1002" stroke="#6c757d" stroke-width="1.5"/>
-
-  <!-- Voltage divider annotation -->
-  <rect x="1060" y="1010" width="340" height="35" rx="6" fill="#e3f2fd" stroke="#0d6efd" stroke-width="1.5"/>
-  <text x="1230" y="1032" text-anchor="middle" font-size="14" fill="#1565c0" font-weight="bold">Spannungsteiler 10k/20k + ZD 3.3V (ADC-Schutz)</text>
+  <line x1="1022" y1="992" x2="1038" y2="992" stroke="#6c757d" stroke-width="2.5"/><line x1="1025" y1="997" x2="1035" y2="997" stroke="#6c757d" stroke-width="2"/><line x1="1027" y1="1002" x2="1033" y2="1002" stroke="#6c757d" stroke-width="1.5"/>
 
   <!-- ============================================================ -->
-  <!-- MOTOR (right side, below BTS7960)                             -->
-  <!-- Manhattan routing from M+/M- to motor                        -->
+  <!-- ENCODER WIRES + LEVEL SHIFTER (NEW)                           -->
   <!-- ============================================================ -->
 
-  <!-- M+ from BTS7960 right edge -->
+  <!-- Level Shifter block -->
+  <rect x="920" y="1000" width="150" height="100" rx="8" fill="#fff" stroke="#9c27b0" stroke-width="2.5"/>
+  <text x="995" y="1035" text-anchor="middle" font-size="14" font-weight="bold" fill="#9c27b0">Level Shifter</text>
+  <text x="995" y="1055" text-anchor="middle" font-size="12" fill="#6c757d">5V → 3.3V</text>
+  <text x="995" y="1075" text-anchor="middle" font-size="12" fill="#6c757d">BSS138</text>
+
+  <!-- GPIO 16 → RC filter → Level Shifter (y=1020) -->
+  <line x1="510" y1="1020" x2="920" y2="1020" stroke="#9c27b0" stroke-width="2.5"/>
+  <!-- RC filter junction at x=700 -->
+  <circle cx="700" cy="1020" r="4" fill="#9c27b0"/>
+  <g transform="translate(700, 1020)">
+    <rect x="-28" y="-8" width="55" height="16" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+    <text x="0" y="-12" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">1kΩ</text>
+    <line x1="0" y1="8" x2="0" y2="20" stroke="#9c27b0" stroke-width="1.5"/>
+    <line x1="-10" y1="20" x2="10" y2="20" stroke="#212529" stroke-width="2.5"/>
+    <line x1="-10" y1="27" x2="10" y2="27" stroke="#212529" stroke-width="2.5"/>
+    <text x="16" y="28" font-size="12" fill="#495057">100nF</text>
+    <line x1="0" y1="27" x2="0" y2="40" stroke="#6c757d" stroke-width="1.5"/>
+    <line x1="-7" y1="40" x2="7" y2="40" stroke="#6c757d" stroke-width="2.5"/><line x1="-4" y1="44" x2="4" y2="44" stroke="#6c757d" stroke-width="2"/><line x1="-2" y1="48" x2="2" y2="48" stroke="#6c757d" stroke-width="1.5"/>
+  </g>
+  <text x="810" y="1012" font-size="15" fill="#9c27b0" font-weight="bold" text-anchor="middle">Enc Ch.A</text>
+
+  <!-- GPIO 17 → RC filter → Level Shifter (y=1080) -->
+  <line x1="510" y1="1080" x2="920" y2="1080" stroke="#9c27b0" stroke-width="2.5"/>
+  <circle cx="780" cy="1080" r="4" fill="#9c27b0"/>
+  <g transform="translate(780, 1080)">
+    <rect x="-28" y="-8" width="55" height="16" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+    <text x="0" y="-12" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">1kΩ</text>
+    <line x1="0" y1="8" x2="0" y2="20" stroke="#9c27b0" stroke-width="1.5"/>
+    <line x1="-10" y1="20" x2="10" y2="20" stroke="#212529" stroke-width="2.5"/>
+    <line x1="-10" y1="27" x2="10" y2="27" stroke="#212529" stroke-width="2.5"/>
+    <text x="16" y="28" font-size="12" fill="#495057">100nF</text>
+    <line x1="0" y1="27" x2="0" y2="40" stroke="#6c757d" stroke-width="1.5"/>
+    <line x1="-7" y1="40" x2="7" y2="40" stroke="#6c757d" stroke-width="2.5"/><line x1="-4" y1="44" x2="4" y2="44" stroke="#6c757d" stroke-width="2"/><line x1="-2" y1="48" x2="2" y2="48" stroke="#6c757d" stroke-width="1.5"/>
+  </g>
+  <text x="860" y="1072" font-size="15" fill="#9c27b0" font-weight="bold" text-anchor="middle">Enc Ch.B</text>
+
+  <!-- Level Shifter → Motor Encoder (routed below BTS7960) -->
+  <line x1="1070" y1="1020" x2="1470" y2="1020" stroke="#9c27b0" stroke-width="2"/>
+  <line x1="1470" y1="1020" x2="1470" y2="1200" stroke="#9c27b0" stroke-width="2"/>
+  <line x1="1470" y1="1200" x2="1780" y2="1200" stroke="#9c27b0" stroke-width="2"/>
+
+  <line x1="1070" y1="1080" x2="1430" y2="1080" stroke="#9c27b0" stroke-width="2"/>
+  <line x1="1430" y1="1080" x2="1430" y2="1240" stroke="#9c27b0" stroke-width="2"/>
+  <line x1="1430" y1="1240" x2="1780" y2="1240" stroke="#9c27b0" stroke-width="2"/>
+
+  <!-- Encoder annotation -->
+  <rect x="1100" y="1150" width="300" height="26" rx="6" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1.5"/>
+  <text x="1250" y="1168" text-anchor="middle" font-size="14" fill="#7b1fa2" font-weight="bold">1kΩ + 100nF + Level Shifter 5V→3.3V</text>
+
+  <!-- ============================================================ -->
+  <!-- MOTOR + ENCODER (updated label, encoder pins)                 -->
+  <!-- ============================================================ -->
+
+  <!-- M+ from BTS7960 -->
   <line x1="1870" y1="990" x2="1940" y2="990" stroke="#212529" stroke-width="2.5"/>
   <line x1="1940" y1="990" x2="1940" y2="1190" stroke="#212529" stroke-width="2.5"/>
   <line x1="1940" y1="1190" x2="1900" y2="1190" stroke="#212529" stroke-width="2.5"/>
   <text x="1948" y="1080" font-size="14" fill="#212529" font-weight="bold">M+</text>
-
-  <!-- M- from BTS7960 right edge -->
+  <!-- M- from BTS7960 -->
   <line x1="1870" y1="1050" x2="1980" y2="1050" stroke="#212529" stroke-width="2.5"/>
-  <line x1="1980" y1="1050" x2="1980" y2="1240" stroke="#212529" stroke-width="2.5"/>
-  <line x1="1980" y1="1240" x2="1900" y2="1240" stroke="#212529" stroke-width="2.5"/>
+  <line x1="1980" y1="1050" x2="1980" y2="1260" stroke="#212529" stroke-width="2.5"/>
+  <line x1="1980" y1="1260" x2="1900" y2="1260" stroke="#212529" stroke-width="2.5"/>
   <text x="1988" y="1140" font-size="14" fill="#212529" font-weight="bold">M-</text>
 
+  <!-- Motor + Encoder block -->
+  <rect x="1770" y="1175" width="140" height="160" rx="10" fill="#fff" stroke="#212529" stroke-width="2.5"/>
   <!-- Motor circle -->
-  <circle cx="1840" cy="1215" r="60" fill="#fff" stroke="#212529" stroke-width="3"/>
-  <text x="1840" y="1225" text-anchor="middle" font-size="40" font-weight="bold" fill="#212529">M</text>
-  <line x1="1900" y1="1190" x2="1895" y2="1190" stroke="#212529" stroke-width="2.5"/>
-  <line x1="1900" y1="1240" x2="1895" y2="1240" stroke="#212529" stroke-width="2.5"/>
+  <circle cx="1840" cy="1225" r="35" fill="#f8f9fa" stroke="#212529" stroke-width="2"/>
+  <text x="1840" y="1233" text-anchor="middle" font-size="28" font-weight="bold" fill="#212529">M</text>
+  <!-- Encoder pins on left side -->
+  <text x="1785" y="1308" font-size="12" fill="#9c27b0" font-weight="bold">Ch.A</text>
+  <text x="1785" y="1325" font-size="12" fill="#9c27b0" font-weight="bold">Ch.B</text>
+  <!-- 5V + GND for encoder -->
+  <text x="1860" y="1308" font-size="12" fill="#fd7e14" font-weight="bold">5V</text>
+  <text x="1860" y="1325" font-size="12" fill="#6c757d" font-weight="bold">GND</text>
 
-  <text x="1840" y="1295" text-anchor="middle" font-size="18" fill="#495057" font-weight="bold">Waveshare Motor</text>
-  <text x="1840" y="1318" text-anchor="middle" font-size="15" fill="#6c757d">L-Shaped 240 RPM</text>
+  <!-- Motor label -->
+  <text x="1840" y="1360" text-anchor="middle" font-size="16" fill="#495057" font-weight="bold">DFRobot FIT0185</text>
+  <text x="1840" y="1380" text-anchor="middle" font-size="13" fill="#6c757d">12V / 83RPM / 45kg·cm</text>
+  <text x="1840" y="1398" text-anchor="middle" font-size="13" fill="#9c27b0">Encoder 2096 CPR</text>
+
+  <!-- 5V to encoder: junction from 5V rail, down to motor -->
+  <circle cx="950" cy="273" r="4" fill="#fd7e14"/>
+  <line x1="950" y1="273" x2="950" y2="1000" stroke="#fd7e14" stroke-width="2"/>
+  <text x="958" y="990" font-size="12" fill="#fd7e14">→ LS + Enc 5V</text>
 
   <!-- ============================================================ -->
-  <!-- ENDSTOPS (with RC filter)                                     -->
-  <!-- Manhattan routing from GPIO pins down to endstop area         -->
+  <!-- ENDSTOPS (shifted down)                                       -->
   <!-- ============================================================ -->
 
-  <rect x="60" y="1210" width="750" height="230" rx="10" fill="none" stroke="#dee2e6" stroke-width="1.5" stroke-dasharray="8,4"/>
-  <text x="90" y="1240" font-size="20" font-weight="bold" fill="#495057">Endschalter</text>
+  <rect x="60" y="1350" width="750" height="210" rx="10" fill="none" stroke="#dee2e6" stroke-width="1.5" stroke-dasharray="8,4"/>
+  <text x="90" y="1380" font-size="20" font-weight="bold" fill="#495057">Endschalter</text>
 
-  <!-- GPIO 32 → vertical down → horizontal to endstop OPEN -->
-  <line x1="510" y1="1020" x2="545" y2="1020" stroke="#6c757d" stroke-width="2"/>
-  <line x1="545" y1="1020" x2="545" y2="1280" stroke="#6c757d" stroke-width="2"/>
-  <line x1="480" y1="1280" x2="545" y2="1280" stroke="#6c757d" stroke-width="2"/>
-  <circle cx="480" cy="1280" r="4" fill="#6c757d"/>
+  <!-- GPIO 32 → OPEN -->
+  <line x1="510" y1="1170" x2="545" y2="1170" stroke="#6c757d" stroke-width="2"/>
+  <line x1="545" y1="1170" x2="545" y2="1420" stroke="#6c757d" stroke-width="2"/>
+  <line x1="480" y1="1420" x2="545" y2="1420" stroke="#6c757d" stroke-width="2"/>
+  <circle cx="480" cy="1420" r="4" fill="#6c757d"/>
+  <text x="120" y="1405" font-size="18" fill="#198754" font-weight="bold">OPEN</text>
+  <line x1="100" y1="1420" x2="190" y2="1420" stroke="#6c757d" stroke-width="2"/>
+  <line x1="88" y1="1412" x2="88" y2="1428" stroke="#6c757d" stroke-width="3"/><line x1="82" y1="1416" x2="82" y2="1424" stroke="#6c757d" stroke-width="2.5"/><line x1="76" y1="1419" x2="76" y2="1421" stroke="#6c757d" stroke-width="2"/>
+  <line x1="88" y1="1420" x2="100" y2="1420" stroke="#6c757d" stroke-width="2"/>
+  <circle cx="220" cy="1420" r="4.5" fill="#212529"/><circle cx="260" cy="1420" r="4.5" fill="#212529"/>
+  <line x1="223" y1="1417" x2="257" y2="1403" stroke="#212529" stroke-width="2.5"/>
+  <line x1="190" y1="1420" x2="220" y2="1420" stroke="#6c757d" stroke-width="2"/>
+  <line x1="260" y1="1420" x2="300" y2="1420" stroke="#6c757d" stroke-width="2"/>
+  <rect x="300" y="1412" width="55" height="16" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+  <text x="327" y="1408" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">1kΩ</text>
+  <line x1="355" y1="1420" x2="480" y2="1420" stroke="#6c757d" stroke-width="2"/>
+  <line x1="480" y1="1420" x2="480" y2="1438" stroke="#6c757d" stroke-width="1.5"/>
+  <line x1="468" y1="1438" x2="492" y2="1438" stroke="#212529" stroke-width="2.5"/>
+  <line x1="468" y1="1446" x2="492" y2="1446" stroke="#212529" stroke-width="2.5"/>
+  <text x="500" y="1448" font-size="14" fill="#495057" font-weight="bold">100nF</text>
+  <line x1="480" y1="1446" x2="480" y2="1462" stroke="#6c757d" stroke-width="1.5"/>
+  <line x1="472" y1="1462" x2="488" y2="1462" stroke="#6c757d" stroke-width="2.5"/><line x1="475" y1="1467" x2="485" y2="1467" stroke="#6c757d" stroke-width="2"/><line x1="477" y1="1472" x2="483" y2="1472" stroke="#6c757d" stroke-width="1.5"/>
 
-  <!-- OPEN: GND → Switch → 1kΩ → junction → 100nF → GND -->
-  <text x="120" y="1265" font-size="18" fill="#198754" font-weight="bold">OPEN</text>
-  <line x1="100" y1="1280" x2="190" y2="1280" stroke="#6c757d" stroke-width="2"/>
-  <!-- GND -->
-  <line x1="88" y1="1272" x2="88" y2="1288" stroke="#6c757d" stroke-width="3"/>
-  <line x1="82" y1="1276" x2="82" y2="1284" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="76" y1="1279" x2="76" y2="1281" stroke="#6c757d" stroke-width="2"/>
-  <line x1="88" y1="1280" x2="100" y2="1280" stroke="#6c757d" stroke-width="2"/>
-  <!-- Switch -->
-  <circle cx="220" cy="1280" r="4.5" fill="#212529"/>
-  <circle cx="260" cy="1280" r="4.5" fill="#212529"/>
-  <line x1="223" y1="1277" x2="257" y2="1263" stroke="#212529" stroke-width="2.5"/>
-  <line x1="190" y1="1280" x2="220" y2="1280" stroke="#6c757d" stroke-width="2"/>
-  <!-- 1kΩ -->
-  <line x1="260" y1="1280" x2="300" y2="1280" stroke="#6c757d" stroke-width="2"/>
-  <rect x="300" y="1272" width="55" height="16" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
-  <text x="327" y="1268" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">1kΩ</text>
-  <line x1="355" y1="1280" x2="480" y2="1280" stroke="#6c757d" stroke-width="2"/>
-  <!-- 100nF -->
-  <line x1="480" y1="1280" x2="480" y2="1298" stroke="#6c757d" stroke-width="1.5"/>
-  <line x1="468" y1="1298" x2="492" y2="1298" stroke="#212529" stroke-width="2.5"/>
-  <line x1="468" y1="1306" x2="492" y2="1306" stroke="#212529" stroke-width="2.5"/>
-  <text x="500" y="1308" font-size="14" fill="#495057" font-weight="bold">100nF</text>
-  <line x1="480" y1="1306" x2="480" y2="1322" stroke="#6c757d" stroke-width="1.5"/>
-  <line x1="472" y1="1322" x2="488" y2="1322" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="475" y1="1327" x2="485" y2="1327" stroke="#6c757d" stroke-width="2"/>
-  <line x1="477" y1="1332" x2="483" y2="1332" stroke="#6c757d" stroke-width="1.5"/>
+  <!-- GPIO 33 → CLOSE -->
+  <line x1="510" y1="1230" x2="595" y2="1230" stroke="#6c757d" stroke-width="2"/>
+  <line x1="595" y1="1230" x2="595" y2="1500" stroke="#6c757d" stroke-width="2"/>
+  <line x1="480" y1="1500" x2="595" y2="1500" stroke="#6c757d" stroke-width="2"/>
+  <circle cx="480" cy="1500" r="4" fill="#6c757d"/>
+  <text x="120" y="1485" font-size="18" fill="#dc3545" font-weight="bold">CLOSE</text>
+  <line x1="100" y1="1500" x2="190" y2="1500" stroke="#6c757d" stroke-width="2"/>
+  <line x1="88" y1="1492" x2="88" y2="1508" stroke="#6c757d" stroke-width="3"/><line x1="82" y1="1496" x2="82" y2="1504" stroke="#6c757d" stroke-width="2.5"/><line x1="76" y1="1499" x2="76" y2="1501" stroke="#6c757d" stroke-width="2"/>
+  <line x1="88" y1="1500" x2="100" y2="1500" stroke="#6c757d" stroke-width="2"/>
+  <circle cx="220" cy="1500" r="4.5" fill="#212529"/><circle cx="260" cy="1500" r="4.5" fill="#212529"/>
+  <line x1="223" y1="1497" x2="257" y2="1483" stroke="#212529" stroke-width="2.5"/>
+  <line x1="190" y1="1500" x2="220" y2="1500" stroke="#6c757d" stroke-width="2"/>
+  <line x1="260" y1="1500" x2="300" y2="1500" stroke="#6c757d" stroke-width="2"/>
+  <rect x="300" y="1492" width="55" height="16" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+  <text x="327" y="1488" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">1kΩ</text>
+  <line x1="355" y1="1500" x2="480" y2="1500" stroke="#6c757d" stroke-width="2"/>
+  <line x1="480" y1="1500" x2="480" y2="1518" stroke="#6c757d" stroke-width="1.5"/>
+  <line x1="468" y1="1518" x2="492" y2="1518" stroke="#212529" stroke-width="2.5"/>
+  <line x1="468" y1="1526" x2="492" y2="1526" stroke="#212529" stroke-width="2.5"/>
+  <text x="500" y="1528" font-size="14" fill="#495057" font-weight="bold">100nF</text>
+  <line x1="480" y1="1526" x2="480" y2="1542" stroke="#6c757d" stroke-width="1.5"/>
+  <line x1="472" y1="1542" x2="488" y2="1542" stroke="#6c757d" stroke-width="2.5"/><line x1="475" y1="1547" x2="485" y2="1547" stroke="#6c757d" stroke-width="2"/><line x1="477" y1="1552" x2="483" y2="1552" stroke="#6c757d" stroke-width="1.5"/>
 
-  <!-- GPIO 33 → vertical down → horizontal to endstop CLOSE -->
-  <line x1="510" y1="1090" x2="595" y2="1090" stroke="#6c757d" stroke-width="2"/>
-  <line x1="595" y1="1090" x2="595" y2="1370" stroke="#6c757d" stroke-width="2"/>
-  <line x1="480" y1="1370" x2="595" y2="1370" stroke="#6c757d" stroke-width="2"/>
-  <circle cx="480" cy="1370" r="4" fill="#6c757d"/>
-
-  <!-- CLOSE: same pattern -->
-  <text x="120" y="1355" font-size="18" fill="#dc3545" font-weight="bold">CLOSE</text>
-  <line x1="100" y1="1370" x2="190" y2="1370" stroke="#6c757d" stroke-width="2"/>
-  <line x1="88" y1="1362" x2="88" y2="1378" stroke="#6c757d" stroke-width="3"/>
-  <line x1="82" y1="1366" x2="82" y2="1374" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="76" y1="1369" x2="76" y2="1371" stroke="#6c757d" stroke-width="2"/>
-  <line x1="88" y1="1370" x2="100" y2="1370" stroke="#6c757d" stroke-width="2"/>
-  <circle cx="220" cy="1370" r="4.5" fill="#212529"/>
-  <circle cx="260" cy="1370" r="4.5" fill="#212529"/>
-  <line x1="223" y1="1367" x2="257" y2="1353" stroke="#212529" stroke-width="2.5"/>
-  <line x1="190" y1="1370" x2="220" y2="1370" stroke="#6c757d" stroke-width="2"/>
-  <line x1="260" y1="1370" x2="300" y2="1370" stroke="#6c757d" stroke-width="2"/>
-  <rect x="300" y="1362" width="55" height="16" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
-  <text x="327" y="1358" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">1kΩ</text>
-  <line x1="355" y1="1370" x2="480" y2="1370" stroke="#6c757d" stroke-width="2"/>
-  <line x1="480" y1="1370" x2="480" y2="1388" stroke="#6c757d" stroke-width="1.5"/>
-  <line x1="468" y1="1388" x2="492" y2="1388" stroke="#212529" stroke-width="2.5"/>
-  <line x1="468" y1="1396" x2="492" y2="1396" stroke="#212529" stroke-width="2.5"/>
-  <text x="500" y="1398" font-size="14" fill="#495057" font-weight="bold">100nF</text>
-  <line x1="480" y1="1396" x2="480" y2="1412" stroke="#6c757d" stroke-width="1.5"/>
-  <line x1="472" y1="1412" x2="488" y2="1412" stroke="#6c757d" stroke-width="2.5"/>
-  <line x1="475" y1="1417" x2="485" y2="1417" stroke="#6c757d" stroke-width="2"/>
-  <line x1="477" y1="1422" x2="483" y2="1422" stroke="#6c757d" stroke-width="1.5"/>
-
-  <!-- Endstop annotation -->
-  <rect x="620" y="1310" width="180" height="35" rx="6" fill="#f5f5f5" stroke="#6c757d" stroke-width="1.5"/>
-  <text x="710" y="1332" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">1kΩ + 100nF RC-Filter</text>
+  <rect x="620" y="1445" width="180" height="35" rx="6" fill="#f5f5f5" stroke="#6c757d" stroke-width="1.5"/>
+  <text x="710" y="1467" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">1kΩ + 100nF RC-Filter</text>
 
   <!-- ============================================================ -->
   <!-- LEGEND                                                        -->
   <!-- ============================================================ -->
 
-  <rect x="1100" y="1190" width="650" height="250" rx="10" fill="#fff" stroke="#ced4da" stroke-width="2"/>
-  <text x="1135" y="1225" font-size="22" font-weight="bold" fill="#212529">Legende</text>
+  <rect x="1100" y="1350" width="650" height="250" rx="10" fill="#fff" stroke="#ced4da" stroke-width="2"/>
+  <text x="1135" y="1385" font-size="22" font-weight="bold" fill="#212529">Legende</text>
 
-  <line x1="1135" y1="1252" x2="1180" y2="1252" stroke="#dc3545" stroke-width="3.5"/>
-  <text x="1192" y="1258" font-size="17" fill="#495057">12V Rail</text>
+  <line x1="1135" y1="1408" x2="1180" y2="1408" stroke="#dc3545" stroke-width="3.5"/>
+  <text x="1192" y="1414" font-size="17" fill="#495057">12V Rail</text>
+  <line x1="1135" y1="1433" x2="1180" y2="1433" stroke="#fd7e14" stroke-width="3.5"/>
+  <text x="1192" y="1439" font-size="17" fill="#495057">5V Rail</text>
+  <line x1="1135" y1="1458" x2="1180" y2="1458" stroke="#198754" stroke-width="3.5"/>
+  <text x="1192" y="1464" font-size="17" fill="#495057">Motor-Steuerung (PWM / Enable)</text>
+  <line x1="1135" y1="1483" x2="1180" y2="1483" stroke="#0d6efd" stroke-width="3.5"/>
+  <text x="1192" y="1489" font-size="17" fill="#495057">Current Sense (ADC)</text>
+  <line x1="1135" y1="1508" x2="1180" y2="1508" stroke="#9c27b0" stroke-width="3.5"/>
+  <text x="1192" y="1514" font-size="17" fill="#495057">Encoder (Quadratur)</text>
+  <line x1="1135" y1="1533" x2="1180" y2="1533" stroke="#6c757d" stroke-width="3.5"/>
+  <text x="1192" y="1539" font-size="17" fill="#495057">GND / Endschalter</text>
 
-  <line x1="1135" y1="1282" x2="1180" y2="1282" stroke="#fd7e14" stroke-width="3.5"/>
-  <text x="1192" y="1288" font-size="17" fill="#495057">5V Rail</text>
-
-  <line x1="1135" y1="1312" x2="1180" y2="1312" stroke="#198754" stroke-width="3.5"/>
-  <text x="1192" y="1318" font-size="17" fill="#495057">Motor-Steuerung (PWM / Enable)</text>
-
-  <line x1="1135" y1="1342" x2="1180" y2="1342" stroke="#0d6efd" stroke-width="3.5"/>
-  <text x="1192" y="1348" font-size="17" fill="#495057">Current Sense (ADC)</text>
-
-  <line x1="1135" y1="1372" x2="1180" y2="1372" stroke="#6c757d" stroke-width="3.5"/>
-  <text x="1192" y="1378" font-size="17" fill="#495057">GND / Endschalter</text>
-
-  <!-- Symbol legend (shifted right to avoid overlap with color legend text) -->
-  <rect x="1530" y="1244" width="26" height="12" rx="2.5" fill="#fff" stroke="#212529" stroke-width="1.5"/>
-  <text x="1564" y="1258" font-size="16" fill="#495057">Widerstand</text>
-
-  <line x1="1536" y1="1278" x2="1550" y2="1278" stroke="#212529" stroke-width="2.5"/>
-  <line x1="1536" y1="1286" x2="1550" y2="1286" stroke="#212529" stroke-width="2.5"/>
-  <text x="1564" y="1288" font-size="16" fill="#495057">Kondensator</text>
-
-  <polygon points="1534,1320 1546,1306 1546,1320" fill="none" stroke="#212529" stroke-width="1.5"/>
-  <line x1="1546" y1="1303" x2="1546" y2="1323" stroke="#212529" stroke-width="1.5"/>
-  <text x="1564" y="1318" font-size="16" fill="#495057">Zener-Diode</text>
-
-  <circle cx="1536" cy="1348" r="3.5" fill="#212529"/>
-  <line x1="1539" y1="1345" x2="1550" y2="1338" stroke="#212529" stroke-width="2"/>
-  <circle cx="1550" cy="1348" r="3.5" fill="#212529"/>
-  <text x="1564" y="1353" font-size="16" fill="#495057">Schalter</text>
-
-  <circle cx="1543" cy="1378" r="4.5" fill="#198754"/>
-  <text x="1564" y="1383" font-size="16" fill="#495057">Knotenpunkt</text>
+  <rect x="1530" y="1400" width="26" height="12" rx="2.5" fill="#fff" stroke="#212529" stroke-width="1.5"/>
+  <text x="1564" y="1414" font-size="16" fill="#495057">Widerstand</text>
+  <line x1="1536" y1="1434" x2="1550" y2="1434" stroke="#212529" stroke-width="2.5"/>
+  <line x1="1536" y1="1442" x2="1550" y2="1442" stroke="#212529" stroke-width="2.5"/>
+  <text x="1564" y="1444" font-size="16" fill="#495057">Kondensator</text>
+  <polygon points="1534,1476 1546,1462 1546,1476" fill="none" stroke="#212529" stroke-width="1.5"/>
+  <line x1="1546" y1="1459" x2="1546" y2="1479" stroke="#212529" stroke-width="1.5"/>
+  <text x="1564" y="1474" font-size="16" fill="#495057">Zener-Diode</text>
+  <circle cx="1536" cy="1504" r="3.5" fill="#212529"/>
+  <line x1="1539" y1="1501" x2="1550" y2="1494" stroke="#212529" stroke-width="2"/>
+  <circle cx="1550" cy="1504" r="3.5" fill="#212529"/>
+  <text x="1564" y="1509" font-size="16" fill="#495057">Schalter</text>
+  <circle cx="1543" cy="1534" r="4.5" fill="#9c27b0"/>
+  <text x="1564" y="1539" font-size="16" fill="#495057">Knotenpunkt</text>
 
   <!-- FOOTER -->
-  <line x1="50" y1="1460" x2="2050" y2="1460" stroke="#dee2e6" stroke-width="1.5"/>
-  <text x="1050" y="1482" text-anchor="middle" font-size="15" fill="#adb5bd">Door Controller v1.0 — Alle Massen (GND) verbinden — Kondensatoren nah an den ICs — Druck: A3 Querformat</text>
+  <line x1="50" y1="1610" x2="2050" y2="1610" stroke="#dee2e6" stroke-width="1.5"/>
+  <text x="1050" y="1632" text-anchor="middle" font-size="15" fill="#adb5bd">Door Controller v2.0 — Alle Massen (GND) verbinden — Kondensatoren nah an den ICs — Druck: A3 Querformat</text>
 
 </svg>
