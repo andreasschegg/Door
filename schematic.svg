@@ -31,8 +31,8 @@
   <text x="400" y="272" text-anchor="middle" font-size="20" font-weight="bold" fill="#fd7e14">Buck Converter</text>
   <text x="400" y="293" text-anchor="middle" font-size="14" fill="#6c757d">12V → 5V</text>
 
-  <!-- 5V Rail -->
-  <line x1="500" y1="273" x2="1580" y2="273" stroke="#fd7e14" stroke-width="3"/>
+  <!-- 5V Rail (ends at x=1540 to avoid crossing the 12V vertical line at x=1580) -->
+  <line x1="500" y1="273" x2="1540" y2="273" stroke="#fd7e14" stroke-width="3"/>
   <text x="580" y="263" font-size="16" fill="#fd7e14" font-weight="bold">5V Rail</text>
 
   <!-- 12V Decoupling caps -->
@@ -308,9 +308,9 @@
   </g>
   <text x="970" y="732" font-size="15" fill="#198754" font-weight="bold" text-anchor="middle">L_EN</text>
 
-  <!-- Pull-down annotation -->
-  <rect x="610" y="810" width="280" height="35" rx="6" fill="#e8f5e9" stroke="#198754" stroke-width="1.5"/>
-  <text x="750" y="832" text-anchor="middle" font-size="14" fill="#2e7d32" font-weight="bold">4× 10kΩ Pull-Down (Boot-Schutz)</text>
+  <!-- Pull-down annotation (placed between L_EN and Current Sense section) -->
+  <rect x="600" y="778" width="310" height="26" rx="6" fill="#e8f5e9" stroke="#198754" stroke-width="1.5"/>
+  <text x="755" y="796" text-anchor="middle" font-size="14" fill="#2e7d32" font-weight="bold">4× 10kΩ Pull-Down (Boot-Schutz)</text>
 
   <!-- ============================================================ -->
   <!-- CURRENT SENSE: straight horizontal + voltage dividers         -->
