@@ -314,7 +314,7 @@ module labels() {
                  valign = "center", font = "Arial:style=Bold");
     translate([cradle_pos[0] + motor_length / 2 + 38, plate_h / 2 - 8, plate_t])
         linear_extrude(0.4)
-            text("by MondayManiacs", size = 3.5, halign = "right",
+            text("by MondayManiacs", size = 5.5, halign = "right",
                  valign = "center", font = "Arial");
 }
 
