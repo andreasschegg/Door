@@ -66,7 +66,8 @@ cradle_wall      = 5;
 cradle_clearance = 1;
 
 // Motor side wall (for screw mounting)
-side_wall_t = 5;
+side_wall_t = 3.5;
+motor_hole_d = 3.4;      // M3 through-hole (3.2mm + clearance)
 
 // Breadboard: flat surface, glued with double-sided tape
 
@@ -235,7 +236,7 @@ module motor_cradle() {
                                    cradle_total_w / 2 + motor_hex_r * sin(angle),
                                    z_pos])
                             rotate([0, 90, 0])
-                                cylinder(d = ibt_hole_d, h = side_wall_t + 2);
+                                cylinder(d = motor_hole_d, h = side_wall_t + 2);
                 }
             }
         }
