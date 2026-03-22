@@ -33,7 +33,7 @@ bb_h = 55;
 
 // IBT_2 (BTS7960) Motor Driver Module
 ibt_hole_spacing = 40;   // Hole pattern 40x40mm
-ibt_standoff_h   = 25;   // Standoff sleeve height
+ibt_standoff_h   = 23.5; // Printed sleeve (+ 6.5mm metal standoff = 30mm total)
 ibt_standoff_d   = 8;    // Standoff outer diameter
 ibt_hole_d       = 3.2;  // M3 through-hole
 
@@ -57,7 +57,7 @@ motor_shaft_d  = 14;      // Shaft + boss clearance (12mm housing + 2mm margin)
 
 margin   = 15;
 gap      = 15;
-plate_t  = 1.5;         // Minimum for rigidity
+plate_t  = 1;           // Minimum plate thickness
 
 // Motor cradle
 cradle_wall      = 5;
@@ -306,6 +306,6 @@ color("White")     labels();
 // ============================================================
 
 echo(str("Platform size: ", plate_w, " x ", plate_h, " mm"));
-echo(str("IBT_2 standoff height: ", ibt_standoff_h, " mm"));
+echo(str("IBT_2 total height: ", ibt_standoff_h, " + 6.5mm metal standoff = ", ibt_standoff_h + 6.5, " mm"));
 echo(str("Motor center height: ", cradle_total_h + plate_t, " mm"));
 echo(str("Fits Prusa bed: ", plate_w <= 250 && plate_h <= 210 ? "YES" : "NO"));
