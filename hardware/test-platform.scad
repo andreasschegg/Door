@@ -49,7 +49,7 @@ buck_clearance = 0.3;     // Fit clearance
 motor_d        = 37;      // Motor body diameter
 motor_length   = 75;      // Motor body length (without shaft)
 motor_hex_r    = 15.5;    // 6x M3 hex pattern circumradius
-motor_shaft_d  = 10;      // Shaft clearance hole
+motor_shaft_d  = 14;      // Shaft + boss clearance (12mm housing + 2mm margin)
 
 // ============================================================
 // Platform Parameters
