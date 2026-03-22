@@ -2,7 +2,7 @@
 
 ## Übersicht
 
-ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen und Schliessen einer Tür. Zwei Endschalter erkennen die Endlagen. Optional liefert ein Encoder am Motor präzise Positionsdaten.
+ESP32-S3 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen und Schliessen einer Tür. Zwei Endschalter erkennen die Endlagen. Optional liefert ein Encoder am Motor präzise Positionsdaten.
 
 **Unterstützte Motoren:**
 - **Ansatz B (aktiv):** DFRobot FIT0185 — 12V, 83 RPM, 45 kg·cm, Hall-Encoder 2096 CPR
@@ -33,7 +33,7 @@ ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen un
              │  │  Stützkondensatoren 5V │         │
              │  └────────────────────────┘         │
              │                                     │
-             ├──► ESP32 VIN                        │
+             ├──► ESP32-S3 VIN                        │
              │       │                             │
              │     100nF (Keramik, nah am Chip)    │
              │      GND                            │
@@ -44,39 +44,39 @@ ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen un
                                                    │
                                                    │
     ┌──────────────────────────────────────────────┐│
-    │              ESP32 DevKit                    ││
+    │            ESP32-S3 DevKit                    ││
     │                                              ││
     │  Motor-Steuerung (mit Pull-Down)             ││
     │  ──────────────────────────────              ││
-    │  GPIO 25 ──┬── 10kΩ ── GND ──────► RPWM     ││
-    │  GPIO 26 ──┬── 10kΩ ── GND ──────► LPWM     ││
-    │  GPIO 27 ──┬── 10kΩ ── GND ──────► R_EN     ││
-    │  GPIO 14 ──┬── 10kΩ ── GND ──────► L_EN     ││
+    │  GPIO  4 ──┬── 10kΩ ── GND ──────► RPWM     ││
+    │  GPIO  5 ──┬── 10kΩ ── GND ──────► LPWM     ││
+    │  GPIO  6 ──┬── 10kΩ ── GND ──────► R_EN     ││
+    │  GPIO  7 ──┬── 10kΩ ── GND ──────► L_EN     ││
     │                                              ││
     │  Strom-Messung (mit Spannungsteiler + Zener) ││
     │  ────────────────────────────────────────     ││
-    │  GPIO 34 ◄─ 18kΩ ─┬─ 10kΩ ◄──────── R_IS    ││
+    │  GPIO  1 ◄─ 18kΩ ─┬─ 10kΩ ◄──────── R_IS    ││
     │                 ZD 3.3V                      ││
     │                   GND                        ││
-    │  GPIO 35 ◄─ 18kΩ ─┬─ 10kΩ ◄──────── L_IS    ││
+    │  GPIO  2 ◄─ 18kΩ ─┬─ 10kΩ ◄──────── L_IS    ││
     │                 ZD 3.3V                      ││
     │                   GND                        ││
     │                                              ││
     │  Encoder (mit Serienwiderstand + Filter)       ││
     │  ────────────────────────────────────────     ││
-    │  GPIO 16 ◄── 1kΩ ──┬──────────────── Ch.A   ││
+    │  GPIO 17 ◄── 1kΩ ──┬──────────────── Ch.A   ││
     │                   100nF                      ││
     │                    GND                       ││
-    │  GPIO 17 ◄── 1kΩ ──┬──────────────── Ch.B   ││
+    │  GPIO 18 ◄── 1kΩ ──┬──────────────── Ch.B   ││
     │                   100nF                      ││
     │                    GND                       ││
     │                                              ││
     │  Endschalter (mit Serienwiderstand + Filter) ││
     │  ────────────────────────────────────────     ││
-    │  GPIO 32 ◄── 1kΩ ──┬──── /  ── GND  (OPEN)  ││
+    │  GPIO 15 ◄── 1kΩ ──┬──── /  ── GND  (OPEN)  ││
     │                   100nF                      ││
     │                    GND                       ││
-    │  GPIO 33 ◄── 1kΩ ──┬──── /  ── GND  (CLOSE) ││
+    │  GPIO 16 ◄── 1kΩ ──┬──── /  ── GND  (CLOSE) ││
     │                   100nF                      ││
     │                    GND                       ││
     │                                              ││
@@ -93,8 +93,8 @@ ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen un
     │  │  GND ── GND   │      │  Encoder:            │
     │  └───────────────┘      │  VCC ◄── 5V Rail     │
     │                         │  GND ◄── GND         │
-    │                         │  Ch.A ──► GPIO 16    │
-    │                         │  Ch.B ──► GPIO 17    │
+    │                         │  Ch.A ──► GPIO 17    │
+    │                         │  Ch.B ──► GPIO 18    │
     │                         └──────────────────────┘
     │
    GND (alle Massen verbunden)
