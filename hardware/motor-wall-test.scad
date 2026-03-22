@@ -17,7 +17,7 @@ cradle_total_w   = motor_d + 2 * cradle_wall;
 cradle_total_h   = cradle_r + cradle_wall;
 
 // Side wall
-side_wall_t  = 3.5;
+side_wall_t  = 3;
 motor_hole_d = 3.4;      // M3 through-hole
 
 // Base plate for test print stability

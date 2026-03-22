@@ -66,7 +66,7 @@ cradle_wall      = 5;
 cradle_clearance = 1;
 
 // Motor side wall (for screw mounting)
-side_wall_t = 3.5;
+side_wall_t = 3;
 motor_hole_d = 3.4;      // M3 through-hole (3.2mm + clearance)
 
 // Breadboard: flat surface, glued with double-sided tape
@@ -274,45 +274,27 @@ module buck_socket() {
     lip_len = 5;  // Lip only on right end (5mm)
 
     translate([buck_pos[0], buck_pos[1], plate_t]) {
-        // Front rail — base up to groove, full length
-        cube([buck_l, w, ledge_h]);
-        // Front rail — lip only on right 5mm
-        translate([buck_l - lip_len, 0, 0])
-            cube([lip_len, w, buck_socket_h]);
-        // Front rail — groove area (full length above ledge, no lip except right)
-        translate([0, 0, ledge_h])
-            difference() {
-                cube([buck_l - lip_len, w, groove_h]);
-                translate([-0.1, w - groove_d, 0])
-                    cube([buck_l - lip_len + 0.2, groove_d + 0.1, groove_h + 0.1]);
-            }
-        // Front rail — lip section groove
-        translate([buck_l - lip_len, 0, ledge_h])
-            difference() {
-                cube([lip_len, w, groove_h + lip_h]);
-                translate([-0.1, w - groove_d, 0])
-                    cube([lip_len + 0.2, groove_d + 0.1, groove_h + 0.1]);
-            }
+        // Front rail — one solid wall, groove cut, lip removed on left
+        difference() {
+            cube([buck_l, w, buck_socket_h]);
+            // Groove from inner face (full length)
+            translate([-0.1, w - groove_d, ledge_h])
+                cube([buck_l + 0.2, groove_d + 0.1, groove_h + 0.1]);
+            // Remove lip on left part (above groove, except right 5mm)
+            translate([-0.1, -0.1, ledge_h + groove_h])
+                cube([buck_l - lip_len + 0.1, w + 0.2, lip_h + 0.1]);
+        }
 
-        // Back rail — base up to groove, full length
+        // Back rail — same logic
         translate([0, w + inner_w, 0])
-            cube([buck_l, w, ledge_h]);
-        // Back rail — lip only on right 5mm
-        translate([buck_l - lip_len, w + inner_w, 0])
-            cube([lip_len, w, buck_socket_h]);
-        // Back rail — groove area (full length, no lip except right)
-        translate([0, w + inner_w, ledge_h])
             difference() {
-                cube([buck_l - lip_len, w, groove_h]);
-                translate([-0.1, -0.1, 0])
-                    cube([buck_l - lip_len + 0.2, groove_d + 0.1, groove_h + 0.1]);
-            }
-        // Back rail — lip section groove
-        translate([buck_l - lip_len, w + inner_w, ledge_h])
-            difference() {
-                cube([lip_len, w, groove_h + lip_h]);
-                translate([-0.1, -0.1, 0])
-                    cube([lip_len + 0.2, groove_d + 0.1, groove_h + 0.1]);
+                cube([buck_l, w, buck_socket_h]);
+                // Groove from inner face (full length)
+                translate([-0.1, -0.1, ledge_h])
+                    cube([buck_l + 0.2, groove_d + 0.1, groove_h + 0.1]);
+                // Remove lip on left part
+                translate([-0.1, -0.1, ledge_h + groove_h])
+                    cube([buck_l - lip_len + 0.1, w + 0.2, lip_h + 0.1]);
             }
     }
 }
