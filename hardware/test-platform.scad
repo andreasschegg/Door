@@ -8,14 +8,17 @@
 //   |  [IBT_2 on 25mm standoffs]  [Motor]→     |
 //   |  40x40 holes, pins up      side-mount    |
 //   |                                           |
+//   |      [Buck Converter 37x17]              |
+//   |       snap-in socket, 10mm               |
+//   |                                           |
 //   |  [Breadboard 165x55]  ← taped down       |
 //   |  (Arduino Nano ESP32 plugs into it)      |
 //   +-------------------------------------------+
 //          ↑ user sits here
 //
-// Front row: Breadboard (flat, glued with double-sided tape).
-// Back row:  IBT_2 on 25mm standoffs + Motor in cradle.
-// Motor screwed to side wall via 6x M3 hex pattern.
+// Front row:   Breadboard (flat, glued with double-sided tape).
+// Middle row:  Buck Converter in snap-in socket (10mm tall).
+// Back row:    IBT_2 on 25mm standoffs + Motor in cradle.
 //
 
 $fn = 60;
@@ -33,6 +36,14 @@ ibt_hole_spacing = 40;   // Hole pattern 40x40mm
 ibt_standoff_h   = 25;   // Standoff sleeve height
 ibt_standoff_d   = 8;    // Standoff outer diameter
 ibt_hole_d       = 3.2;  // M3 through-hole
+
+// Buck Converter Board
+buck_l  = 37;             // PCB length
+buck_w  = 17;             // PCB width
+buck_t  = 1.5;            // PCB thickness
+buck_socket_h  = 10;      // Socket height
+buck_socket_wall = 2;     // Socket wall thickness
+buck_clearance = 0.3;     // Fit clearance
 
 // DFRobot FIT0185 Motor
 motor_d        = 37;      // Motor body diameter
@@ -70,10 +81,17 @@ cradle_total_h = cradle_r + cradle_wall;
 // The side wall holds the motor faceplate at that height
 side_wall_h = cradle_total_h + plate_t;
 
+// Buck converter socket total dimensions
+buck_socket_total_l = buck_l + 2 * buck_socket_wall;
+buck_socket_total_w = buck_w + buck_clearance + 2 * buck_socket_wall;
+
 // Back row: IBT_2 (left) + Motor cradle (right)
 ibt_area_w = ibt_hole_spacing + ibt_standoff_d;
 ibt_area_h = ibt_hole_spacing + ibt_standoff_d;
-ibt_pos    = [margin, margin + bb_h + gap];
+
+// Middle row: Buck converter (between breadboard and back row)
+buck_y = margin + bb_h + gap;
+ibt_pos = [margin, buck_y + buck_socket_total_w + gap];
 
 cradle_pos = [margin + ibt_area_w + gap,
               ibt_pos[1] + (ibt_area_h - cradle_total_w) / 2];
@@ -85,8 +103,11 @@ side_wall_x = cradle_pos[0] + motor_length;
 plate_w = max(bb_w + 2 * margin,
               side_wall_x + side_wall_t + margin);
 
-// Front row: Breadboard centered (closest to user, y=margin-3)
+// Front row: Breadboard centered (closest to user)
 bb_pos = [(plate_w - bb_w) / 2, margin - 3];
+
+// Buck converter position (centered horizontally)
+buck_pos = [(plate_w - buck_socket_total_l) / 2, buck_y];
 
 // Platform height
 plate_h = ibt_pos[1] + max(ibt_area_h, cradle_total_w) + margin;
@@ -202,6 +223,38 @@ module motor_cradle() {
 }
 
 // ============================================================
+// Buck Converter Snap-In Socket
+// Two rails with groove for PCB, one end wall, open other end
+// ============================================================
+
+module buck_socket() {
+    ledge_h = buck_socket_h - buck_t - buck_clearance;
+    inner_w = buck_w + buck_clearance;
+    w = buck_socket_wall;
+
+    translate([buck_pos[0], buck_pos[1], plate_t]) {
+        // Left rail (along PCB length)
+        difference() {
+            cube([buck_socket_total_l, w, buck_socket_h]);
+            // Groove for PCB
+            translate([w, -0.1, ledge_h])
+                cube([buck_l + buck_clearance, w + 0.2, buck_t + buck_clearance]);
+        }
+
+        // Right rail (along PCB length)
+        translate([0, w + inner_w, 0])
+            difference() {
+                cube([buck_socket_total_l, w, buck_socket_h]);
+                translate([w, -0.1, ledge_h])
+                    cube([buck_l + buck_clearance, w + 0.2, buck_t + buck_clearance]);
+            }
+
+        // End wall (closed end — PCB slides in from other side)
+        cube([w, buck_socket_total_w, buck_socket_h]);
+    }
+}
+
+// ============================================================
 // Breadboard Area (flat surface for double-sided tape)
 // ============================================================
 
@@ -233,6 +286,7 @@ module labels() {
 color("SlateGray") base();
 color("DimGray")   ibt_standoffs();
 color("DimGray")   motor_cradle();
+color("DimGray")   buck_socket();
 color("White")     breadboard_area();
 color("White")     labels();
 
