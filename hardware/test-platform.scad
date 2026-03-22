@@ -263,17 +263,19 @@ module buck_socket() {
     //   │        │
     //   └────────┘  ← base
 
-    ledge_h    = buck_socket_h - buck_t - buck_clearance;
-    groove_d   = buck_socket_wall / 2;    // Groove depth: half the wall
-    inner_w    = buck_w + buck_clearance;
-    w          = buck_socket_wall;
+    groove_d    = buck_socket_wall / 2;   // Groove depth into wall: 1.5mm
+    groove_gap  = 0.3;                    // Clearance above PCB in groove
+    groove_h    = buck_t + groove_gap;    // Groove slot height: 1.8mm
+    ledge_h     = buck_socket_h - groove_h; // Ledge at 8.2mm
+    inner_w     = buck_w + buck_clearance;  // 14mm wall gap
+    w           = buck_socket_wall;         // 3mm wall thickness
 
     translate([buck_pos[0], buck_pos[1], plate_t]) {
         // Front rail — groove on inner face (y = w - groove_d .. w)
         difference() {
             cube([buck_l, w, buck_socket_h]);
             translate([-0.1, w - groove_d, ledge_h])
-                cube([buck_l + 0.2, groove_d + 0.1, buck_t + buck_clearance]);
+                cube([buck_l + 0.2, groove_d + 0.1, groove_h + 0.1]);
         }
 
         // Back rail — groove on inner face (y = 0 .. groove_d)
@@ -281,7 +283,7 @@ module buck_socket() {
             difference() {
                 cube([buck_l, w, buck_socket_h]);
                 translate([-0.1, -0.1, ledge_h])
-                    cube([buck_l + 0.2, groove_d + 0.1, buck_t + buck_clearance]);
+                    cube([buck_l + 0.2, groove_d + 0.1, groove_h + 0.1]);
             }
     }
 }
