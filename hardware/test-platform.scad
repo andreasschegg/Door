@@ -220,23 +220,22 @@ module motor_cradle() {
             }
 
         // --- Side Wall (right end, motor screws to this) ---
+        // Height reduced by 2mm, no shaft hole, only bottom 4 holes
         translate([motor_length, 0, 0]) {
             difference() {
-                cube([side_wall_t, cradle_total_w, cradle_total_h]);
+                cube([side_wall_t, cradle_total_w, cradle_total_h - 2]);
 
-                // Motor shaft hole (center of wall)
-                translate([-1, cradle_total_w / 2, cradle_total_h])
-                    rotate([0, 90, 0])
-                        cylinder(d = motor_shaft_d, h = side_wall_t + 2);
-
-                // 6x M3 hex pattern mounting holes
+                // 4x M3 mounting holes (bottom 4 of hex pattern, skip top 2)
                 for (i = [0:5]) {
-                    angle = i * 60 + 90;  // Rotated so 2 holes are horizontal
-                    translate([-1,
-                               cradle_total_w / 2 + motor_hex_r * sin(angle),
-                               cradle_total_h + motor_hex_r * cos(angle)])
-                        rotate([0, 90, 0])
-                            cylinder(d = ibt_hole_d, h = side_wall_t + 2);
+                    angle = i * 60 + 90;
+                    z_pos = cradle_total_h + motor_hex_r * cos(angle);
+                    // Only holes that are below motor center (skip top 2)
+                    if (z_pos < cradle_total_h)
+                        translate([-1,
+                                   cradle_total_w / 2 + motor_hex_r * sin(angle),
+                                   z_pos])
+                            rotate([0, 90, 0])
+                                cylinder(d = ibt_hole_d, h = side_wall_t + 2);
                 }
             }
         }
