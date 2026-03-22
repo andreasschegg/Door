@@ -57,7 +57,7 @@ motor_shaft_d  = 14;      // Shaft + boss clearance (12mm housing + 2mm margin)
 
 margin   = 15;
 gap      = 15;
-plate_t  = 3;
+plate_t  = 1.5;         // Minimum for rigidity
 
 // Motor cradle
 cradle_wall      = 5;
