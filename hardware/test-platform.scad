@@ -152,14 +152,33 @@ module base() {
 
 ibt_tap_depth = 5;       // Blind hole depth for metal standoff to screw into
 
+ibt_flat = 1;  // Flatten inner face of each standoff by 1mm for heatsink clearance
+
 module ibt_standoffs() {
+    // Center of the 4-hole pattern
+    cx = ibt_hole_offset_x + ibt_hole_spacing / 2;
+    cy = ibt_hole_offset_y + ibt_hole_spacing / 2;
+
     for (pos = ibt_holes) {
+        // Direction from this hole toward center (for inner face cut)
+        dx = (cx - pos[0]) > 0 ? 1 : -1;
+        dy = (cy - pos[1]) > 0 ? 1 : -1;
+
         translate([pos[0], pos[1], plate_t]) {
             difference() {
                 cylinder(d = ibt_standoff_d, h = ibt_standoff_h);
-                // Blind hole at the top only
+                // Blind hole at the top
                 translate([0, 0, ibt_standoff_h - ibt_tap_depth])
                     cylinder(d = ibt_hole_d, h = ibt_tap_depth + 0.1);
+                // Flatten inner face X (cut 1mm from the side facing center)
+                translate([dx > 0 ? ibt_standoff_d/2 - ibt_flat : -ibt_standoff_d/2 - 1,
+                           -ibt_standoff_d/2 - 1, -0.1])
+                    cube([ibt_flat + 1, ibt_standoff_d + 2, ibt_standoff_h + 0.2]);
+                // Flatten inner face Y
+                translate([-ibt_standoff_d/2 - 1,
+                           dy > 0 ? ibt_standoff_d/2 - ibt_flat : -ibt_standoff_d/2 - 1,
+                           -0.1])
+                    cube([ibt_standoff_d + 2, ibt_flat + 1, ibt_standoff_h + 0.2]);
             }
         }
     }
