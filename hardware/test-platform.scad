@@ -294,10 +294,14 @@ module breadboard_area() {
 // ============================================================
 
 module labels() {
-    translate([cradle_pos[0] + motor_length / 2, plate_h / 2, plate_t])
+    translate([cradle_pos[0] + motor_length / 2, plate_h / 2 + 2, plate_t])
         linear_extrude(0.5)
             text("Door Controller", size = 8, halign = "center",
                  valign = "center", font = "Arial:style=Bold");
+    translate([cradle_pos[0] + motor_length / 2 + 38, plate_h / 2 - 8, plate_t])
+        linear_extrude(0.4)
+            text("by MondayManiacs", size = 3.5, halign = "right",
+                 valign = "center", font = "Arial");
 }
 
 // ============================================================
