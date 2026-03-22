@@ -48,35 +48,35 @@ Arduino Nano ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor z
     │                                              ││
     │  Motor-Steuerung (mit Pull-Down)             ││
     │  ──────────────────────────────              ││
-    │  GPIO  4 ──┬── 10kΩ ── GND ──────► RPWM     ││
-    │  GPIO  5 ──┬── 10kΩ ── GND ──────► LPWM     ││
-    │  GPIO  6 ──┬── 10kΩ ── GND ──────► R_EN     ││
-    │  GPIO  7 ──┬── 10kΩ ── GND ──────► L_EN     ││
+    │  GPIO  5 ──┬── 10kΩ ── GND ──────► RPWM     ││
+    │  GPIO  6 ──┬── 10kΩ ── GND ──────► LPWM     ││
+    │  GPIO  7 ──┬── 10kΩ ── GND ──────► R_EN     ││
+    │  GPIO  8 ──┬── 10kΩ ── GND ──────► L_EN     ││
     │                                              ││
     │  Strom-Messung (mit Spannungsteiler + Zener) ││
     │  ────────────────────────────────────────     ││
-    │  GPIO  1 ◄─ 18kΩ ─┬─ 10kΩ ◄──────── R_IS    ││
+    │  GPIO  9 ◄─ 18kΩ ─┬─ 10kΩ ◄──────── R_IS    ││
     │                 ZD 3.3V                      ││
     │                   GND                        ││
-    │  GPIO  2 ◄─ 18kΩ ─┬─ 10kΩ ◄──────── L_IS    ││
+    │  GPIO 10 ◄─ 18kΩ ─┬─ 10kΩ ◄──────── L_IS    ││
     │                 ZD 3.3V                      ││
     │                   GND                        ││
     │                                              ││
     │  Encoder (mit Serienwiderstand + Filter)       ││
     │  ────────────────────────────────────────     ││
-    │  GPIO 17 ◄── 1kΩ ──┬──────────────── Ch.A   ││
+    │  GPIO  3 ◄── 1kΩ ──┬──────────────── Ch.A   ││
     │                   100nF                      ││
     │                    GND                       ││
-    │  GPIO 18 ◄── 1kΩ ──┬──────────────── Ch.B   ││
+    │  GPIO  4 ◄── 1kΩ ──┬──────────────── Ch.B   ││
     │                   100nF                      ││
     │                    GND                       ││
     │                                              ││
     │  Endschalter (mit Serienwiderstand + Filter) ││
     │  ────────────────────────────────────────     ││
-    │  GPIO 8 ◄── 1kΩ ──┬──── /  ── GND  (OPEN)  ││
+    │  GPIO  1 ◄── 1kΩ ──┬──── /  ── GND  (OPEN)  ││
     │                   100nF                      ││
     │                    GND                       ││
-    │  GPIO 9 ◄── 1kΩ ──┬──── /  ── GND  (CLOSE) ││
+    │  GPIO  2 ◄── 1kΩ ──┬──── /  ── GND  (CLOSE) ││
     │                   100nF                      ││
     │                    GND                       ││
     │                                              ││
@@ -93,8 +93,8 @@ Arduino Nano ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor z
     │  │  GND ── GND   │      │  Encoder:            │
     │  └───────────────┘      │  VCC ◄── 5V Rail     │
     │                         │  GND ◄── GND         │
-    │                         │  Ch.A ──► GPIO 17    │
-    │                         │  Ch.B ──► GPIO 18    │
+    │                         │  Ch.A ──► GPIO  3    │
+    │                         │  Ch.B ──► GPIO  4    │
     │                         └──────────────────────┘
     │
    GND (alle Massen verbunden)
