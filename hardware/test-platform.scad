@@ -1,5 +1,5 @@
 // ============================================================
-// Door Controller — Test Platform v2
+// Door Controller — Test Platform v3
 // For Prusa 3D Printer (fits 250x210mm bed)
 // ============================================================
 //
@@ -9,12 +9,13 @@
 //   |  [Breadboard 165x55]                     |
 //   |  (Arduino Nano ESP32 plugs into it)      |
 //   |                                           |
-//   |  [IBT_2 heatsink-down]   [===Motor===]→  |
-//   |  pins up                  lying on side   |
+//   |  [IBT_2 on 25mm standoffs]  [Motor]→     |
+//   |  40x40 holes, pins up      side-mount    |
 //   +-------------------------------------------+
 //
-// IBT_2: heatsink faces down onto platform, pins face up.
-// Motor: lies on its side in a cradle, shaft extends right.
+// IBT_2: on 4x 25mm standoff sleeves, M3, 40x40mm hole pattern.
+// Motor: lies on its side, screwed to a side wall via 6x M3 hex
+//        pattern. Shaft extends right beyond the platform.
 //
 
 $fn = 60;
@@ -28,18 +29,16 @@ bb_w = 165;
 bb_h = 55;
 
 // IBT_2 (BTS7960) Motor Driver Module
-ibt_w     = 50;         // PCB width
-ibt_h     = 50;         // PCB height
-ibt_holes = [            // M3 mounting holes from bottom-left
-    [ 4,  4],
-    [46,  4],
-    [ 4, 46],
-    [46, 46]
-];
+ibt_hole_spacing = 40;   // Hole pattern 40x40mm
+ibt_standoff_h   = 25;   // Standoff sleeve height
+ibt_standoff_d   = 8;    // Standoff outer diameter
+ibt_hole_d       = 3.2;  // M3 through-hole
 
 // DFRobot FIT0185 Motor
-motor_d        = 37;     // Motor body diameter
-motor_length   = 75;     // Total motor body length (without shaft)
+motor_d        = 37;      // Motor body diameter
+motor_length   = 75;      // Motor body length (without shaft)
+motor_hex_r    = 15.5;    // 6x M3 hex pattern circumradius
+motor_shaft_d  = 10;      // Shaft clearance hole
 
 // ============================================================
 // Platform Parameters
@@ -49,44 +48,62 @@ margin   = 15;
 gap      = 15;
 plate_t  = 3;
 
-// IBT_2 mounting (heatsink-down, screws from above)
-ibt_hole_d = 3.2;       // M3 through-hole
-
 // Motor cradle
-cradle_wall   = 5;       // Wall thickness
-cradle_clearance = 1;    // Diameter clearance for motor fit
+cradle_wall      = 5;
+cradle_clearance = 1;
+
+// Motor side wall (for screw mounting)
+side_wall_t = 5;
 
 // Breadboard rails
 rail_h = 5;
 rail_w = 2.5;
-
-// Zip-tie slot dimensions
-zip_w = 4;               // Slot width
-zip_h = 3;               // Slot height
 
 // ============================================================
 // Layout Calculation
 // ============================================================
 
 // Motor cradle dimensions
-cradle_r     = motor_d / 2 + cradle_clearance;
+cradle_r       = motor_d / 2 + cradle_clearance;
 cradle_total_w = motor_d + 2 * cradle_wall;
 cradle_total_h = cradle_r + cradle_wall;
 
-// Bottom row positions
-ibt_pos     = [margin, margin];
-cradle_pos  = [margin + ibt_w + gap, margin + (ibt_h - cradle_total_w) / 2];
+// Side wall height: motor center needs to be at cradle_total_h
+// The side wall holds the motor faceplate at that height
+side_wall_h = cradle_total_h + plate_t;
 
-// Platform width: fits breadboard or bottom row, whichever is larger
+// Bottom row positions
+// IBT_2 area (40x40 holes + standoff diameter margin)
+ibt_area_w = ibt_hole_spacing + ibt_standoff_d;
+ibt_area_h = ibt_hole_spacing + ibt_standoff_d;
+ibt_pos    = [margin, margin];
+
+// Motor cradle starts after IBT_2
+cradle_pos = [margin + ibt_area_w + gap, margin + (ibt_area_h - cradle_total_w) / 2];
+
+// Side wall at the right end of the cradle
+side_wall_x = cradle_pos[0] + motor_length;
+
+// Platform width
 plate_w = max(bb_w + 2 * margin,
-              cradle_pos[0] + motor_length + margin);
+              side_wall_x + side_wall_t + margin);
 
 // Breadboard above bottom row
 bb_pos = [(plate_w - bb_w) / 2,
-           margin + max(ibt_h, cradle_total_w) + gap];
+           margin + max(ibt_area_h, cradle_total_w) + gap];
 
 // Platform height
 plate_h = bb_pos[1] + bb_h + margin;
+
+// IBT_2 hole positions (centered in ibt_area)
+ibt_hole_offset_x = ibt_pos[0] + (ibt_area_w - ibt_hole_spacing) / 2;
+ibt_hole_offset_y = ibt_pos[1] + (ibt_area_h - ibt_hole_spacing) / 2;
+ibt_holes = [
+    [ibt_hole_offset_x,                       ibt_hole_offset_y],
+    [ibt_hole_offset_x + ibt_hole_spacing,     ibt_hole_offset_y],
+    [ibt_hole_offset_x,                       ibt_hole_offset_y + ibt_hole_spacing],
+    [ibt_hole_offset_x + ibt_hole_spacing,     ibt_hole_offset_y + ibt_hole_spacing]
+];
 
 // ============================================================
 // Modules
@@ -105,86 +122,83 @@ module rounded_plate(w, h, t, r = 5) {
 // ============================================================
 
 module base() {
-    rounded_plate(plate_w, plate_h, plate_t);
+    difference() {
+        rounded_plate(plate_w, plate_h, plate_t);
+
+        // IBT_2 M3 through-holes
+        for (pos = ibt_holes) {
+            translate([pos[0], pos[1], -0.1])
+                cylinder(d = ibt_hole_d, h = plate_t + 0.2);
+        }
+    }
 }
 
 // ============================================================
-// IBT_2 Mount (heatsink-down, pins-up)
-// Through-holes for M3 screws, heatsink rests on plate surface
+// IBT_2 Standoff Sleeves (25mm tall, M3 through-hole)
+// Board screws on top, heatsink hangs below board in the air
 // ============================================================
 
-module ibt_mount() {
-    // Through-holes in plate
-    for (hole = ibt_holes) {
-        translate([ibt_pos[0] + hole[0],
-                   ibt_pos[1] + hole[1],
-                   -0.1])
-            cylinder(d = ibt_hole_d, h = plate_t + 0.2);
+module ibt_standoffs() {
+    for (pos = ibt_holes) {
+        translate([pos[0], pos[1], plate_t]) {
+            difference() {
+                cylinder(d = ibt_standoff_d, h = ibt_standoff_h);
+                translate([0, 0, -0.1])
+                    cylinder(d = ibt_hole_d, h = ibt_standoff_h + 0.2);
+            }
+        }
     }
 
-    // Outline embossed on plate surface
-    translate([ibt_pos[0], ibt_pos[1], plate_t])
+    // Outline on plate for reference
+    translate([ibt_hole_offset_x - ibt_standoff_d / 2,
+               ibt_hole_offset_y - ibt_standoff_d / 2,
+               plate_t])
         difference() {
-            cube([ibt_w, ibt_h, 0.6]);
+            cube([ibt_hole_spacing + ibt_standoff_d,
+                  ibt_hole_spacing + ibt_standoff_d, 0.6]);
             translate([1.5, 1.5, -0.1])
-                cube([ibt_w - 3, ibt_h - 3, 0.8]);
+                cube([ibt_hole_spacing + ibt_standoff_d - 3,
+                      ibt_hole_spacing + ibt_standoff_d - 3, 0.8]);
         }
 }
 
 // ============================================================
-// Motor Cradle (motor lying on its side, shaft extends right)
-// Two end walls with semicircular cutout + base + zip-tie slots
+// Motor Cradle (2 support walls) + Side Wall (screw mount)
+// Motor lies on its side, shaft extends right past side wall
 // ============================================================
 
 module motor_cradle() {
     translate([cradle_pos[0], cradle_pos[1], plate_t]) {
-        // Base plate of cradle
-        cube([motor_length, cradle_total_w, 2]);
 
-        // Left end wall (closed — stops motor from sliding out)
-        difference() {
-            cube([cradle_wall, cradle_total_w, cradle_total_h]);
-            translate([-1, cradle_total_w / 2, cradle_total_h])
-                rotate([0, 90, 0])
-                    cylinder(r = cradle_r, h = cradle_wall + 2);
-        }
-
-        // Right end wall (with shaft slot — motor shaft exits here)
-        translate([motor_length - cradle_wall, 0, 0])
-            difference() {
-                cube([cradle_wall, cradle_total_w, cradle_total_h]);
-                // Semicircular cutout
-                translate([-1, cradle_total_w / 2, cradle_total_h])
-                    rotate([0, 90, 0])
-                        cylinder(r = cradle_r, h = cradle_wall + 2);
-                // Shaft slot (open at bottom of cutout for shaft)
-                translate([-1, cradle_total_w / 2 - motor_d / 4,
-                           cradle_total_h - cradle_r])
-                    cube([cradle_wall + 2, motor_d / 2, cradle_r]);
-            }
-
-        // Middle support wall
-        translate([motor_length / 2 - cradle_wall / 2, 0, 0])
-            difference() {
-                cube([cradle_wall, cradle_total_w, cradle_total_h]);
-                translate([-1, cradle_total_w / 2, cradle_total_h])
-                    rotate([0, 90, 0])
-                        cylinder(r = cradle_r, h = cradle_wall + 2);
-            }
-
-        // Zip-tie bridges (arch over the motor for securing)
-        for (x_offset = [motor_length * 0.25, motor_length * 0.7]) {
-            translate([x_offset - zip_w / 2, 0, 0]) {
+        // --- 2 Cradle Support Walls ---
+        for (x_offset = [motor_length * 0.2, motor_length * 0.65]) {
+            translate([x_offset - cradle_wall / 2, 0, 0])
                 difference() {
-                    // Bridge block
-                    cube([zip_w, cradle_total_w, cradle_total_h + 5]);
-                    // Motor clearance (slightly larger than motor)
+                    cube([cradle_wall, cradle_total_w, cradle_total_h]);
                     translate([-1, cradle_total_w / 2, cradle_total_h])
                         rotate([0, 90, 0])
-                            cylinder(r = cradle_r + 2, h = zip_w + 2);
-                    // Zip-tie channel (slot through the bridge)
-                    translate([-1, cradle_wall - 1, cradle_total_h + 1])
-                        cube([zip_w + 2, cradle_total_w - 2 * cradle_wall + 2, zip_h]);
+                            cylinder(r = cradle_r, h = cradle_wall + 2);
+                }
+        }
+
+        // --- Side Wall (right end, motor screws to this) ---
+        translate([motor_length, 0, 0]) {
+            difference() {
+                cube([side_wall_t, cradle_total_w, cradle_total_h]);
+
+                // Motor shaft hole (center of wall)
+                translate([-1, cradle_total_w / 2, cradle_total_h])
+                    rotate([0, 90, 0])
+                        cylinder(d = motor_shaft_d, h = side_wall_t + 2);
+
+                // 6x M3 hex pattern mounting holes
+                for (i = [0:5]) {
+                    angle = i * 60;
+                    translate([-1,
+                               cradle_total_w / 2 + motor_hex_r * sin(angle),
+                               cradle_total_h + motor_hex_r * cos(angle)])
+                        rotate([0, 90, 0])
+                            cylinder(d = ibt_hole_d, h = side_wall_t + 2);
                 }
             }
         }
@@ -192,7 +206,7 @@ module motor_cradle() {
 }
 
 // ============================================================
-// Breadboard Rails (side clips + lips)
+// Breadboard Rails
 // ============================================================
 
 module breadboard_rails() {
@@ -211,12 +225,12 @@ module breadboard_rails() {
 }
 
 // ============================================================
-// Labels (embossed text)
+// Labels
 // ============================================================
 
 module labels() {
-    translate([ibt_pos[0] + ibt_w / 2,
-               ibt_pos[1] + ibt_h / 2, plate_t])
+    translate([ibt_hole_offset_x + ibt_hole_spacing / 2,
+               ibt_hole_offset_y + ibt_hole_spacing / 2, plate_t])
         linear_extrude(0.5)
             text("IBT_2", size = 7, halign = "center",
                  valign = "center", font = "Arial:style=Bold");
@@ -238,31 +252,17 @@ module labels() {
 // Assembly
 // ============================================================
 
-difference() {
-    union() {
-        color("SlateGray") base();
-        color("DimGray")   motor_cradle();
-        color("DimGray")   breadboard_rails();
-        color("White")     labels();
-    }
-    // IBT_2 through-holes (cut from assembled base)
-    ibt_mount();
-}
-
-// IBT_2 outline (added after difference)
-translate([ibt_pos[0], ibt_pos[1], plate_t])
-    color("White")
-        difference() {
-            cube([ibt_w, ibt_h, 0.6]);
-            translate([1.5, 1.5, -0.1])
-                cube([ibt_w - 3, ibt_h - 3, 0.8]);
-        }
+color("SlateGray") base();
+color("DimGray")   ibt_standoffs();
+color("DimGray")   motor_cradle();
+color("DimGray")   breadboard_rails();
+color("White")     labels();
 
 // ============================================================
 // Info
 // ============================================================
 
 echo(str("Platform size: ", plate_w, " x ", plate_h, " mm"));
-echo(str("Cradle total width: ", cradle_total_w, " mm"));
-echo(str("Cradle total height: ", cradle_total_h + plate_t, " mm above base"));
+echo(str("IBT_2 standoff height: ", ibt_standoff_h, " mm"));
+echo(str("Motor center height: ", cradle_total_h + plate_t, " mm"));
 echo(str("Fits Prusa bed: ", plate_w <= 250 && plate_h <= 210 ? "YES" : "NO"));
