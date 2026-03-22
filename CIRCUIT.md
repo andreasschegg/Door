@@ -113,7 +113,7 @@ ESP32-S3 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen
 | Zener-Diode | 2 | 3.3V | SOD-323 / THT | ADC-Überspannungsschutz |
 | Elko | 1 | 470µF / 25V | Radial | 12V-Puffer |
 | Elko | 1 | 100µF / 10V | Radial | 5V-Puffer |
-| Keramikkondensator | 7 | 100nF | 0805 / THT | Entkopplung (12V, 5V, ESP32, 2× Endschalter, 2× Encoder) |
+| Keramikkondensator | 7 | 100nF | 0805 / THT | Entkopplung (12V, 5V, ESP32-S3, 2× Endschalter, 2× Encoder) |
 | Mikroschalter | 2 | – | – | Endlagen-Erkennung |
 
 ---
@@ -122,15 +122,15 @@ ESP32-S3 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen
 
 ### Pull-Down Widerstände (10kΩ) auf RPWM, LPWM, R_EN, L_EN
 
-**Problem:** Während des ESP32-Bootprozesses (ca. 100-300 ms) sind die GPIOs nicht konfiguriert und floaten. Der BTS7960 interpretiert ein floatendes HIGH-Signal als aktiv — der Motor könnte beim Einschalten unkontrolliert anlaufen.
+**Problem:** Während des ESP32-S3-Bootprozesses (ca. 100-300 ms) sind die GPIOs nicht konfiguriert und floaten. Der BTS7960 interpretiert ein floatendes HIGH-Signal als aktiv — der Motor könnte beim Einschalten unkontrolliert anlaufen.
 
-**Lösung:** 10kΩ Pull-Down Widerstände halten die Leitungen zuverlässig auf LOW, bis der ESP32 die Pins konfiguriert hat. 10kΩ ist hoch genug, um den ESP32-Ausgang nicht merklich zu belasten (0.33 mA bei 3.3V), aber niedrig genug, um sicher gegen Störeinkopplungen zu sein.
+**Lösung:** 10kΩ Pull-Down Widerstände halten die Leitungen zuverlässig auf LOW, bis der ESP32-S3 die Pins konfiguriert hat. 10kΩ ist hoch genug, um den ESP32-S3-Ausgang nicht merklich zu belasten (0.33 mA bei 3.3V), aber niedrig genug, um sicher gegen Störeinkopplungen zu sein.
 
 **Warum nicht im BTS7960 integriert?** Das BTS7960-Modul hat keine definierten Pull-Downs auf den Logikeingängen. Der Zustand bei offenem Eingang ist undefiniert.
 
 ### Spannungsteiler (10kΩ / 18kΩ) + Zener-Diode (3.3V) auf IS-Pins
 
-**Problem:** Die Current-Sense Ausgänge des BTS7960 können bis zu 5V ausgeben (bei hohem Motorstrom). Der ESP32 ADC verträgt maximal 3.3V — höhere Spannungen beschädigen den Eingangs-Pin dauerhaft.
+**Problem:** Die Current-Sense Ausgänge des BTS7960 können bis zu 5V ausgeben (bei hohem Motorstrom). Der ESP32-S3 ADC verträgt maximal 3.3V — höhere Spannungen beschädigen den Eingangs-Pin dauerhaft.
 
 **Lösung — Spannungsteiler:**
 ```
@@ -151,7 +151,7 @@ V_IS = 5.1A / 8.5 = 0.6V → nach Teiler (×0.643) 0.386V → ADC ≈ 479
 
 ### Encoder-Schutz (1kΩ + 100nF)
 
-**Problem:** Der DFRobot FIT0185 Encoder gibt 5V-Signale aus. Die ESP32-GPIO-Eingänge sind offiziell für max. 3.3V spezifiziert, tolerieren aber de facto 5V auf Eingängen über die internen Schutzdioden.
+**Problem:** Der DFRobot FIT0185 Encoder gibt 5V-Signale aus. Die ESP32-S3-GPIO-Eingänge sind offiziell für max. 3.3V spezifiziert, tolerieren aber de facto 5V auf Eingängen über die internen Schutzdioden.
 
 **Lösung:** Der 1kΩ Serienwiderstand begrenzt den Strom in die interne Clamp-Diode auf ~1.7mA — weit unter dem kritischen Bereich. Bei der Einsatzhäufigkeit dieses Projekts (30-40 Zyklen pro Abend) ist Langzeit-Degradation kein Thema. Ein Level-Shifter wäre erst bei 24/7-Dauerbetrieb empfehlenswert.
 
@@ -159,7 +159,7 @@ V_IS = 5.1A / 8.5 = 0.6V → nach Teiler (×0.643) 0.386V → ADC ≈ 479
 
 ### Stützkondensatoren (Elkos + Keramik)
 
-**Problem:** Der Motor erzeugt beim Anlaufen, Abbremsen und unter Last starke Stromschwankungen. Diese verursachen Spannungseinbrüche (Brownouts) und hochfrequente Störungen (EMV) auf der Versorgungsleitung. Der ESP32 ist besonders empfindlich — ein kurzer Spannungseinbruch unter ~2.8V löst einen Brownout-Reset aus.
+**Problem:** Der Motor erzeugt beim Anlaufen, Abbremsen und unter Last starke Stromschwankungen. Diese verursachen Spannungseinbrüche (Brownouts) und hochfrequente Störungen (EMV) auf der Versorgungsleitung. Der ESP32-S3 ist besonders empfindlich — ein kurzer Spannungseinbruch unter ~2.8V löst einen Brownout-Reset aus.
 
 **Lösung — 12V-Rail (470µF Elko + 100nF Keramik):**
 - Der 470µF Elko puffert die grossen Stromspitzen des Motors (Anlaufstrom kann kurzzeitig 3-5× Nennstrom betragen)
@@ -167,13 +167,13 @@ V_IS = 5.1A / 8.5 = 0.6V → nach Teiler (×0.643) 0.386V → ADC ≈ 479
 - Platzierung: So nah wie möglich am BTS7960 B+ Eingang
 
 **Lösung — 5V-Rail (100µF Elko + 100nF Keramik):**
-- Puffert die 5V-Versorgung für ESP32, BTS7960-Logik und Encoder
+- Puffert die 5V-Versorgung für ESP32-S3, BTS7960-Logik und Encoder
 - Verhindert, dass Motor-Spannungseinbrüche auf dem 12V-Rail durch den Buck Converter auf die 5V-Seite durchschlagen
 
-**Lösung — 100nF direkt am ESP32:**
+**Lösung — 100nF direkt am ESP32-S3:**
 - Entkopplung der digitalen Schaltung vom Rest
 - Filtert kurze HF-Störungen direkt an der Versorgung des Mikrocontrollers
-- Platzierung: So nah wie möglich an VIN/GND des ESP32-Boards
+- Platzierung: So nah wie möglich an VIN/GND des ESP32-S3-Boards
 
 **Warum zwei Typen?** Elkos haben hohe Kapazität aber schlechtes HF-Verhalten (parasitäre Induktivität). Keramikkondensatoren haben niedrige Kapazität aber exzellentes HF-Verhalten. Zusammen decken sie das gesamte Frequenzspektrum ab.
 
@@ -181,7 +181,7 @@ V_IS = 5.1A / 8.5 = 0.6V → nach Teiler (×0.643) 0.386V → ADC ≈ 479
 
 **Problem 1 — Fehlverdrahtung:** Wenn ein Endschalter-Kabel versehentlich an 12V oder 5V gerät (z.B. bei Wartungsarbeiten), fliesst ohne Schutz ein zerstörerischer Strom in den GPIO.
 
-**Lösung:** Der 1kΩ Serienwiderstand begrenzt den Strom auf maximal 12 mA bei 12V Fehlspannung — sicher für den ESP32 (max. 12 mA pro Pin). Im Normalbetrieb fliesst nur 3.3V / (1kΩ + interner Pull-up ~45kΩ) ≈ 0.07 mA — vernachlässigbar.
+**Lösung:** Der 1kΩ Serienwiderstand begrenzt den Strom auf maximal 12 mA bei 12V Fehlspannung — sicher für den ESP32-S3 (max. 12 mA pro Pin). Im Normalbetrieb fliesst nur 3.3V / (1kΩ + interner Pull-up ~45kΩ) ≈ 0.07 mA — vernachlässigbar.
 
 **Problem 2 — Prellen und Störungen:** Mechanische Endschalter prellen beim Betätigen (10-50 ms Kontaktspringen). Lange Kabel zum Endschalter wirken als Antennen und fangen elektromagnetische Störungen ein (besonders vom PWM-getakteten Motor).
 
@@ -195,13 +195,13 @@ Die Software implementiert zusätzlich ein 50 ms Debouncing als zweite Schutzsch
 
 ## Verdrahtungshinweise
 
-1. **GND-Führung:** Alle Massen (Netzteil, Buck Converter, ESP32, BTS7960, Encoder) an einem gemeinsamen Punkt verbinden (Star-Ground). Keine Schleifen bilden — Motor-Rückstrom soll nicht über die Logik-Masse fliessen.
+1. **GND-Führung:** Alle Massen (Netzteil, Buck Converter, ESP32-S3, BTS7960, Encoder) an einem gemeinsamen Punkt verbinden (Star-Ground). Keine Schleifen bilden — Motor-Rückstrom soll nicht über die Logik-Masse fliessen.
 
 2. **Kabelquerschnitt:** Motorleitungen (M+/M-, B+/B-) mindestens 1.0 mm², Signalleitungen 0.25 mm² genügt.
 
 3. **Kondensatoren-Platzierung:** Stützkondensatoren immer so nah wie möglich an den Verbraucher-Pins. Lange Leitungen zwischen Kondensator und IC machen die Entkopplung wirkungslos.
 
-4. **Endschalter-Kabel:** Geschirmte oder paarweise verdrillte Leitungen verwenden, wenn die Kabelwege länger als 30 cm sind. Den Schirm einseitig (am ESP32) auf GND legen.
+4. **Endschalter-Kabel:** Geschirmte oder paarweise verdrillte Leitungen verwenden, wenn die Kabelwege länger als 30 cm sind. Den Schirm einseitig (am ESP32-S3) auf GND legen.
 
 5. **Motor-Kabel:** Kurz halten und von den Signalleitungen räumlich trennen. Idealerweise separat verlegen.
 
@@ -216,6 +216,6 @@ Beim ersten Start (oder nach Firmware-Update) muss die Tür kalibriert werden:
 1. **Über das Web-Interface** (`http://door.local`) → Settings → "Calibrate"
 2. Der Motor fährt die Tür zuerst ganz zu (Endschalter CLOSE → Position 0)
 3. Dann fährt er die Tür ganz auf (Endschalter OPEN → Position wird gespeichert)
-4. Die Kalibrierungsdaten werden im NVS (Non-Volatile Storage) des ESP32 gespeichert und überleben Neustarts
+4. Die Kalibrierungsdaten werden im NVS (Non-Volatile Storage) des ESP32-S3 gespeichert und überleben Neustarts
 
 Ohne Kalibrierung arbeitet der Controller ausschliesslich mit Endschaltern (wie Ansatz A).
