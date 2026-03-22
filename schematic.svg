@@ -6,7 +6,7 @@
 
   <!-- TITLE -->
   <text x="1050" y="58" text-anchor="middle" font-size="36" font-weight="bold" fill="#212529">Door Controller — Schaltplan</text>
-  <text x="1050" y="88" text-anchor="middle" font-size="20" fill="#6c757d">ESP32-S3 + BTS7960 H-Bridge + DFRobot FIT0185 (Encoder)</text>
+  <text x="1050" y="88" text-anchor="middle" font-size="20" fill="#6c757d">Arduino Nano ESP32 + BTS7960 H-Bridge + DFRobot FIT0185 (Encoder)</text>
   <line x1="50" y1="105" x2="2050" y2="105" stroke="#dee2e6" stroke-width="1.5"/>
 
   <!-- ============================================================ -->
@@ -116,7 +116,7 @@
   <rect x="80" y="380" width="350" height="930" rx="12" fill="#fff" stroke="#0d6efd" stroke-width="3"/>
   <rect x="80" y="380" width="350" height="40" rx="12" fill="#0d6efd"/>
   <rect x="80" y="406" width="350" height="14" fill="#0d6efd"/>
-  <text x="255" y="410" text-anchor="middle" font-size="22" font-weight="bold" fill="#fff">ESP32-S3 DevKit</text>
+  <text x="255" y="410" text-anchor="middle" font-size="20" font-weight="bold" fill="#fff">Arduino Nano ESP32</text>
 
   <!-- VIN -->
   <text x="410" y="437" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">VIN</text>
@@ -154,9 +154,9 @@
   <!-- Endstops (shifted down) -->
   <line x1="95" y1="1115" x2="415" y2="1115" stroke="#e9ecef" stroke-width="1.5"/>
   <text x="100" y="1143" font-size="15" fill="#6c757d" font-style="italic">Endstops</text>
-  <text x="410" y="1177" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 15</text>
+  <text x="410" y="1177" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 8</text>
   <line x1="430" y1="1170" x2="510" y2="1170" stroke="#6c757d" stroke-width="2"/><circle cx="510" cy="1170" r="4.5" fill="#6c757d"/>
-  <text x="410" y="1237" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 16</text>
+  <text x="410" y="1237" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 9</text>
   <line x1="430" y1="1230" x2="510" y2="1230" stroke="#6c757d" stroke-width="2"/><circle cx="510" cy="1230" r="4.5" fill="#6c757d"/>
 
   <!-- GND -->

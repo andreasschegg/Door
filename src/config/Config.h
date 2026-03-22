@@ -1,29 +1,33 @@
 #pragma once
 
 // =============================================
-// Pin Configuration (ESP32-S3-N16R8)
+// Pin Configuration (Arduino Nano ESP32 — ESP32-S3-N16R8)
 // =============================================
-// GPIO 26-37 are NOT available (used by Octal Flash + PSRAM).
-// GPIO 19-20 are USB D-/D+ (native USB, do not use).
-// GPIO 0 is strapping pin (boot button).
-// ADC1 channels: GPIO 1-10. ADC2: GPIO 11-20 (conflicts with WiFi).
-// We use ADC1 (GPIO 1-10) for current sensing.
+// Board: Arduino Nano ESP32 (44-pin, u-blox NORA-W106)
+// GPIO 26-37 NOT available (Octal Flash + PSRAM).
+// GPIO 19-20 are USB D-/D+ (native USB).
+// ADC1: GPIO 1-10. We use ADC1 for current sensing.
+//
+// Nano ESP32 pin mapping:
+//   A0=GPIO1, A1=GPIO2, A3=GPIO4
+//   D2=GPIO5, D3=GPIO6, D4=GPIO7, D5=GPIO8, D6=GPIO9
+//   D8=GPIO17, D9=GPIO18
 
 // BTS7960 Motor Driver
-#define PIN_RPWM        4       // Right PWM (forward / open)
-#define PIN_LPWM        5       // Left PWM  (reverse / close)
-#define PIN_R_EN        6       // Right enable
-#define PIN_L_EN        7       // Left enable
-#define PIN_R_IS        1       // Right current sense (ADC1)
-#define PIN_L_IS        2       // Left current sense  (ADC1)
+#define PIN_RPWM        4       // A3  — Right PWM (forward / open)
+#define PIN_LPWM        5       // D2  — Left PWM  (reverse / close)
+#define PIN_R_EN        6       // D3  — Right enable
+#define PIN_L_EN        7       // D4  — Left enable
+#define PIN_R_IS        1       // A0  — Right current sense (ADC1)
+#define PIN_L_IS        2       // A1  — Left current sense  (ADC1)
 
 // Endstops (active LOW — connect switch between pin and GND)
-#define PIN_ENDSTOP_OPEN    15
-#define PIN_ENDSTOP_CLOSE   16
+#define PIN_ENDSTOP_OPEN    8   // D5
+#define PIN_ENDSTOP_CLOSE   9   // D6
 
 // Encoder (DFRobot FIT0185 — Hall effect, quadrature)
-#define PIN_ENCODER_A       17      // Encoder channel A
-#define PIN_ENCODER_B       18      // Encoder channel B
+#define PIN_ENCODER_A       17  // D8  — Encoder channel A
+#define PIN_ENCODER_B       18  // D9  — Encoder channel B
 #define ENCODER_ENABLED     1       // Set to 0 to compile without encoder
 
 // =============================================

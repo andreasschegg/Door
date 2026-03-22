@@ -4,7 +4,7 @@
 
 | # | Bauteil | Beschreibung | Anzahl | Bezugsquelle |
 |---|---|---|---|---|
-| 1 | ESP32 DevKit | ESP32-S3-N16R8 Development Board (44-Pin) | 1 | |
+| 1 | Arduino Nano ESP32 | ESP32-S3, u-blox NORA-W106, USB-C | 1 | Arduino Store / Händler |
 | 2 | BTS7960 H-Bridge | 43A Motor Driver Modul | 1 | |
 | 3 | DFRobot FIT0185 | DC-Getriebemotor 12V, 83RPM, 45kg·cm, Hall-Encoder 2096 CPR | 1 | DFRobot / Schweizer Händler |
 | 4 | 12V Netzteil | min. 5A (60W), DC-Hohlstecker | 1 | |
