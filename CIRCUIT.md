@@ -55,10 +55,10 @@ ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen un
     │                                              ││
     │  Strom-Messung (mit Spannungsteiler + Zener) ││
     │  ────────────────────────────────────────     ││
-    │  GPIO 34 ◄─ 20kΩ ─┬─ 10kΩ ◄──────── R_IS    ││
+    │  GPIO 34 ◄─ 18kΩ ─┬─ 10kΩ ◄──────── R_IS    ││
     │                 ZD 3.3V                      ││
     │                   GND                        ││
-    │  GPIO 35 ◄─ 20kΩ ─┬─ 10kΩ ◄──────── L_IS    ││
+    │  GPIO 35 ◄─ 18kΩ ─┬─ 10kΩ ◄──────── L_IS    ││
     │                 ZD 3.3V                      ││
     │                   GND                        ││
     │                                              ││
@@ -108,7 +108,7 @@ ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen un
 |---|---|---|---|---|
 | Widerstand | 4 | 10kΩ | 0805 / THT | Pull-Down Motor-Pins |
 | Widerstand | 2 | 10kΩ | 0805 / THT | Spannungsteiler IS (oben) |
-| Widerstand | 2 | 20kΩ | 0805 / THT | Spannungsteiler IS (unten) |
+| Widerstand | 2 | 18kΩ | 0805 / THT | Spannungsteiler IS (unten) |
 | Widerstand | 4 | 1kΩ | 0805 / THT | Serienschutz Endschalter + Encoder |
 | Zener-Diode | 2 | 3.3V | SOD-323 / THT | ADC-Überspannungsschutz |
 | Elko | 1 | 470µF / 25V | Radial | 12V-Puffer |
@@ -128,25 +128,25 @@ ESP32 steuert über einen BTS7960 H-Bridge einen DC-Getriebemotor zum Öffnen un
 
 **Warum nicht im BTS7960 integriert?** Das BTS7960-Modul hat keine definierten Pull-Downs auf den Logikeingängen. Der Zustand bei offenem Eingang ist undefiniert.
 
-### Spannungsteiler (10kΩ / 20kΩ) + Zener-Diode (3.3V) auf IS-Pins
+### Spannungsteiler (10kΩ / 18kΩ) + Zener-Diode (3.3V) auf IS-Pins
 
 **Problem:** Die Current-Sense Ausgänge des BTS7960 können bis zu 5V ausgeben (bei hohem Motorstrom). Der ESP32 ADC verträgt maximal 3.3V — höhere Spannungen beschädigen den Eingangs-Pin dauerhaft.
 
 **Lösung — Spannungsteiler:**
 ```
 V_adc = V_is × R_bottom / (R_top + R_bottom)
-V_adc = V_is × 20kΩ / (10kΩ + 20kΩ)
-V_adc = V_is × 0.667
+V_adc = V_is × 18kΩ / (10kΩ + 18kΩ)
+V_adc = V_is × 0.643
 ```
-Bei maximalen 5V am IS-Pin kommen 3.33V am ADC an — gerade noch im sicheren Bereich.
+Bei maximalen 5V am IS-Pin kommen 3.21V am ADC an — sicher unter dem 3.3V Limit.
 
 **Lösung — Zener-Diode:**
 Die 3.3V Zener-Diode ist ein Sicherheitsnetz: Falls der Spannungsteiler allein nicht ausreicht (z.B. durch Toleranzen oder Spannungsspitzen), clippt die Zener zuverlässig bei 3.3V und schützt den ADC.
 
 **Auswirkung auf die Software:**
-Der `CURRENT_THRESHOLD` in `Config.h` ist auf `500` gesetzt. Bei der FIT0185 (7A Stall) löst dies bei ~5.1A aus:
+Der `CURRENT_THRESHOLD` in `Config.h` ist auf `482` gesetzt. Bei der FIT0185 (7A Stall) löst dies bei ~5.1A aus:
 ```
-V_IS = 5.1A / 8.5 = 0.6V → nach Teiler 0.4V → ADC ≈ 497
+V_IS = 5.1A / 8.5 = 0.6V → nach Teiler (×0.643) 0.386V → ADC ≈ 479
 ```
 
 ### Encoder-Schutz (1kΩ + 100nF)

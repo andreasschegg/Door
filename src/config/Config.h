@@ -39,20 +39,21 @@
 // =============================================
 // Safety — Current Sensing
 // =============================================
-// IS pins are behind a 10kΩ/20kΩ voltage divider to protect the 3.3V ADC.
-// Divider ratio: 20k / (10k + 20k) = 0.667
+// IS pins are behind a 10kΩ/18kΩ voltage divider to protect the 3.3V ADC.
+// Divider ratio: 18k / (10k + 18k) = 0.643
+// At max 5V IS output: 5 × 0.643 = 3.21V — safely under 3.3V ADC limit.
 //
 // BTS7960 IS ratio: ~8500:1 (load current to sense current).
 // With typical module sense resistor (~1kΩ):
 //   V_IS ≈ I_load / 8.5
-// After voltage divider: V_ADC = V_IS × 0.667
+// After voltage divider: V_ADC = V_IS × 0.643
 //
 // FIT0185: stall current 7A, normal load ~1-3A.
-// Trip at ~5A: V_IS = 5/8.5 = 0.588V → after divider 0.392V → ADC ~487
-// Set threshold to 500 (trips at ~5.1A, well under 7A stall).
+// Trip at ~5A: V_IS = 5/8.5 = 0.588V → after divider 0.378V → ADC ~469
+// Set threshold to 482 (trips at ~5.1A, well under 7A stall).
 #define IS_R_TOP                10000   // Voltage divider top resistor (Ohm)
-#define IS_R_BOTTOM             20000   // Voltage divider bottom resistor (Ohm)
-#define CURRENT_THRESHOLD       500     // ADC value — ~5A trip point
+#define IS_R_BOTTOM             18000   // Voltage divider bottom resistor (Ohm)
+#define CURRENT_THRESHOLD       482     // ADC value — ~5A trip point (18kΩ divider)
 #define DEBOUNCE_MS             50      // Endstop debounce time
 
 // =============================================

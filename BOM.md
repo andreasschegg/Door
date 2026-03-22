@@ -16,7 +16,7 @@
 | # | Bauteil | Wert | Anzahl | Zweck |
 |---|---|---|---|---|
 | 7 | Widerstand | 10kΩ | 6 | 4× Pull-Down Motor-Pins, 2× Spannungsteiler IS (oben) |
-| 8 | Widerstand | 20kΩ | 2 | Spannungsteiler IS (unten) |
+| 8 | Widerstand | 18kΩ | 2 | Spannungsteiler IS (unten) |
 | 9 | Widerstand | 1kΩ | 4 | 2× Serienschutz Endschalter, 2× Serienschutz Encoder |
 | 10 | Zener-Diode 3.3V | z.B. BZX84C3V3 | 2 | ADC-Überspannungsschutz IS-Pins |
 | 11 | Elko 470µF / 25V | Radial | 1 | 12V-Rail Puffer |
