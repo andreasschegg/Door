@@ -42,7 +42,7 @@ buck_l  = 37;             // PCB length
 buck_w  = 17;             // PCB width
 buck_t  = 1.5;            // PCB thickness
 buck_socket_h  = 10;      // Socket height
-buck_socket_wall = 2;     // Socket wall thickness
+buck_socket_wall = 3;     // Socket wall thickness
 buck_clearance = 0.3;     // Fit clearance
 
 // DFRobot FIT0185 Motor
@@ -230,26 +230,37 @@ module motor_cradle() {
 module buck_socket() {
     // PCB slides in from LEFT or RIGHT (along the 37mm length).
     // Two rails run along the full 37mm length (front + back),
-    // each with a groove that clamps the PCB edges.
+    // each with a groove cut into the INNER face only.
+    //
+    // Cross-section of one rail:
+    //   outer ←  → inner
+    //   ┌────────┐
+    //   │        │  ← lip (holds PCB from above)
+    //   │   ┌────┘  ← groove cut 1.5mm into 3mm wall
+    //   │   │ PCB   ← 1.8mm tall slot for PCB
+    //   │   └────┐  ← ledge (PCB rests here)
+    //   │        │
+    //   └────────┘  ← base
 
-    ledge_h = buck_socket_h - buck_t - buck_clearance;
-    inner_w = buck_w + buck_clearance;
-    w = buck_socket_wall;
+    ledge_h    = buck_socket_h - buck_t - buck_clearance;
+    groove_d   = buck_socket_wall / 2;    // Groove depth: half the wall
+    inner_w    = buck_w + buck_clearance;
+    w          = buck_socket_wall;
 
     translate([buck_pos[0], buck_pos[1], plate_t]) {
-        // Front rail (full length, groove facing inward)
+        // Front rail — groove on inner face (y = w - groove_d .. w)
         difference() {
             cube([buck_l, w, buck_socket_h]);
-            translate([-0.1, -0.1, ledge_h])
-                cube([buck_l + 0.2, w + 0.2, buck_t + buck_clearance]);
+            translate([-0.1, w - groove_d, ledge_h])
+                cube([buck_l + 0.2, groove_d + 0.1, buck_t + buck_clearance]);
         }
 
-        // Back rail (full length, groove facing inward)
+        // Back rail — groove on inner face (y = 0 .. groove_d)
         translate([0, w + inner_w, 0])
             difference() {
                 cube([buck_l, w, buck_socket_h]);
                 translate([-0.1, -0.1, ledge_h])
-                    cube([buck_l + 0.2, w + 0.2, buck_t + buck_clearance]);
+                    cube([buck_l + 0.2, groove_d + 0.1, buck_t + buck_clearance]);
             }
     }
 }
