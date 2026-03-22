@@ -43,7 +43,7 @@ buck_w  = 17;             // PCB width
 buck_t  = 1.5;            // PCB thickness
 buck_socket_h  = 10;      // Socket height
 buck_socket_wall = 3;     // Socket wall thickness
-buck_clearance = -3.5;    // Inner gap = 13.5mm. PCB (17mm) sits 1.75mm in each groove, clamped.
+buck_clearance = -3;      // Inner gap = 14mm. PCB (17mm) sits 1.5mm in each groove.
 
 // DFRobot FIT0185 Motor
 motor_d_front  = 37;      // Gearbox diameter (near faceplate)
@@ -271,20 +271,48 @@ module buck_socket() {
     inner_w     = buck_w + buck_clearance;  // 14mm wall gap
     w           = buck_socket_wall;         // 3mm wall thickness
 
-    translate([buck_pos[0], buck_pos[1], plate_t]) {
-        // Front rail — groove on inner face (y = w - groove_d .. w)
-        difference() {
-            cube([buck_l, w, buck_socket_h]);
-            translate([-0.1, w - groove_d, ledge_h])
-                cube([buck_l + 0.2, groove_d + 0.1, groove_h + 0.1]);
-        }
+    lip_len = 5;  // Lip only on right end (5mm)
 
-        // Back rail — groove on inner face (y = 0 .. groove_d)
-        translate([0, w + inner_w, 0])
+    translate([buck_pos[0], buck_pos[1], plate_t]) {
+        // Front rail — base up to groove, full length
+        cube([buck_l, w, ledge_h]);
+        // Front rail — lip only on right 5mm
+        translate([buck_l - lip_len, 0, 0])
+            cube([lip_len, w, buck_socket_h]);
+        // Front rail — groove area (full length above ledge, no lip except right)
+        translate([0, 0, ledge_h])
             difference() {
-                cube([buck_l, w, buck_socket_h]);
-                translate([-0.1, -0.1, ledge_h])
-                    cube([buck_l + 0.2, groove_d + 0.1, groove_h + 0.1]);
+                cube([buck_l - lip_len, w, groove_h]);
+                translate([-0.1, w - groove_d, 0])
+                    cube([buck_l - lip_len + 0.2, groove_d + 0.1, groove_h + 0.1]);
+            }
+        // Front rail — lip section groove
+        translate([buck_l - lip_len, 0, ledge_h])
+            difference() {
+                cube([lip_len, w, groove_h + lip_h]);
+                translate([-0.1, w - groove_d, 0])
+                    cube([lip_len + 0.2, groove_d + 0.1, groove_h + 0.1]);
+            }
+
+        // Back rail — base up to groove, full length
+        translate([0, w + inner_w, 0])
+            cube([buck_l, w, ledge_h]);
+        // Back rail — lip only on right 5mm
+        translate([buck_l - lip_len, w + inner_w, 0])
+            cube([lip_len, w, buck_socket_h]);
+        // Back rail — groove area (full length, no lip except right)
+        translate([0, w + inner_w, ledge_h])
+            difference() {
+                cube([buck_l - lip_len, w, groove_h]);
+                translate([-0.1, -0.1, 0])
+                    cube([buck_l - lip_len + 0.2, groove_d + 0.1, groove_h + 0.1]);
+            }
+        // Back rail — lip section groove
+        translate([buck_l - lip_len, w + inner_w, ledge_h])
+            difference() {
+                cube([lip_len, w, groove_h + lip_h]);
+                translate([-0.1, -0.1, 0])
+                    cube([lip_len + 0.2, groove_d + 0.1, groove_h + 0.1]);
             }
     }
 }
