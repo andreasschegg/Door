@@ -1,24 +1,29 @@
 #pragma once
 
 // =============================================
-// Pin Configuration
+// Pin Configuration (ESP32-S3-N16R8)
 // =============================================
+// GPIO 26-37 are NOT available (used by Octal Flash + PSRAM).
+// GPIO 19-20 are USB D-/D+ (native USB, do not use).
+// GPIO 0 is strapping pin (boot button).
+// ADC1 channels: GPIO 1-10. ADC2: GPIO 11-20 (conflicts with WiFi).
+// We use ADC1 (GPIO 1-10) for current sensing.
 
 // BTS7960 Motor Driver
-#define PIN_RPWM        25      // Right PWM (forward / open)
-#define PIN_LPWM        26      // Left PWM  (reverse / close)
-#define PIN_R_EN        27      // Right enable
-#define PIN_L_EN        14      // Left enable
-#define PIN_R_IS        34      // Right current sense (ADC, input only)
-#define PIN_L_IS        35      // Left current sense  (ADC, input only)
+#define PIN_RPWM        4       // Right PWM (forward / open)
+#define PIN_LPWM        5       // Left PWM  (reverse / close)
+#define PIN_R_EN        6       // Right enable
+#define PIN_L_EN        7       // Left enable
+#define PIN_R_IS        1       // Right current sense (ADC1)
+#define PIN_L_IS        2       // Left current sense  (ADC1)
 
 // Endstops (active LOW — connect switch between pin and GND)
-#define PIN_ENDSTOP_OPEN    32
-#define PIN_ENDSTOP_CLOSE   33
+#define PIN_ENDSTOP_OPEN    15
+#define PIN_ENDSTOP_CLOSE   16
 
 // Encoder (DFRobot FIT0185 — Hall effect, quadrature)
-#define PIN_ENCODER_A       16      // Encoder channel A
-#define PIN_ENCODER_B       17      // Encoder channel B
+#define PIN_ENCODER_A       17      // Encoder channel A
+#define PIN_ENCODER_B       18      // Encoder channel B
 #define ENCODER_ENABLED     1       // Set to 0 to compile without encoder
 
 // =============================================
