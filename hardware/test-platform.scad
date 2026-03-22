@@ -170,15 +170,10 @@ module ibt_standoffs() {
                 // Blind hole at the top
                 translate([0, 0, ibt_standoff_h - ibt_tap_depth])
                     cylinder(d = ibt_hole_d, h = ibt_tap_depth + 0.1);
-                // Flatten inner face X (cut 1mm from the side facing center)
+                // Flatten inner face X only (heatsink clearance left/right)
                 translate([dx > 0 ? ibt_standoff_d/2 - ibt_flat : -ibt_standoff_d/2 - 1,
                            -ibt_standoff_d/2 - 1, -0.1])
                     cube([ibt_flat + 1, ibt_standoff_d + 2, ibt_standoff_h + 0.2]);
-                // Flatten inner face Y
-                translate([-ibt_standoff_d/2 - 1,
-                           dy > 0 ? ibt_standoff_d/2 - ibt_flat : -ibt_standoff_d/2 - 1,
-                           -0.1])
-                    cube([ibt_standoff_d + 2, ibt_flat + 1, ibt_standoff_h + 0.2]);
             }
         }
     }
