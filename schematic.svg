@@ -5,7 +5,7 @@
   <rect x="15" y="15" width="2070" height="1770" fill="none" stroke="#ced4da" stroke-width="2.5" rx="6"/>
 
   <!-- TITLE -->
-  <text x="1050" y="58" text-anchor="middle" font-size="36" font-weight="bold" fill="#212529">Door Controller — Schaltplan</text>
+  <text x="1050" y="58" text-anchor="middle" font-size="36" font-weight="bold" fill="#212529">Door Manager — Schaltplan</text>
   <text x="1050" y="88" text-anchor="middle" font-size="20" fill="#6c757d">Arduino Nano ESP32 + BTS7960 H-Bridge + DFRobot FIT0185 (Encoder)</text>
   <line x1="50" y1="105" x2="2050" y2="105" stroke="#dee2e6" stroke-width="1.5"/>
 
@@ -485,6 +485,6 @@
 
   <!-- FOOTER -->
   <line x1="50" y1="1760" x2="2050" y2="1760" stroke="#dee2e6" stroke-width="1.5"/>
-  <text x="1050" y="1782" text-anchor="middle" font-size="15" fill="#adb5bd">Door Controller v2.0 — Alle Massen (GND) verbinden — Kondensatoren nah an den ICs — Druck: A3 Querformat</text>
+  <text x="1050" y="1782" text-anchor="middle" font-size="15" fill="#adb5bd">Door Manager v2.0 — Alle Massen (GND) verbinden — Kondensatoren nah an den ICs — Druck: A3 Querformat</text>
 
 </svg>

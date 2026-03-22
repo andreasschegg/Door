@@ -49,7 +49,7 @@ static void connectWiFi() {
 void setup() {
     Serial.begin(115200);
     Serial.println("\n=============================");
-    Serial.println("  Door Controller v2.0");
+    Serial.println("  Door Manager v2.0");
     Serial.println("=============================");
 
     connectWiFi();
@@ -67,7 +67,7 @@ void setup() {
     door.begin();
     webServer.begin();
 
-    Serial.println("[Door Controller] Ready\n");
+    Serial.println("[Door Manager] Ready\n");
 }
 
 // ---------------------------------------------------------

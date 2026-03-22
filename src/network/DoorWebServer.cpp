@@ -7,7 +7,7 @@ static const char INDEX_HTML[] PROGMEM = R"rawliteral(
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Door Controller</title>
+<title>Door Manager</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#1a1a2e;color:#e0e0e0;display:flex;justify-content:center;min-height:100vh;padding:20px}
@@ -39,7 +39,7 @@ button:active{opacity:.7}
 </head>
 <body>
 <div class="c">
-<h1>Door Controller</h1>
+<h1>Door Manager</h1>
 <div id="st" class="status">Connecting...</div>
 <div class="pos-bar"><div id="bar" class="pos-fill"></div></div>
 <div class="info">

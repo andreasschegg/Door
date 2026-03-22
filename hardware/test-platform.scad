@@ -1,5 +1,5 @@
 // ============================================================
-// Door Controller — Test Platform v3
+// Door Manager — Test Platform v3
 // For Prusa 3D Printer (fits 250x210mm bed)
 // ============================================================
 //
