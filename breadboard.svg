@@ -1,0 +1,326 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 900" width="360mm" height="180mm" font-family="Segoe UI, Arial, sans-serif">
+  <style>@media print { svg { width: 100%; height: auto; } }</style>
+
+  <rect width="1800" height="900" fill="#f8f9fa"/>
+  <rect x="10" y="10" width="1780" height="880" fill="none" stroke="#ced4da" stroke-width="2" rx="6"/>
+
+  <!-- Title -->
+  <text x="900" y="45" text-anchor="middle" font-size="28" font-weight="bold" fill="#212529">Door Controller — Breadboard-Verdrahtung</text>
+  <text x="900" y="70" text-anchor="middle" font-size="16" fill="#6c757d">Arduino Nano ESP32 | D13=C60, TX/D1=G46 | Spalten 46-60</text>
+
+  <!-- ============================================================ -->
+  <!-- BREADBOARD GRID                                               -->
+  <!-- ============================================================ -->
+
+  <!-- Breadboard outline -->
+  <rect x="80" y="100" width="1640" height="680" rx="10" fill="#f0ebe3" stroke="#c4b9a8" stroke-width="2"/>
+
+  <!-- Row labels -->
+  <text x="60" y="155" text-anchor="end" font-size="18" font-weight="bold" fill="#6c757d">A</text>
+  <text x="60" y="205" text-anchor="end" font-size="18" font-weight="bold" fill="#6c757d">B</text>
+  <text x="60" y="265" text-anchor="end" font-size="18" font-weight="bold" fill="#6c757d">C</text>
+  <text x="60" y="325" text-anchor="end" font-size="18" font-weight="bold" fill="#6c757d">D</text>
+  <text x="60" y="385" text-anchor="end" font-size="18" font-weight="bold" fill="#6c757d">E</text>
+  <!-- Center gap -->
+  <rect x="80" y="410" width="1640" height="20" fill="#d4cfc6" rx="2"/>
+  <text x="60" y="495" text-anchor="end" font-size="18" font-weight="bold" fill="#6c757d">F</text>
+  <text x="60" y="555" text-anchor="end" font-size="18" font-weight="bold" fill="#6c757d">G</text>
+  <text x="60" y="615" text-anchor="end" font-size="18" font-weight="bold" fill="#6c757d">H</text>
+  <text x="60" y="675" text-anchor="end" font-size="18" font-weight="bold" fill="#6c757d">I</text>
+  <text x="60" y="735" text-anchor="end" font-size="18" font-weight="bold" fill="#6c757d">J</text>
+
+  <!-- Column numbers (only 44-60 visible, rest implied) -->
+  <text x="145" y="120" text-anchor="middle" font-size="11" fill="#999">44</text>
+  <text x="185" y="120" text-anchor="middle" font-size="11" fill="#999">45</text>
+  <text x="225" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">46</text>
+  <text x="265" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">47</text>
+  <text x="305" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">48</text>
+  <text x="345" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">49</text>
+  <text x="385" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">50</text>
+  <text x="425" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">51</text>
+  <text x="465" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">52</text>
+  <text x="505" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">53</text>
+  <text x="545" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">54</text>
+  <text x="585" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">55</text>
+  <text x="625" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">56</text>
+  <text x="665" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">57</text>
+  <text x="705" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">58</text>
+  <text x="745" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">59</text>
+  <text x="785" y="120" text-anchor="middle" font-size="14" fill="#495057" font-weight="bold">60</text>
+
+  <!-- Breadboard holes (rows A-E, cols 46-60) -->
+  <!-- Row A -->
+  <g fill="#d0c8b8" stroke="#b8ad98" stroke-width="0.5">
+    <circle cx="225" cy="150" r="5"/><circle cx="265" cy="150" r="5"/><circle cx="305" cy="150" r="5"/>
+    <circle cx="345" cy="150" r="5"/><circle cx="385" cy="150" r="5"/><circle cx="425" cy="150" r="5"/>
+    <circle cx="465" cy="150" r="5"/><circle cx="505" cy="150" r="5"/><circle cx="545" cy="150" r="5"/>
+    <circle cx="585" cy="150" r="5"/><circle cx="625" cy="150" r="5"/><circle cx="665" cy="150" r="5"/>
+    <circle cx="705" cy="150" r="5"/><circle cx="745" cy="150" r="5"/><circle cx="785" cy="150" r="5"/>
+  </g>
+  <!-- Row B -->
+  <g fill="#d0c8b8" stroke="#b8ad98" stroke-width="0.5">
+    <circle cx="225" cy="200" r="5"/><circle cx="265" cy="200" r="5"/><circle cx="305" cy="200" r="5"/>
+    <circle cx="345" cy="200" r="5"/><circle cx="385" cy="200" r="5"/><circle cx="425" cy="200" r="5"/>
+    <circle cx="465" cy="200" r="5"/><circle cx="505" cy="200" r="5"/><circle cx="545" cy="200" r="5"/>
+    <circle cx="585" cy="200" r="5"/><circle cx="625" cy="200" r="5"/><circle cx="665" cy="200" r="5"/>
+    <circle cx="705" cy="200" r="5"/><circle cx="745" cy="200" r="5"/><circle cx="785" cy="200" r="5"/>
+  </g>
+  <!-- Row C (Nano left side pins) -->
+  <g fill="#d0c8b8" stroke="#b8ad98" stroke-width="0.5">
+    <circle cx="225" cy="260" r="5"/><circle cx="265" cy="260" r="5"/><circle cx="305" cy="260" r="5"/>
+    <circle cx="345" cy="260" r="5"/><circle cx="385" cy="260" r="5"/><circle cx="425" cy="260" r="5"/>
+    <circle cx="465" cy="260" r="5"/><circle cx="505" cy="260" r="5"/><circle cx="545" cy="260" r="5"/>
+    <circle cx="585" cy="260" r="5"/><circle cx="625" cy="260" r="5"/><circle cx="665" cy="260" r="5"/>
+    <circle cx="705" cy="260" r="5"/><circle cx="745" cy="260" r="5"/><circle cx="785" cy="260" r="5"/>
+  </g>
+  <!-- Row D -->
+  <g fill="#d0c8b8" stroke="#b8ad98" stroke-width="0.5">
+    <circle cx="225" cy="320" r="5"/><circle cx="265" cy="320" r="5"/><circle cx="305" cy="320" r="5"/>
+    <circle cx="345" cy="320" r="5"/><circle cx="385" cy="320" r="5"/><circle cx="425" cy="320" r="5"/>
+    <circle cx="465" cy="320" r="5"/><circle cx="505" cy="320" r="5"/><circle cx="545" cy="320" r="5"/>
+    <circle cx="585" cy="320" r="5"/><circle cx="625" cy="320" r="5"/><circle cx="665" cy="320" r="5"/>
+    <circle cx="705" cy="320" r="5"/><circle cx="745" cy="320" r="5"/><circle cx="785" cy="320" r="5"/>
+  </g>
+  <!-- Row E -->
+  <g fill="#d0c8b8" stroke="#b8ad98" stroke-width="0.5">
+    <circle cx="225" cy="380" r="5"/><circle cx="265" cy="380" r="5"/><circle cx="305" cy="380" r="5"/>
+    <circle cx="345" cy="380" r="5"/><circle cx="385" cy="380" r="5"/><circle cx="425" cy="380" r="5"/>
+    <circle cx="465" cy="380" r="5"/><circle cx="505" cy="380" r="5"/><circle cx="545" cy="380" r="5"/>
+    <circle cx="585" cy="380" r="5"/><circle cx="625" cy="380" r="5"/><circle cx="665" cy="380" r="5"/>
+    <circle cx="705" cy="380" r="5"/><circle cx="745" cy="380" r="5"/><circle cx="785" cy="380" r="5"/>
+  </g>
+  <!-- Row F -->
+  <g fill="#d0c8b8" stroke="#b8ad98" stroke-width="0.5">
+    <circle cx="225" cy="460" r="5"/><circle cx="265" cy="460" r="5"/><circle cx="305" cy="460" r="5"/>
+    <circle cx="345" cy="460" r="5"/><circle cx="385" cy="460" r="5"/><circle cx="425" cy="460" r="5"/>
+    <circle cx="465" cy="460" r="5"/><circle cx="505" cy="460" r="5"/><circle cx="545" cy="460" r="5"/>
+    <circle cx="585" cy="460" r="5"/><circle cx="625" cy="460" r="5"/><circle cx="665" cy="460" r="5"/>
+    <circle cx="705" cy="460" r="5"/><circle cx="745" cy="460" r="5"/><circle cx="785" cy="460" r="5"/>
+  </g>
+  <!-- Row G (Nano right side pins) -->
+  <g fill="#d0c8b8" stroke="#b8ad98" stroke-width="0.5">
+    <circle cx="225" cy="550" r="5"/><circle cx="265" cy="550" r="5"/><circle cx="305" cy="550" r="5"/>
+    <circle cx="345" cy="550" r="5"/><circle cx="385" cy="550" r="5"/><circle cx="425" cy="550" r="5"/>
+    <circle cx="465" cy="550" r="5"/><circle cx="505" cy="550" r="5"/><circle cx="545" cy="550" r="5"/>
+    <circle cx="585" cy="550" r="5"/><circle cx="625" cy="550" r="5"/><circle cx="665" cy="550" r="5"/>
+    <circle cx="705" cy="550" r="5"/><circle cx="745" cy="550" r="5"/><circle cx="785" cy="550" r="5"/>
+  </g>
+  <!-- Row H -->
+  <g fill="#d0c8b8" stroke="#b8ad98" stroke-width="0.5">
+    <circle cx="225" cy="610" r="5"/><circle cx="265" cy="610" r="5"/><circle cx="305" cy="610" r="5"/>
+    <circle cx="345" cy="610" r="5"/><circle cx="385" cy="610" r="5"/><circle cx="425" cy="610" r="5"/>
+    <circle cx="465" cy="610" r="5"/><circle cx="505" cy="610" r="5"/><circle cx="545" cy="610" r="5"/>
+    <circle cx="585" cy="610" r="5"/><circle cx="625" cy="610" r="5"/><circle cx="665" cy="610" r="5"/>
+    <circle cx="705" cy="610" r="5"/><circle cx="745" cy="610" r="5"/><circle cx="785" cy="610" r="5"/>
+  </g>
+  <!-- Row I -->
+  <g fill="#d0c8b8" stroke="#b8ad98" stroke-width="0.5">
+    <circle cx="225" cy="670" r="5"/><circle cx="265" cy="670" r="5"/><circle cx="305" cy="670" r="5"/>
+    <circle cx="345" cy="670" r="5"/><circle cx="385" cy="670" r="5"/><circle cx="425" cy="670" r="5"/>
+    <circle cx="465" cy="670" r="5"/><circle cx="505" cy="670" r="5"/><circle cx="545" cy="670" r="5"/>
+    <circle cx="585" cy="670" r="5"/><circle cx="625" cy="670" r="5"/><circle cx="665" cy="670" r="5"/>
+    <circle cx="705" cy="670" r="5"/><circle cx="745" cy="670" r="5"/><circle cx="785" cy="670" r="5"/>
+  </g>
+  <!-- Row J -->
+  <g fill="#d0c8b8" stroke="#b8ad98" stroke-width="0.5">
+    <circle cx="225" cy="730" r="5"/><circle cx="265" cy="730" r="5"/><circle cx="305" cy="730" r="5"/>
+    <circle cx="345" cy="730" r="5"/><circle cx="385" cy="730" r="5"/><circle cx="425" cy="730" r="5"/>
+    <circle cx="465" cy="730" r="5"/><circle cx="505" cy="730" r="5"/><circle cx="545" cy="730" r="5"/>
+    <circle cx="585" cy="730" r="5"/><circle cx="625" cy="730" r="5"/><circle cx="665" cy="730" r="5"/>
+    <circle cx="705" cy="730" r="5"/><circle cx="745" cy="730" r="5"/><circle cx="785" cy="730" r="5"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- NANO ESP32 (rectangle spanning rows C-G, cols 46-60)          -->
+  <!-- ============================================================ -->
+
+  <rect x="215" y="245" width="580" height="320" rx="6" fill="#1a6b54" stroke="#145540" stroke-width="2" opacity="0.85"/>
+  <text x="505" y="395" text-anchor="middle" font-size="20" font-weight="bold" fill="#fff">Arduino Nano ESP32</text>
+  <text x="505" y="420" text-anchor="middle" font-size="13" fill="#aee6d0">USB ↑</text>
+
+  <!-- Nano pin labels LEFT (row C) -->
+  <text x="225" y="240" text-anchor="middle" font-size="9" fill="#495057">VIN</text>
+  <text x="265" y="240" text-anchor="middle" font-size="9" fill="#495057">GND</text>
+  <text x="305" y="240" text-anchor="middle" font-size="9" fill="#495057">RST</text>
+  <text x="345" y="240" text-anchor="middle" font-size="9" fill="#fd7e14" font-weight="bold">5V</text>
+  <text x="385" y="240" text-anchor="middle" font-size="9" fill="#495057">A7</text>
+  <text x="425" y="240" text-anchor="middle" font-size="9" fill="#495057">A6</text>
+  <text x="465" y="240" text-anchor="middle" font-size="9" fill="#495057">A5</text>
+  <text x="505" y="240" text-anchor="middle" font-size="9" fill="#495057">A4</text>
+  <text x="545" y="240" text-anchor="middle" font-size="9" fill="#9c27b0" font-weight="bold">A3</text>
+  <text x="585" y="240" text-anchor="middle" font-size="9" fill="#9c27b0" font-weight="bold">A2</text>
+  <text x="625" y="240" text-anchor="middle" font-size="9" fill="#6c757d" font-weight="bold">A1</text>
+  <text x="665" y="240" text-anchor="middle" font-size="9" fill="#6c757d" font-weight="bold">A0</text>
+  <text x="705" y="240" text-anchor="middle" font-size="9" fill="#495057">AR</text>
+  <text x="745" y="240" text-anchor="middle" font-size="9" fill="#495057">3V3</text>
+  <text x="785" y="240" text-anchor="middle" font-size="9" fill="#495057">D13</text>
+
+  <!-- Nano pin labels RIGHT (row G) -->
+  <text x="225" y="580" text-anchor="middle" font-size="9" fill="#495057">TX</text>
+  <text x="265" y="580" text-anchor="middle" font-size="9" fill="#495057">RX</text>
+  <text x="305" y="580" text-anchor="middle" font-size="9" fill="#495057">RST</text>
+  <text x="345" y="580" text-anchor="middle" font-size="9" fill="#6c757d" font-weight="bold">GND</text>
+  <text x="385" y="580" text-anchor="middle" font-size="9" fill="#198754" font-weight="bold">D2</text>
+  <text x="425" y="580" text-anchor="middle" font-size="9" fill="#198754" font-weight="bold">D3</text>
+  <text x="465" y="580" text-anchor="middle" font-size="9" fill="#198754" font-weight="bold">D4</text>
+  <text x="505" y="580" text-anchor="middle" font-size="9" fill="#198754" font-weight="bold">D5</text>
+  <text x="545" y="580" text-anchor="middle" font-size="9" fill="#0d6efd" font-weight="bold">D6</text>
+  <text x="585" y="580" text-anchor="middle" font-size="9" fill="#0d6efd" font-weight="bold">D7</text>
+  <text x="625" y="580" text-anchor="middle" font-size="9" fill="#495057">D8</text>
+  <text x="665" y="580" text-anchor="middle" font-size="9" fill="#495057">D9</text>
+  <text x="705" y="580" text-anchor="middle" font-size="9" fill="#495057">D10</text>
+  <text x="745" y="580" text-anchor="middle" font-size="9" fill="#495057">D11</text>
+  <text x="785" y="580" text-anchor="middle" font-size="9" fill="#495057">D12</text>
+
+  <!-- ============================================================ -->
+  <!-- JUMPER WIRES — BTS7960 (right side, row I, cols 50-55)        -->
+  <!-- ============================================================ -->
+
+  <!-- RPWM (yellow) col 50 -->
+  <circle cx="385" cy="670" r="6" fill="#ffc107" stroke="#d4a005" stroke-width="1.5"/>
+  <text x="385" y="700" text-anchor="middle" font-size="10" fill="#d4a005" font-weight="bold">RPWM</text>
+
+  <!-- LPWM (orange) col 51 -->
+  <circle cx="425" cy="670" r="6" fill="#fd7e14" stroke="#d46b10" stroke-width="1.5"/>
+  <text x="425" y="700" text-anchor="middle" font-size="10" fill="#d46b10" font-weight="bold">LPWM</text>
+
+  <!-- R_EN (green) col 52 -->
+  <circle cx="465" cy="670" r="6" fill="#198754" stroke="#14693f" stroke-width="1.5"/>
+  <text x="465" y="700" text-anchor="middle" font-size="10" fill="#14693f" font-weight="bold">R_EN</text>
+
+  <!-- L_EN (blue) col 53 -->
+  <circle cx="505" cy="670" r="6" fill="#0d6efd" stroke="#0a58ca" stroke-width="1.5"/>
+  <text x="505" y="700" text-anchor="middle" font-size="10" fill="#0a58ca" font-weight="bold">L_EN</text>
+
+  <!-- R_IS (white) col 54 -->
+  <circle cx="545" cy="670" r="6" fill="#fff" stroke="#999" stroke-width="1.5"/>
+  <text x="545" y="700" text-anchor="middle" font-size="10" fill="#666" font-weight="bold">R_IS</text>
+
+  <!-- L_IS (gray) col 55 -->
+  <circle cx="585" cy="670" r="6" fill="#adb5bd" stroke="#7c848b" stroke-width="1.5"/>
+  <text x="585" y="700" text-anchor="middle" font-size="10" fill="#666" font-weight="bold">L_IS</text>
+
+  <!-- GND for BTS7960 col 49 -->
+  <circle cx="345" cy="670" r="6" fill="#212529" stroke="#000" stroke-width="1.5"/>
+  <text x="345" y="700" text-anchor="middle" font-size="10" fill="#212529" font-weight="bold">GND</text>
+
+  <!-- BTS7960 label -->
+  <rect x="320" y="715" width="290" height="30" rx="6" fill="#e8f5e9" stroke="#198754" stroke-width="1.5"/>
+  <text x="465" y="735" text-anchor="middle" font-size="14" fill="#2e7d32" font-weight="bold">→ BTS7960 Motor Driver</text>
+
+  <!-- ============================================================ -->
+  <!-- JUMPER WIRES — Sensors (left side, row B, cols 54-57)         -->
+  <!-- ============================================================ -->
+
+  <!-- Encoder B (brown) col 54 = A3 -->
+  <circle cx="545" cy="200" r="6" fill="#8d6e63" stroke="#6d4c41" stroke-width="1.5"/>
+  <text x="545" y="185" text-anchor="middle" font-size="10" fill="#6d4c41" font-weight="bold">Enc B</text>
+
+  <!-- Encoder A (purple) col 55 = A2 -->
+  <circle cx="585" cy="200" r="6" fill="#9c27b0" stroke="#7b1fa2" stroke-width="1.5"/>
+  <text x="585" y="185" text-anchor="middle" font-size="10" fill="#7b1fa2" font-weight="bold">Enc A</text>
+
+  <!-- Endstop CLOSE (red) col 56 = A1 -->
+  <circle cx="625" cy="200" r="6" fill="#dc3545" stroke="#b02a37" stroke-width="1.5"/>
+  <text x="625" y="185" text-anchor="middle" font-size="10" fill="#b02a37" font-weight="bold">CLOSE</text>
+
+  <!-- Endstop OPEN (green) col 57 = A0 -->
+  <circle cx="665" cy="200" r="6" fill="#4ecca3" stroke="#2e8b6e" stroke-width="1.5"/>
+  <text x="665" y="185" text-anchor="middle" font-size="10" fill="#2e8b6e" font-weight="bold">OPEN</text>
+
+  <!-- Sensor labels -->
+  <rect x="520" y="135" width="170" height="30" rx="6" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1.5"/>
+  <text x="605" y="155" text-anchor="middle" font-size="14" fill="#7b1fa2" font-weight="bold">→ Encoder + Endstops</text>
+
+  <!-- ============================================================ -->
+  <!-- POWER (5V and GND)                                            -->
+  <!-- ============================================================ -->
+
+  <!-- 5V col 49 left side -->
+  <circle cx="345" cy="200" r="6" fill="#fd7e14" stroke="#d46b10" stroke-width="1.5"/>
+  <text x="345" y="185" text-anchor="middle" font-size="10" fill="#d46b10" font-weight="bold">5V</text>
+
+  <!-- GND col 47 left side -->
+  <circle cx="265" cy="200" r="6" fill="#212529" stroke="#000" stroke-width="1.5"/>
+  <text x="265" y="185" text-anchor="middle" font-size="10" fill="#212529" font-weight="bold">GND</text>
+
+  <!-- Power label -->
+  <rect x="240" y="135" width="130" height="30" rx="6" fill="#fff3e0" stroke="#fd7e14" stroke-width="1.5"/>
+  <text x="305" y="155" text-anchor="middle" font-size="14" fill="#e65100" font-weight="bold">→ Power</text>
+
+  <!-- ============================================================ -->
+  <!-- LEGEND                                                        -->
+  <!-- ============================================================ -->
+
+  <rect x="870" y="110" width="700" height="680" rx="10" fill="#fff" stroke="#ced4da" stroke-width="2"/>
+  <text x="900" y="145" font-size="20" font-weight="bold" fill="#212529">Verdrahtungstabelle</text>
+
+  <!-- BTS7960 section -->
+  <text x="900" y="180" font-size="16" font-weight="bold" fill="#198754">BTS7960 (rechte Seite, Reihe I)</text>
+
+  <text x="910" y="210" font-size="14" fill="#495057">Sp.50  D2 / GPIO 5   → RPWM</text>
+  <circle cx="1420" cy="205" r="5" fill="#ffc107" stroke="#d4a005" stroke-width="1"/>
+  <text x="1440" y="210" font-size="13" fill="#999">gelb</text>
+
+  <text x="910" y="235" font-size="14" fill="#495057">Sp.51  D3 / GPIO 6   → LPWM</text>
+  <circle cx="1420" cy="230" r="5" fill="#fd7e14" stroke="#d46b10" stroke-width="1"/>
+  <text x="1440" y="235" font-size="13" fill="#999">orange</text>
+
+  <text x="910" y="260" font-size="14" fill="#495057">Sp.52  D4 / GPIO 7   → R_EN</text>
+  <circle cx="1420" cy="255" r="5" fill="#198754" stroke="#14693f" stroke-width="1"/>
+  <text x="1440" y="260" font-size="13" fill="#999">grün</text>
+
+  <text x="910" y="285" font-size="14" fill="#495057">Sp.53  D5 / GPIO 8   → L_EN</text>
+  <circle cx="1420" cy="280" r="5" fill="#0d6efd" stroke="#0a58ca" stroke-width="1"/>
+  <text x="1440" y="285" font-size="13" fill="#999">blau</text>
+
+  <text x="910" y="310" font-size="14" fill="#495057">Sp.54  D6 / GPIO 9   → R_IS</text>
+  <circle cx="1420" cy="305" r="5" fill="#fff" stroke="#999" stroke-width="1"/>
+  <text x="1440" y="310" font-size="13" fill="#999">weiss</text>
+
+  <text x="910" y="335" font-size="14" fill="#495057">Sp.55  D7 / GPIO 10  → L_IS</text>
+  <circle cx="1420" cy="330" r="5" fill="#adb5bd" stroke="#7c848b" stroke-width="1"/>
+  <text x="1440" y="335" font-size="13" fill="#999">grau</text>
+
+  <text x="910" y="360" font-size="14" fill="#495057">Sp.49  GND            → GND</text>
+  <circle cx="1420" cy="355" r="5" fill="#212529" stroke="#000" stroke-width="1"/>
+  <text x="1440" y="360" font-size="13" fill="#999">schwarz</text>
+
+  <!-- Sensors section -->
+  <line x1="900" y1="385" x2="1540" y2="385" stroke="#dee2e6" stroke-width="1"/>
+  <text x="900" y="415" font-size="16" font-weight="bold" fill="#9c27b0">Sensoren (linke Seite, Reihe B)</text>
+
+  <text x="910" y="445" font-size="14" fill="#495057">Sp.57  A0 / GPIO 1   → Endstop OPEN</text>
+  <circle cx="1420" cy="440" r="5" fill="#4ecca3" stroke="#2e8b6e" stroke-width="1"/>
+  <text x="1440" y="445" font-size="13" fill="#999">grün</text>
+
+  <text x="910" y="470" font-size="14" fill="#495057">Sp.56  A1 / GPIO 2   → Endstop CLOSE</text>
+  <circle cx="1420" cy="465" r="5" fill="#dc3545" stroke="#b02a37" stroke-width="1"/>
+  <text x="1440" y="470" font-size="13" fill="#999">rot</text>
+
+  <text x="910" y="495" font-size="14" fill="#495057">Sp.55  A2 / GPIO 3   → Encoder Ch.A</text>
+  <circle cx="1420" cy="490" r="5" fill="#9c27b0" stroke="#7b1fa2" stroke-width="1"/>
+  <text x="1440" y="495" font-size="13" fill="#999">violett</text>
+
+  <text x="910" y="520" font-size="14" fill="#495057">Sp.54  A3 / GPIO 4   → Encoder Ch.B</text>
+  <circle cx="1420" cy="515" r="5" fill="#8d6e63" stroke="#6d4c41" stroke-width="1"/>
+  <text x="1440" y="520" font-size="13" fill="#999">braun</text>
+
+  <!-- Power section -->
+  <line x1="900" y1="545" x2="1540" y2="545" stroke="#dee2e6" stroke-width="1"/>
+  <text x="900" y="575" font-size="16" font-weight="bold" fill="#fd7e14">Stromversorgung (linke Seite, Reihe B)</text>
+
+  <text x="910" y="605" font-size="14" fill="#495057">Sp.49  5V             → Buck Out, BTS VCC, Encoder VCC</text>
+  <text x="910" y="630" font-size="14" fill="#495057">Sp.47  GND            → Gemeinsame Masse</text>
+  <text x="910" y="655" font-size="14" fill="#495057">Sp.49  GND (rechts)   → BTS7960 GND</text>
+
+  <!-- Tip -->
+  <line x1="900" y1="675" x2="1540" y2="675" stroke="#dee2e6" stroke-width="1"/>
+  <text x="900" y="705" font-size="13" fill="#6c757d" font-style="italic">Schutzbeschaltung (Widerstände, Kondensatoren) auf dem</text>
+  <text x="900" y="725" font-size="13" fill="#6c757d" font-style="italic">Breadboard zwischen Nano und Zielkomponente platzieren.</text>
+  <text x="900" y="755" font-size="13" fill="#6c757d" font-style="italic">Siehe CIRCUIT.md für Details.</text>
+
+  <!-- Footer -->
+  <text x="900" y="860" text-anchor="middle" font-size="13" fill="#adb5bd">Door Controller v2.0 — Breadboard Layout — Arduino Nano ESP32</text>
+
+</svg>
