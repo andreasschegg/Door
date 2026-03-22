@@ -81,8 +81,8 @@ cradle_total_h = cradle_r + cradle_wall;
 // The side wall holds the motor faceplate at that height
 side_wall_h = cradle_total_h + plate_t;
 
-// Buck converter socket total dimensions
-buck_socket_total_l = buck_l + 2 * buck_socket_wall;
+// Buck converter socket total dimensions (rails along full length, no end walls)
+buck_socket_total_l = buck_l;
 buck_socket_total_w = buck_w + buck_clearance + 2 * buck_socket_wall;
 
 // Back row: IBT_2 (left) + Motor cradle (right)
@@ -229,29 +229,27 @@ module motor_cradle() {
 
 module buck_socket() {
     // PCB slides in from LEFT or RIGHT (along the 37mm length).
-    // Clamped by front and back walls (along the 17mm width).
-    // Ledge inside the walls supports the PCB from below.
+    // Two rails run along the full 37mm length (front + back),
+    // each with a groove that clamps the PCB edges.
 
     ledge_h = buck_socket_h - buck_t - buck_clearance;
-    inner_l = buck_l + buck_clearance;
     inner_w = buck_w + buck_clearance;
     w = buck_socket_wall;
 
     translate([buck_pos[0], buck_pos[1], plate_t]) {
-        // Front wall (clamps PCB from front, groove for PCB)
+        // Front rail (full length, groove facing inward)
         difference() {
-            cube([inner_l + 2 * w, w, buck_socket_h]);
-            // Groove for PCB to slide through
-            translate([w, -0.1, ledge_h])
-                cube([inner_l, w + 0.2, buck_t + buck_clearance]);
+            cube([buck_l, w, buck_socket_h]);
+            translate([-0.1, -0.1, ledge_h])
+                cube([buck_l + 0.2, w + 0.2, buck_t + buck_clearance]);
         }
 
-        // Back wall (clamps PCB from back, groove for PCB)
+        // Back rail (full length, groove facing inward)
         translate([0, w + inner_w, 0])
             difference() {
-                cube([inner_l + 2 * w, w, buck_socket_h]);
-                translate([w, -0.1, ledge_h])
-                    cube([inner_l, w + 0.2, buck_t + buck_clearance]);
+                cube([buck_l, w, buck_socket_h]);
+                translate([-0.1, -0.1, ledge_h])
+                    cube([buck_l + 0.2, w + 0.2, buck_t + buck_clearance]);
             }
     }
 }
