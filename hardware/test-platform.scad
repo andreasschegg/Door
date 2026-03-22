@@ -189,9 +189,9 @@ module ibt_standoffs() {
 module motor_cradle() {
     translate([cradle_pos[0], cradle_pos[1], plate_t]) {
 
-        // --- Rear cradle wall (20%, smaller motor body 35mm) ---
+        // --- Rear cradle wall (40% = 30mm from left = 45mm from faceplate, ø35mm) ---
         cradle_r_rear = motor_d_rear / 2 + cradle_clearance;
-        translate([motor_length * 0.2 - cradle_wall / 2, 0, 0])
+        translate([motor_length * 0.4 - cradle_wall / 2, 0, 0])
             difference() {
                 cube([cradle_wall, cradle_total_w, cradle_total_h]);
                 translate([-1, cradle_total_w / 2, cradle_total_h])
@@ -199,8 +199,8 @@ module motor_cradle() {
                         cylinder(r = cradle_r_rear, h = cradle_wall + 2);
             }
 
-        // --- Front cradle wall (65%, gearbox 37mm) ---
-        translate([motor_length * 0.65 - cradle_wall / 2, 0, 0])
+        // --- Front cradle wall (80% = 60mm from left = 15mm from faceplate, ø37mm) ---
+        translate([motor_length * 0.8 - cradle_wall / 2, 0, 0])
             difference() {
                 cube([cradle_wall, cradle_total_w, cradle_total_h]);
                 translate([-1, cradle_total_w / 2, cradle_total_h])
