@@ -3,19 +3,19 @@
 // For Prusa 3D Printer (fits 250x210mm bed)
 // ============================================================
 //
-// Layout (top view):
+// Layout (top view, user sits at bottom):
 //   +-------------------------------------------+
-//   |                                           |
-//   |  [Breadboard 165x55]                     |
-//   |  (Arduino Nano ESP32 plugs into it)      |
-//   |                                           |
 //   |  [IBT_2 on 25mm standoffs]  [Motor]→     |
 //   |  40x40 holes, pins up      side-mount    |
+//   |                                           |
+//   |  [Breadboard 165x55]  ← taped down       |
+//   |  (Arduino Nano ESP32 plugs into it)      |
 //   +-------------------------------------------+
+//          ↑ user sits here
 //
-// IBT_2: on 4x 25mm standoff sleeves, M3, 40x40mm hole pattern.
-// Motor: lies on its side, screwed to a side wall via 6x M3 hex
-//        pattern. Shaft extends right beyond the platform.
+// Front row: Breadboard (flat, glued with double-sided tape).
+// Back row:  IBT_2 on 25mm standoffs + Motor in cradle.
+// Motor screwed to side wall via 6x M3 hex pattern.
 //
 
 $fn = 60;
@@ -55,9 +55,7 @@ cradle_clearance = 1;
 // Motor side wall (for screw mounting)
 side_wall_t = 5;
 
-// Breadboard rails
-rail_h = 5;
-rail_w = 2.5;
+// Breadboard: flat surface, glued with double-sided tape
 
 // ============================================================
 // Layout Calculation
@@ -72,14 +70,13 @@ cradle_total_h = cradle_r + cradle_wall;
 // The side wall holds the motor faceplate at that height
 side_wall_h = cradle_total_h + plate_t;
 
-// Bottom row positions
-// IBT_2 area (40x40 holes + standoff diameter margin)
+// Back row: IBT_2 (left) + Motor cradle (right)
 ibt_area_w = ibt_hole_spacing + ibt_standoff_d;
 ibt_area_h = ibt_hole_spacing + ibt_standoff_d;
-ibt_pos    = [margin, margin];
+ibt_pos    = [margin, margin + bb_h + gap];
 
-// Motor cradle starts after IBT_2
-cradle_pos = [margin + ibt_area_w + gap, margin + (ibt_area_h - cradle_total_w) / 2];
+cradle_pos = [margin + ibt_area_w + gap,
+              ibt_pos[1] + (ibt_area_h - cradle_total_w) / 2];
 
 // Side wall at the right end of the cradle
 side_wall_x = cradle_pos[0] + motor_length;
@@ -88,12 +85,11 @@ side_wall_x = cradle_pos[0] + motor_length;
 plate_w = max(bb_w + 2 * margin,
               side_wall_x + side_wall_t + margin);
 
-// Breadboard above bottom row
-bb_pos = [(plate_w - bb_w) / 2,
-           margin + max(ibt_area_h, cradle_total_w) + gap];
+// Front row: Breadboard centered (closest to user, y=margin)
+bb_pos = [(plate_w - bb_w) / 2, margin];
 
 // Platform height
-plate_h = bb_pos[1] + bb_h + margin;
+plate_h = ibt_pos[1] + max(ibt_area_h, cradle_total_w) + margin;
 
 // IBT_2 hole positions (centered in ibt_area)
 ibt_hole_offset_x = ibt_pos[0] + (ibt_area_w - ibt_hole_spacing) / 2;
@@ -206,22 +202,17 @@ module motor_cradle() {
 }
 
 // ============================================================
-// Breadboard Rails
+// Breadboard Area (flat surface for double-sided tape)
 // ============================================================
 
-module breadboard_rails() {
-    // Left rail
-    translate([bb_pos[0] - rail_w, bb_pos[1], plate_t])
-        cube([rail_w, bb_h, rail_h]);
-    // Right rail
-    translate([bb_pos[0] + bb_w, bb_pos[1], plate_t])
-        cube([rail_w, bb_h, rail_h]);
-    // Front lip
-    translate([bb_pos[0] - rail_w, bb_pos[1] - rail_w, plate_t])
-        cube([bb_w + 2 * rail_w, rail_w, rail_h * 0.6]);
-    // Back lip
-    translate([bb_pos[0] - rail_w, bb_pos[1] + bb_h, plate_t])
-        cube([bb_w + 2 * rail_w, rail_w, rail_h * 0.6]);
+module breadboard_area() {
+    // Embossed outline showing where to stick the breadboard
+    translate([bb_pos[0], bb_pos[1], plate_t])
+        difference() {
+            cube([bb_w, bb_h, 0.6]);
+            translate([1.5, 1.5, -0.1])
+                cube([bb_w - 3, bb_h - 3, 0.8]);
+        }
 }
 
 // ============================================================
@@ -255,7 +246,7 @@ module labels() {
 color("SlateGray") base();
 color("DimGray")   ibt_standoffs();
 color("DimGray")   motor_cradle();
-color("DimGray")   breadboard_rails();
+color("White")     breadboard_area();
 color("White")     labels();
 
 // ============================================================
