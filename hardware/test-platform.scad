@@ -1,5 +1,5 @@
 // ============================================================
-// Door Manager — Test Platform v3
+// Door Controller — Test Platform v3
 // For Prusa 3D Printer (fits 250x210mm bed)
 // ============================================================
 //
@@ -220,22 +220,10 @@ module breadboard_area() {
 // ============================================================
 
 module labels() {
-    translate([ibt_hole_offset_x + ibt_hole_spacing / 2,
-               ibt_hole_offset_y + ibt_hole_spacing / 2, plate_t])
-        linear_extrude(0.5)
-            text("IBT_2", size = 7, halign = "center",
-                 valign = "center", font = "Arial:style=Bold");
-
-    translate([cradle_pos[0] + motor_length / 2,
-               cradle_pos[1] - 8, plate_t])
-        linear_extrude(0.5)
-            text("MOTOR", size = 6, halign = "center",
-                 valign = "center", font = "Arial:style=Bold");
-
-    translate([bb_pos[0] + bb_w / 2,
+    translate([plate_w / 2,
                bb_pos[1] + bb_h / 2, plate_t])
         linear_extrude(0.5)
-            text("BREADBOARD + NANO", size = 6, halign = "center",
+            text("Door Controller", size = 8, halign = "center",
                  valign = "center", font = "Arial:style=Bold");
 }
 

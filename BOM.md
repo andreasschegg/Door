@@ -1,4 +1,4 @@
-# Stückliste (Bill of Materials) — Door Manager v2.0
+# Stückliste (Bill of Materials) — Door Controller v2.0
 
 ## Hauptkomponenten
 

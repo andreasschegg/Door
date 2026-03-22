@@ -1,4 +1,4 @@
-# Schaltung — Door Manager
+# Schaltung — Door Controller
 
 ## Übersicht
 
