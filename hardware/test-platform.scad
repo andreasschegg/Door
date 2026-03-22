@@ -85,8 +85,8 @@ side_wall_x = cradle_pos[0] + motor_length;
 plate_w = max(bb_w + 2 * margin,
               side_wall_x + side_wall_t + margin);
 
-// Front row: Breadboard centered (closest to user, y=margin)
-bb_pos = [(plate_w - bb_w) / 2, margin];
+// Front row: Breadboard centered (closest to user, y=margin-3)
+bb_pos = [(plate_w - bb_w) / 2, margin - 3];
 
 // Platform height
 plate_h = ibt_pos[1] + max(ibt_area_h, cradle_total_w) + margin;
@@ -209,9 +209,9 @@ module breadboard_area() {
     // Embossed outline showing where to stick the breadboard
     translate([bb_pos[0], bb_pos[1], plate_t])
         difference() {
-            cube([bb_w, bb_h, 0.6]);
+            cube([bb_w, bb_h, 0.4]);
             translate([1.5, 1.5, -0.1])
-                cube([bb_w - 3, bb_h - 3, 0.8]);
+                cube([bb_w - 3, bb_h - 3, 0.6]);
         }
 }
 
