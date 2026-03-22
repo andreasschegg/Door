@@ -3,31 +3,32 @@
 // =============================================
 // Pin Configuration (Arduino Nano ESP32 — ESP32-S3-N16R8)
 // =============================================
-// Board: Arduino Nano ESP32 (44-pin, u-blox NORA-W106)
-// GPIO 26-37 NOT available (Octal Flash + PSRAM).
-// GPIO 19-20 are USB D-/D+ (native USB).
-// ADC1: GPIO 1-10. We use ADC1 for current sensing.
+// Board: Arduino Nano ESP32 (u-blox NORA-W106)
+// Nano plugged into breadboard: D13=C60, TX/D1=G46
 //
-// Nano ESP32 pin mapping:
-//   A0=GPIO1, A1=GPIO2, A3=GPIO4
-//   D2=GPIO5, D3=GPIO6, D4=GPIO7, D5=GPIO8, D6=GPIO9
-//   D8=GPIO17, D9=GPIO18
+// Layout optimized for breadboard wiring:
+//   RIGHT side (row G, cols 50-55): all BTS7960 signals together
+//   LEFT side  (row C, cols 54-57): all sensor signals together
+//
+// Nano pin mapping (ESP32-style GPIO numbers):
+//   A0=GPIO1, A1=GPIO2, A2=GPIO3, A3=GPIO4
+//   D2=GPIO5, D3=GPIO6, D4=GPIO7, D5=GPIO8, D6=GPIO9, D7=GPIO10
 
-// BTS7960 Motor Driver
-#define PIN_RPWM        4       // A3  — Right PWM (forward / open)
-#define PIN_LPWM        5       // D2  — Left PWM  (reverse / close)
-#define PIN_R_EN        6       // D3  — Right enable
-#define PIN_L_EN        7       // D4  — Left enable
-#define PIN_R_IS        1       // A0  — Right current sense (ADC1)
-#define PIN_L_IS        2       // A1  — Left current sense  (ADC1)
+// BTS7960 Motor Driver (right side of Nano, cols 50-55)
+#define PIN_RPWM        5       // D2  col50 — Right PWM (forward / open)
+#define PIN_LPWM        6       // D3  col51 — Left PWM  (reverse / close)
+#define PIN_R_EN        7       // D4  col52 — Right enable
+#define PIN_L_EN        8       // D5  col53 — Left enable
+#define PIN_R_IS        9       // D6  col54 — Right current sense (ADC1)
+#define PIN_L_IS        10      // D7  col55 — Left current sense  (ADC1)
 
-// Endstops (active LOW — connect switch between pin and GND)
-#define PIN_ENDSTOP_OPEN    8   // D5
-#define PIN_ENDSTOP_CLOSE   9   // D6
+// Endstops (left side of Nano, cols 56-57)
+#define PIN_ENDSTOP_OPEN    1   // A0  col57
+#define PIN_ENDSTOP_CLOSE   2   // A1  col56
 
-// Encoder (DFRobot FIT0185 — Hall effect, quadrature)
-#define PIN_ENCODER_A       17  // D8  — Encoder channel A
-#define PIN_ENCODER_B       18  // D9  — Encoder channel B
+// Encoder (left side of Nano, cols 54-55)
+#define PIN_ENCODER_A       3   // A2  col55 — Encoder channel A
+#define PIN_ENCODER_B       4   // A3  col54 — Encoder channel B
 #define ENCODER_ENABLED     1       // Set to 0 to compile without encoder
 
 // =============================================

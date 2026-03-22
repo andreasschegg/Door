@@ -126,37 +126,37 @@
   <!-- Motor Control -->
   <line x1="95" y1="460" x2="415" y2="460" stroke="#e9ecef" stroke-width="1.5"/>
   <text x="100" y="488" font-size="15" fill="#6c757d" font-style="italic">Motor Control</text>
-  <text x="410" y="537" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 4 / A3</text>
+  <text x="410" y="537" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 5 / D2</text>
   <line x1="430" y1="530" x2="510" y2="530" stroke="#198754" stroke-width="2"/><circle cx="510" cy="530" r="4.5" fill="#198754"/>
-  <text x="410" y="607" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 5 / D2</text>
+  <text x="410" y="607" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 6 / D3</text>
   <line x1="430" y1="600" x2="510" y2="600" stroke="#198754" stroke-width="2"/><circle cx="510" cy="600" r="4.5" fill="#198754"/>
-  <text x="410" y="677" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 6 / D3</text>
+  <text x="410" y="677" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 7 / D4</text>
   <line x1="430" y1="670" x2="510" y2="670" stroke="#198754" stroke-width="2"/><circle cx="510" cy="670" r="4.5" fill="#198754"/>
-  <text x="410" y="747" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 7 / D4</text>
+  <text x="410" y="747" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 8 / D5</text>
   <line x1="430" y1="740" x2="510" y2="740" stroke="#198754" stroke-width="2"/><circle cx="510" cy="740" r="4.5" fill="#198754"/>
 
   <!-- Current Sense -->
   <line x1="95" y1="775" x2="415" y2="775" stroke="#e9ecef" stroke-width="1.5"/>
   <text x="100" y="803" font-size="15" fill="#6c757d" font-style="italic">Current Sense (ADC1)</text>
-  <text x="410" y="837" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 1 / A0</text>
+  <text x="410" y="837" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 9 / D6</text>
   <line x1="430" y1="830" x2="510" y2="830" stroke="#0d6efd" stroke-width="2"/><circle cx="510" cy="830" r="4.5" fill="#0d6efd"/>
-  <text x="410" y="937" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 2 / A1</text>
+  <text x="410" y="937" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 10 / D7</text>
   <line x1="430" y1="930" x2="510" y2="930" stroke="#0d6efd" stroke-width="2"/><circle cx="510" cy="930" r="4.5" fill="#0d6efd"/>
 
   <!-- Encoder (NEW) -->
   <line x1="95" y1="965" x2="415" y2="965" stroke="#e9ecef" stroke-width="1.5"/>
   <text x="100" y="993" font-size="15" fill="#6c757d" font-style="italic">Encoder</text>
-  <text x="410" y="1027" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 17 / D8</text>
+  <text x="410" y="1027" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 3 / A2</text>
   <line x1="430" y1="1020" x2="510" y2="1020" stroke="#9c27b0" stroke-width="2"/><circle cx="510" cy="1020" r="4.5" fill="#9c27b0"/>
-  <text x="410" y="1087" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 18 / D9</text>
+  <text x="410" y="1087" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 4 / A3</text>
   <line x1="430" y1="1080" x2="510" y2="1080" stroke="#9c27b0" stroke-width="2"/><circle cx="510" cy="1080" r="4.5" fill="#9c27b0"/>
 
   <!-- Endstops (shifted down) -->
   <line x1="95" y1="1115" x2="415" y2="1115" stroke="#e9ecef" stroke-width="1.5"/>
   <text x="100" y="1143" font-size="15" fill="#6c757d" font-style="italic">Endstops</text>
-  <text x="410" y="1177" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 8 / D5</text>
+  <text x="410" y="1177" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 1 / A0</text>
   <line x1="430" y1="1170" x2="510" y2="1170" stroke="#6c757d" stroke-width="2"/><circle cx="510" cy="1170" r="4.5" fill="#6c757d"/>
-  <text x="410" y="1237" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 9 / D6</text>
+  <text x="410" y="1237" font-size="18" fill="#212529" font-weight="bold" text-anchor="end">GPIO 2 / A1</text>
   <line x1="430" y1="1230" x2="510" y2="1230" stroke="#6c757d" stroke-width="2"/><circle cx="510" cy="1230" r="4.5" fill="#6c757d"/>
 
   <!-- GND -->
