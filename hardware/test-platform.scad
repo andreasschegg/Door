@@ -57,7 +57,7 @@ motor_shaft_d  = 14;      // Shaft + boss clearance (12mm housing + 2mm margin)
 // Platform Parameters
 // ============================================================
 
-margin   = 15;
+margin   = 10;
 gap      = 15;
 plate_t  = 1;           // Minimum plate thickness
 
