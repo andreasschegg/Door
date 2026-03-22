@@ -305,14 +305,29 @@ module buck_socket() {
 
 bb_stop_h = 7;    // Side stop height
 bb_stop_w = 3;    // Side stop wall thickness
+bb_corner = 7;    // Corner profile depth toward board center
 
 module breadboard_area() {
     // Left side stop
     translate([bb_pos[0] - bb_stop_w, bb_pos[1], plate_t])
         cube([bb_stop_w, bb_h, bb_stop_h]);
-    // Right side stop (165mm from left stop inner face)
+    // Right side stop
     translate([bb_pos[0] + bb_w, bb_pos[1], plate_t])
         cube([bb_stop_w, bb_h, bb_stop_h]);
+
+    // Corner profiles (L-shaped, 7mm toward board center)
+    // Left-front corner
+    translate([bb_pos[0] - bb_stop_w, bb_pos[1] - bb_stop_w, plate_t])
+        cube([bb_stop_w + bb_corner, bb_stop_w, bb_stop_h]);
+    // Left-back corner
+    translate([bb_pos[0] - bb_stop_w, bb_pos[1] + bb_h, plate_t])
+        cube([bb_stop_w + bb_corner, bb_stop_w, bb_stop_h]);
+    // Right-front corner
+    translate([bb_pos[0] + bb_w - bb_corner, bb_pos[1] - bb_stop_w, plate_t])
+        cube([bb_stop_w + bb_corner, bb_stop_w, bb_stop_h]);
+    // Right-back corner
+    translate([bb_pos[0] + bb_w - bb_corner, bb_pos[1] + bb_h, plate_t])
+        cube([bb_stop_w + bb_corner, bb_stop_w, bb_stop_h]);
 }
 
 // ============================================================
