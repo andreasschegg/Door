@@ -43,7 +43,7 @@ buck_w  = 17;             // PCB width
 buck_t  = 1.5;            // PCB thickness
 buck_socket_h  = 10;      // Socket height
 buck_socket_wall = 3;     // Socket wall thickness
-buck_clearance = 0.3;     // Fit clearance
+buck_clearance = -0.4;    // Negative = walls grip PCB tightly in groove
 
 // DFRobot FIT0185 Motor
 motor_d_front  = 37;      // Gearbox diameter (near faceplate)
