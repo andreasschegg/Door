@@ -152,7 +152,7 @@ module base() {
 
 ibt_tap_depth = 5;       // Blind hole depth for metal standoff to screw into
 
-ibt_flat = 1;  // Flatten inner face of each standoff by 1mm for heatsink clearance
+ibt_flat = 1.5;  // Flatten inner face of each standoff by 1.5mm for heatsink clearance
 
 module ibt_standoffs() {
     // Center of the 4-hole pattern
