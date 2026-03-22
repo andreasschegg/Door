@@ -106,8 +106,8 @@ plate_w = max(bb_w + 2 * margin,
 // Front row: Breadboard centered (closest to user)
 bb_pos = [(plate_w - bb_w) / 2, margin - 3];
 
-// Buck converter position (centered horizontally)
-buck_pos = [(plate_w - buck_socket_total_l) / 2, buck_y];
+// Buck converter position (aligned with IBT_2 center)
+buck_pos = [ibt_pos[0] + (ibt_area_w - buck_socket_total_l) / 2, buck_y];
 
 // Platform height
 plate_h = ibt_pos[1] + max(ibt_area_h, cradle_total_w) + margin;
@@ -228,29 +228,31 @@ module motor_cradle() {
 // ============================================================
 
 module buck_socket() {
+    // PCB slides in from LEFT or RIGHT (along the 37mm length).
+    // Clamped by front and back walls (along the 17mm width).
+    // Ledge inside the walls supports the PCB from below.
+
     ledge_h = buck_socket_h - buck_t - buck_clearance;
+    inner_l = buck_l + buck_clearance;
     inner_w = buck_w + buck_clearance;
     w = buck_socket_wall;
 
     translate([buck_pos[0], buck_pos[1], plate_t]) {
-        // Left rail (along PCB length)
+        // Front wall (clamps PCB from front, groove for PCB)
         difference() {
-            cube([buck_socket_total_l, w, buck_socket_h]);
-            // Groove for PCB
+            cube([inner_l + 2 * w, w, buck_socket_h]);
+            // Groove for PCB to slide through
             translate([w, -0.1, ledge_h])
-                cube([buck_l + buck_clearance, w + 0.2, buck_t + buck_clearance]);
+                cube([inner_l, w + 0.2, buck_t + buck_clearance]);
         }
 
-        // Right rail (along PCB length)
+        // Back wall (clamps PCB from back, groove for PCB)
         translate([0, w + inner_w, 0])
             difference() {
-                cube([buck_socket_total_l, w, buck_socket_h]);
+                cube([inner_l + 2 * w, w, buck_socket_h]);
                 translate([w, -0.1, ledge_h])
-                    cube([buck_l + buck_clearance, w + 0.2, buck_t + buck_clearance]);
+                    cube([inner_l, w + 0.2, buck_t + buck_clearance]);
             }
-
-        // End wall (closed end — PCB slides in from other side)
-        cube([w, buck_socket_total_w, buck_socket_h]);
     }
 }
 
