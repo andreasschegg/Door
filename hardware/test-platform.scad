@@ -231,7 +231,7 @@ module motor_cradle() {
 
                 // 6x M3 hex pattern mounting holes
                 for (i = [0:5]) {
-                    angle = i * 60;
+                    angle = i * 60 + 90;  // Rotated so 2 holes are horizontal
                     translate([-1,
                                cradle_total_w / 2 + motor_hex_r * sin(angle),
                                cradle_total_h + motor_hex_r * cos(angle)])
