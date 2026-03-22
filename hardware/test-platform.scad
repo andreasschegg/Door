@@ -266,7 +266,8 @@ module buck_socket() {
     groove_d    = buck_socket_wall / 2;   // Groove depth into wall: 1.5mm
     groove_gap  = 0.3;                    // Clearance above PCB in groove
     groove_h    = buck_t + groove_gap;    // Groove slot height: 1.8mm
-    ledge_h     = buck_socket_h - groove_h; // Ledge at 8.2mm
+    lip_h       = 1.5;                    // Lip above groove to hold PCB
+    ledge_h     = buck_socket_h - groove_h - lip_h; // Ledge at 6.7mm
     inner_w     = buck_w + buck_clearance;  // 14mm wall gap
     w           = buck_socket_wall;         // 3mm wall thickness
 
