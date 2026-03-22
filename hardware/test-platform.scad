@@ -321,14 +321,16 @@ module buck_socket() {
 // Breadboard Area (flat surface for double-sided tape)
 // ============================================================
 
+bb_stop_h = 7;    // Side stop height
+bb_stop_w = 3;    // Side stop wall thickness
+
 module breadboard_area() {
-    // Embossed outline showing where to stick the breadboard
-    translate([bb_pos[0], bb_pos[1], plate_t])
-        difference() {
-            cube([bb_w, bb_h, 0.4]);
-            translate([1.5, 1.5, -0.1])
-                cube([bb_w - 3, bb_h - 3, 0.6]);
-        }
+    // Left side stop
+    translate([bb_pos[0] - bb_stop_w, bb_pos[1], plate_t])
+        cube([bb_stop_w, bb_h, bb_stop_h]);
+    // Right side stop (165mm from left stop inner face)
+    translate([bb_pos[0] + bb_w, bb_pos[1], plate_t])
+        cube([bb_stop_w, bb_h, bb_stop_h]);
 }
 
 // ============================================================
