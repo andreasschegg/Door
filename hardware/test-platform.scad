@@ -35,7 +35,7 @@ bb_h = 55;
 ibt_hole_spacing = 40;   // Hole pattern 40x40mm
 ibt_standoff_h   = 23.5; // Printed sleeve (+ 6.5mm metal standoff = 30mm total)
 ibt_standoff_d   = 8;    // Standoff outer diameter
-ibt_hole_d       = 2.5;  // M3 self-tap pilot hole (2.5mm for M3 thread to grip PLA)
+ibt_hole_d       = 2.8;  // M3 self-tap pilot hole (slightly larger for easier threading)
 
 // Buck Converter Board
 buck_l  = 37;             // PCB length
