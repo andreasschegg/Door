@@ -41,7 +41,7 @@ ibt_hole_d       = 2.8;  // M3 self-tap pilot hole (slightly larger for easier t
 buck_l  = 37;             // PCB length
 buck_w  = 17;             // PCB width
 buck_t  = 1.5;            // PCB thickness
-buck_socket_h  = 10;      // Socket height
+buck_socket_h  = 15;      // Socket height
 buck_socket_wall = 3;     // Socket wall thickness
 buck_clearance = -3;      // Inner gap = 14mm. PCB (17mm) sits 1.5mm in each groove.
 
