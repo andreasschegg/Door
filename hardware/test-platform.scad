@@ -35,7 +35,7 @@ bb_h = 55;
 ibt_hole_spacing = 40;   // Hole pattern 40x40mm
 ibt_standoff_h   = 23.5; // Printed sleeve (+ 6.5mm metal standoff = 30mm total)
 ibt_standoff_d   = 8;    // Standoff outer diameter
-ibt_hole_d       = 3.2;  // M3 through-hole
+ibt_hole_d       = 2.5;  // M3 self-tap pilot hole (2.5mm for M3 thread to grip PLA)
 
 // Buck Converter Board
 buck_l  = 37;             // PCB length
@@ -141,29 +141,25 @@ module rounded_plate(w, h, t, r = 5) {
 // ============================================================
 
 module base() {
-    difference() {
-        rounded_plate(plate_w, plate_h, plate_t);
-
-        // IBT_2 M3 through-holes
-        for (pos = ibt_holes) {
-            translate([pos[0], pos[1], -0.1])
-                cylinder(d = ibt_hole_d, h = plate_t + 0.2);
-        }
-    }
+    rounded_plate(plate_w, plate_h, plate_t);
 }
 
 // ============================================================
-// IBT_2 Standoff Sleeves (25mm tall, M3 through-hole)
-// Board screws on top, heatsink hangs below board in the air
+// IBT_2 Standoff Sleeves
+// Solid pillars with 5mm blind hole on top for metal standoffs
+// to self-tap into. No through-hole needed.
 // ============================================================
+
+ibt_tap_depth = 5;       // Blind hole depth for metal standoff to screw into
 
 module ibt_standoffs() {
     for (pos = ibt_holes) {
         translate([pos[0], pos[1], plate_t]) {
             difference() {
                 cylinder(d = ibt_standoff_d, h = ibt_standoff_h);
-                translate([0, 0, -0.1])
-                    cylinder(d = ibt_hole_d, h = ibt_standoff_h + 0.2);
+                // Blind hole at the top only
+                translate([0, 0, ibt_standoff_h - ibt_tap_depth])
+                    cylinder(d = ibt_hole_d, h = ibt_tap_depth + 0.1);
             }
         }
     }
