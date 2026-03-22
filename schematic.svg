@@ -247,7 +247,7 @@
   <circle cx="1260" cy="830" r="4.5" fill="#0d6efd"/>
   <line x1="1260" y1="830" x2="1260" y2="847" stroke="#0d6efd" stroke-width="1.5"/>
   <rect x="1252" y="847" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
-  <text x="1275" y="868" font-size="14" fill="#495057" font-weight="bold">20kΩ</text>
+  <text x="1275" y="868" font-size="14" fill="#495057" font-weight="bold">18kΩ</text>
   <line x1="1260" y1="879" x2="1260" y2="892" stroke="#6c757d" stroke-width="1.5"/>
   <line x1="1252" y1="892" x2="1268" y2="892" stroke="#6c757d" stroke-width="2.5"/><line x1="1255" y1="897" x2="1265" y2="897" stroke="#6c757d" stroke-width="2"/><line x1="1257" y1="902" x2="1263" y2="902" stroke="#6c757d" stroke-width="1.5"/>
   <line x1="1260" y1="830" x2="1190" y2="830" stroke="#0d6efd" stroke-width="1.5"/>
@@ -265,7 +265,7 @@
   <circle cx="1100" cy="930" r="4.5" fill="#0d6efd"/>
   <line x1="1100" y1="930" x2="1100" y2="947" stroke="#0d6efd" stroke-width="1.5"/>
   <rect x="1092" y="947" width="16" height="32" rx="3" fill="#fff" stroke="#212529" stroke-width="1.5"/>
-  <text x="1115" y="968" font-size="14" fill="#495057" font-weight="bold">20kΩ</text>
+  <text x="1115" y="968" font-size="14" fill="#495057" font-weight="bold">18kΩ</text>
   <line x1="1100" y1="979" x2="1100" y2="992" stroke="#6c757d" stroke-width="1.5"/>
   <line x1="1092" y1="992" x2="1108" y2="992" stroke="#6c757d" stroke-width="2.5"/><line x1="1095" y1="997" x2="1105" y2="997" stroke="#6c757d" stroke-width="2"/><line x1="1097" y1="1002" x2="1103" y2="1002" stroke="#6c757d" stroke-width="1.5"/>
   <line x1="1100" y1="930" x2="1030" y2="930" stroke="#0d6efd" stroke-width="1.5"/>
