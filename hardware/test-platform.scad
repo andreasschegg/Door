@@ -46,7 +46,9 @@ buck_socket_wall = 3;     // Socket wall thickness
 buck_clearance = 0.3;     // Fit clearance
 
 // DFRobot FIT0185 Motor
-motor_d        = 37;      // Motor body diameter
+motor_d_front  = 37;      // Gearbox diameter (near faceplate)
+motor_d_rear   = 35;      // Motor body diameter (rear)
+motor_d        = motor_d_front; // Used for cradle width calculation
 motor_length   = 75;      // Motor body length (without shaft)
 motor_hex_r    = 15.5;    // 6x M3 hex pattern circumradius
 motor_shaft_d  = 14;      // Shaft + boss clearance (12mm housing + 2mm margin)
@@ -187,16 +189,24 @@ module ibt_standoffs() {
 module motor_cradle() {
     translate([cradle_pos[0], cradle_pos[1], plate_t]) {
 
-        // --- 2 Cradle Support Walls ---
-        for (x_offset = [motor_length * 0.2, motor_length * 0.65]) {
-            translate([x_offset - cradle_wall / 2, 0, 0])
-                difference() {
-                    cube([cradle_wall, cradle_total_w, cradle_total_h]);
-                    translate([-1, cradle_total_w / 2, cradle_total_h])
-                        rotate([0, 90, 0])
-                            cylinder(r = cradle_r, h = cradle_wall + 2);
-                }
-        }
+        // --- Rear cradle wall (20%, smaller motor body 35mm) ---
+        cradle_r_rear = motor_d_rear / 2 + cradle_clearance;
+        translate([motor_length * 0.2 - cradle_wall / 2, 0, 0])
+            difference() {
+                cube([cradle_wall, cradle_total_w, cradle_total_h]);
+                translate([-1, cradle_total_w / 2, cradle_total_h])
+                    rotate([0, 90, 0])
+                        cylinder(r = cradle_r_rear, h = cradle_wall + 2);
+            }
+
+        // --- Front cradle wall (65%, gearbox 37mm) ---
+        translate([motor_length * 0.65 - cradle_wall / 2, 0, 0])
+            difference() {
+                cube([cradle_wall, cradle_total_w, cradle_total_h]);
+                translate([-1, cradle_total_w / 2, cradle_total_h])
+                    rotate([0, 90, 0])
+                        cylinder(r = cradle_r, h = cradle_wall + 2);
+            }
 
         // --- Side Wall (right end, motor screws to this) ---
         translate([motor_length, 0, 0]) {
