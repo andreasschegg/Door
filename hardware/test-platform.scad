@@ -43,7 +43,7 @@ buck_w  = 17;             // PCB width
 buck_t  = 1.5;            // PCB thickness
 buck_socket_h  = 10;      // Socket height
 buck_socket_wall = 3;     // Socket wall thickness
-buck_clearance = -3;      // Inner gap = 17-3 = 14mm. PCB (17mm) sits 1.5mm in each groove.
+buck_clearance = -3.5;    // Inner gap = 13.5mm. PCB (17mm) sits 1.75mm in each groove, clamped.
 
 // DFRobot FIT0185 Motor
 motor_d_front  = 37;      // Gearbox diameter (near faceplate)
